@@ -1,0 +1,137 @@
+.middle {
+	margin-left: 50px;
+	margin-top: 50px;
+}
+
+
+.header {
+  font-family: Helvetica, Geneva, Swiss, SunSans-Regular;
+  font-weight: bold;
+  color: #05143f;
+  background-color: #b7c2c6;
+  font-size:80%;
+  vertical-align:bottom;
+  PADDING:2px 2px 2px 2px;
+
+  border-style: solid; 
+  border-top-width: 0px; 
+  border-bottom-width: 1px; 
+  border-right-width: 0px; 
+  border-left-width: 0px
+
+
+}
+
+
+.edittable {
+	border-style: solid;
+	border-color: #000000;
+	font-family: Helvetica, Geneva, Swiss, SunSans-Regular;
+	font-weight: bold;
+	color: #05143f;
+	background-color: #b7c2c6;
+	font-size: 80%;
+	vertical-align: bottom;
+	PADDING: 2px 2px 2px 2px;
+	margin-bottom: 10px;
+}
+
+.error {
+	PADDING: 2px 2px 2px 2px;
+	color: red;
+	font-family: Helvetica, Geneva, Swiss, SunSans-Regular, Sans Serif;
+	font-weight: normal;
+	white-space: nowrap;
+}
+
+.tableborder {
+	border-collapse: collapse;
+	border-style: solid;
+	border-color: #000000;
+}
+
+.nowrap {
+  white-space:nowrap;
+}
+
+.gwt-Button { 
+  font-family: Helvetica, Geneva, Swiss, SunSans-Regular;
+  font-weight: bold;
+  background-color:#d7e2e6;
+  font-size:80%;
+}
+
+.gwt-TextBox { 
+  font-family: Helvetica, Geneva, Swiss, SunSans-Regular;
+  font-weight: normal;
+  font-size:80%;
+}
+
+.gwt-PasswordTextBox { 
+  font-family: Helvetica, Geneva, Swiss, SunSans-Regular;
+  font-weight: normal;
+  font-size:80%;
+}
+
+.gwt-Label {
+  font-size:80%;
+  font-weight:bold;
+  vertical-align:bottom;
+  padding-right:3px;
+  padding-top:2px;
+}
+
+
+.gwt-ListBox { 
+  font-family: Helvetica, Geneva, Swiss, SunSans-Regular;
+  font-weight: normal;
+  font-size:80%;
+}
+
+.gwt-MenuBar .gwt-MenuItem {
+  padding: 1px 4px 1px 4px;
+  background-color:#d7e2e6;
+  font-size: smaller;
+  cursor: pointer;
+}
+
+.gwt-DialogBox {
+  color: black;
+  background-color: white;
+  PADDING:3px 3px 3px 3px;
+}
+
+.gwt-DialogBox .Caption {
+  color: #05143f;
+  background-color: #b7c2c6;
+ }
+
+.gwt-MenuBar .gwt-MenuItem-selected {
+  background-color: #E8EEF7;
+}
+
+.gwt-TabBarItem {
+  padding: 4px 4px 4px 4px;
+  background-color:#d7e2e6;
+  border:1px dotted black;
+  cursor: pointer;
+}
+
+.gwt-TabBarItem-selected {
+  background-color: #E8EEF7;
+  border-top:3px solid black;
+  border-left:3px solid black;
+  border-right:3px solid black;
+  border-bottom:none;
+}
+
+.gwt-TabPanelBottom {
+  background-color: #E8EEF7;
+  border-left:2px solid black;
+  border-right:2px solid black;
+  border-bottom:2px solid black;
+  border-top:2px solid black;
+  padding:10px;
+}
+
+
