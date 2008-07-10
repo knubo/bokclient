@@ -3,7 +3,7 @@ package no.knubo.bok.client.validation;
 import java.util.ArrayList;
 import java.util.List;
 
-import no.knubo.bok.cache.Registry;
+import no.knubo.bok.client.cache.Registry;
 
 import com.google.gwt.user.client.ui.Widget;
 

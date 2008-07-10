@@ -1,6 +1,6 @@
 package no.knubo.bok.client.validation;
 
-import no.knubo.bok.cache.Registry;
+import no.knubo.bok.client.cache.Registry;
 
 public class RegistryValidator extends ValidatorBase {
 
