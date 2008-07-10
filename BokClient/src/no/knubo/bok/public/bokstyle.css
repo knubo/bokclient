@@ -44,6 +44,27 @@
 	white-space: nowrap;
 }
 
+.line1 TD {
+  background-color:#ecf1f3;
+  font-size:80%;
+  border-style: solid; 
+  border-top-width: 0px; 
+  border-bottom-width: 0px; 
+  border-right-width: 1px; 
+  border-left-width: 1px
+}
+
+.line2 TD {
+  background-color:#d7e2e6;
+  font-size:80%;
+  border-style: solid; 
+  border-top-width: 0px; 
+  border-bottom-width: 0px; 
+  border-right-width: 1px; 
+  border-left-width: 1px
+}
+
+
 .logline {
  vertical-align:top;
 }
