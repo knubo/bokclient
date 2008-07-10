@@ -2,9 +2,9 @@ package no.knubo.bok.client.misc;
 
 import java.util.ArrayList;
 
-import no.knubo.bok.Constants;
-import no.knubo.bok.Messages;
 import no.knubo.bok.client.BokGWT;
+import no.knubo.bok.client.Constants;
+import no.knubo.bok.client.Messages;
 import no.knubo.bok.client.Util;
 
 import com.google.gwt.http.client.Request;

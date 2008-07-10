@@ -1,7 +1,7 @@
 package no.knubo.bok.client.misc;
 
 
-import no.knubo.bok.Constants;
+import no.knubo.bok.client.Constants;
 import no.knubo.bok.client.Util;
 
 import com.google.gwt.http.client.Request;
