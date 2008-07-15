@@ -4,6 +4,7 @@ import no.knubo.bok.client.misc.ImageFactory;
 import no.knubo.bok.client.misc.WidgetIds;
 import no.knubo.bok.client.views.AboutView;
 import no.knubo.bok.client.views.BackupView;
+import no.knubo.bok.client.views.BookEditView;
 import no.knubo.bok.client.views.LogView;
 import no.knubo.bok.client.views.LoginView;
 import no.knubo.bok.client.views.LogoutView;
@@ -71,10 +72,13 @@ public class BokGWT implements EntryPoint {
 	}
 
 	private void setupMenu() {
+		MenuBar booksMenu = addTopMenu(topMenu, elements.menu_books());
 		MenuBar settingsMenu = addTopMenu(topMenu, elements.menu_settings());
 		MenuBar logoutMenu = addTopMenu(topMenu, elements.menu_logout());
 		MenuBar aboutMenu = addTopMenu(topMenu, elements.menu_info());
 
+		addMenuItem(booksMenu, elements.menuitem_new_book(),
+				WidgetIds.REGISTER_BOOK);
 		addMenuItem(settingsMenu, elements.menuitem_useradm(),
 				WidgetIds.EDIT_USERS);
 
@@ -148,26 +152,30 @@ public class BokGWT implements EntryPoint {
 			switch (action) {
 			case ABOUT:
 				widget = AboutView.getInstance(constants, messages, elements);
-				((AboutView)widget).init();
+				((AboutView) widget).init();
 				break;
-            case BACKUP:
-                widget = BackupView.getInstance(constants, messages, elements);
-                ((BackupView)widget).init();
-                break;
+			case BACKUP:
+				widget = BackupView.getInstance(constants, messages, elements);
+				((BackupView) widget).init();
+				break;
 			case EDIT_USERS:
 				widget = UsersEditView.show(messages, constants, elements);
 				((UsersEditView) widget).init();
 				break;
-            case LOGGING:
-                widget = LogView.show(messages, constants, elements);
-                ((LogView) widget).init();
-                break;
+			case LOGGING:
+				widget = LogView.show(messages, constants, elements);
+				((LogView) widget).init();
+				break;
 			case LOGIN:
 				widget = LoginView.getInstance(elements, constants, messages);
 				((LoginView) widget).init();
 				break;
 			case LOGOUT:
 				widget = LogoutView.getInstance(constants, messages, elements);
+				break;
+			case REGISTER_BOOK:
+				widget = BookEditView.getInstance(constants, messages, elements);
+				((BookEditView)widget).init();
 				break;
 			}
 
