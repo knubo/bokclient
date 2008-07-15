@@ -40,38 +40,6 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String login();
 
   /**
-   * Translated "Melding".
-   * 
-   * @return translated "Melding"
-   * @gwt.key message
-   */
-  String message();
-
-  /**
-   * Translated "Logg ut".
-   * 
-   * @return translated "Logg ut"
-   * @gwt.key menuitem_logout
-   */
-  String menuitem_logout();
-
-  /**
-   * Translated "Info".
-   * 
-   * @return translated "Info"
-   * @gwt.key menu_info
-   */
-  String menu_info();
-
-  /**
-   * Translated "Kun lesetilgang".
-   * 
-   * @return translated "Kun lesetilgang"
-   * @gwt.key read_only_access
-   */
-  String read_only_access();
-
-  /**
    * Translated "Id".
    * 
    * @return translated "Id"
@@ -80,28 +48,12 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String id();
 
   /**
-   * Translated "Tidspunkt".
+   * Translated "ISBN".
    * 
-   * @return translated "Tidspunkt"
-   * @gwt.key occured
+   * @return translated "ISBN"
+   * @gwt.key book_isbn
    */
-  String occured();
-
-  /**
-   * Translated "Brukere".
-   * 
-   * @return translated "Brukere"
-   * @gwt.key menuitem_useradm
-   */
-  String menuitem_useradm();
-
-  /**
-   * Translated "Pakker filer".
-   * 
-   * @return translated "Pakker filer"
-   * @gwt.key backup_zipping
-   */
-  String backup_zipping();
+  String book_isbn();
 
   /**
    * Translated "Siste sikkerhetskopi ".
@@ -110,6 +62,14 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
    * @gwt.key backup_last
    */
   String backup_last();
+
+  /**
+   * Translated "Brukere".
+   * 
+   * @return translated "Brukere"
+   * @gwt.key menuitem_useradm
+   */
+  String menuitem_useradm();
 
   /**
    * Translated "Standardverdier".
@@ -128,36 +88,12 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String backup_start();
 
   /**
-   * Translated "Klarte ikke operasjonen:".
+   * Translated "Avbryt".
    * 
-   * @return translated "Klarte ikke operasjonen:"
-   * @gwt.key backup_error
+   * @return translated "Avbryt"
+   * @gwt.key cancel
    */
-  String backup_error();
-
-  /**
-   * Translated "Navn".
-   * 
-   * @return translated "Navn"
-   * @gwt.key name
-   */
-  String name();
-
-  /**
-   * Translated "Logg ut".
-   * 
-   * @return translated "Logg ut"
-   * @gwt.key logout
-   */
-  String logout();
-
-  /**
-   * Translated "Innstillinger".
-   * 
-   * @return translated "Innstillinger"
-   * @gwt.key menu_settings
-   */
-  String menu_settings();
+  String cancel();
 
   /**
    * Translated "Antall tabeller som skal sikkerhetskopieres:".
@@ -168,36 +104,12 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String backup_table_count();
 
   /**
-   * Translated "Avbryt".
+   * Translated "Lagre".
    * 
-   * @return translated "Avbryt"
-   * @gwt.key cancel
+   * @return translated "Lagre"
+   * @gwt.key save
    */
-  String cancel();
-
-  /**
-   * Translated "Passord".
-   * 
-   * @return translated "Passord"
-   * @gwt.key password
-   */
-  String password();
-
-  /**
-   * Translated "Brukernavn".
-   * 
-   * @return translated "Brukernavn"
-   * @gwt.key user
-   */
-  String user();
-
-  /**
-   * Translated "Aksjon".
-   * 
-   * @return translated "Aksjon"
-   * @gwt.key action
-   */
-  String action();
+  String save();
 
   /**
    * Translated "Ny/endre bruker".
@@ -206,14 +118,6 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
    * @gwt.key title_edit_new_user
    */
   String title_edit_new_user();
-
-  /**
-   * Translated "Lagre".
-   * 
-   * @return translated "Lagre"
-   * @gwt.key save
-   */
-  String save();
 
   /**
    * Translated "Sikkerhetskopi".
@@ -240,28 +144,12 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String title_about();
 
   /**
-   * Translated "Kategori".
+   * Translated "Boknummer".
    * 
-   * @return translated "Kategori"
-   * @gwt.key category
+   * @return translated "Boknummer"
+   * @gwt.key book_number
    */
-  String category();
-
-  /**
-   * Translated "Redusert skrivetilgang".
-   * 
-   * @return translated "Redusert skrivetilgang"
-   * @gwt.key reduced_write_access
-   */
-  String reduced_write_access();
-
-  /**
-   * Translated "Tabell:".
-   * 
-   * @return translated "Tabell:"
-   * @gwt.key backup_table
-   */
-  String backup_table();
+  String book_number();
 
   /**
    * Translated "Starter sikkerhetskopiering".
@@ -280,6 +168,14 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String userEditView_newButton();
 
   /**
+   * Translated "Bøker".
+   * 
+   * @return translated "Bøker"
+   * @gwt.key menu_books
+   */
+  String menu_books();
+
+  /**
    * Translated "Progresjon".
    * 
    * @return translated "Progresjon"
@@ -294,14 +190,6 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
    * @gwt.key menu_logout
    */
   String menu_logout();
-
-  /**
-   * Translated "Laster ned zipfil".
-   * 
-   * @return translated "Laster ned zipfil"
-   * @gwt.key backup_downloading
-   */
-  String backup_downloading();
 
   /**
    * Translated "Vis logger".
@@ -320,14 +208,6 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String menuitem_about();
 
   /**
-   * Translated "Elements".
-   * 
-   * @return translated "Elements"
-   * @gwt.key ClassName
-   */
-  String ClassName();
-
-  /**
    * Translated "Brukere".
    * 
    * @return translated "Brukere"
@@ -342,4 +222,188 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
    * @gwt.key title_back
    */
   String title_back();
+
+  /**
+   * Translated "Ny/endre bok".
+   * 
+   * @return translated "Ny/endre bok"
+   * @gwt.key title_new_book
+   */
+  String title_new_book();
+
+  /**
+   * Translated "Logg ut".
+   * 
+   * @return translated "Logg ut"
+   * @gwt.key menuitem_logout
+   */
+  String menuitem_logout();
+
+  /**
+   * Translated "Melding".
+   * 
+   * @return translated "Melding"
+   * @gwt.key message
+   */
+  String message();
+
+  /**
+   * Translated "Info".
+   * 
+   * @return translated "Info"
+   * @gwt.key menu_info
+   */
+  String menu_info();
+
+  /**
+   * Translated "Kun lesetilgang".
+   * 
+   * @return translated "Kun lesetilgang"
+   * @gwt.key read_only_access
+   */
+  String read_only_access();
+
+  /**
+   * Translated "Tittel".
+   * 
+   * @return translated "Tittel"
+   * @gwt.key book_title
+   */
+  String book_title();
+
+  /**
+   * Translated "Tidspunkt".
+   * 
+   * @return translated "Tidspunkt"
+   * @gwt.key occured
+   */
+  String occured();
+
+  /**
+   * Translated "Pakker filer".
+   * 
+   * @return translated "Pakker filer"
+   * @gwt.key backup_zipping
+   */
+  String backup_zipping();
+
+  /**
+   * Translated "Klarte ikke operasjonen:".
+   * 
+   * @return translated "Klarte ikke operasjonen:"
+   * @gwt.key backup_error
+   */
+  String backup_error();
+
+  /**
+   * Translated "Logg ut".
+   * 
+   * @return translated "Logg ut"
+   * @gwt.key logout
+   */
+  String logout();
+
+  /**
+   * Translated "Innstillinger".
+   * 
+   * @return translated "Innstillinger"
+   * @gwt.key menu_settings
+   */
+  String menu_settings();
+
+  /**
+   * Translated "Navn".
+   * 
+   * @return translated "Navn"
+   * @gwt.key name
+   */
+  String name();
+
+  /**
+   * Translated "Passord".
+   * 
+   * @return translated "Passord"
+   * @gwt.key password
+   */
+  String password();
+
+  /**
+   * Translated "Aksjon".
+   * 
+   * @return translated "Aksjon"
+   * @gwt.key action
+   */
+  String action();
+
+  /**
+   * Translated "Brukernavn".
+   * 
+   * @return translated "Brukernavn"
+   * @gwt.key user
+   */
+  String user();
+
+  /**
+   * Translated "Registrer bok".
+   * 
+   * @return translated "Registrer bok"
+   * @gwt.key menuitem_new_book
+   */
+  String menuitem_new_book();
+
+  /**
+   * Translated "Kategori".
+   * 
+   * @return translated "Kategori"
+   * @gwt.key category
+   */
+  String category();
+
+  /**
+   * Translated "Redusert skrivetilgang".
+   * 
+   * @return translated "Redusert skrivetilgang"
+   * @gwt.key reduced_write_access
+   */
+  String reduced_write_access();
+
+  /**
+   * Translated "Forfatter".
+   * 
+   * @return translated "Forfatter"
+   * @gwt.key book_author
+   */
+  String book_author();
+
+  /**
+   * Translated "Tabell:".
+   * 
+   * @return translated "Tabell:"
+   * @gwt.key backup_table
+   */
+  String backup_table();
+
+  /**
+   * Translated "Org. tittel".
+   * 
+   * @return translated "Org. tittel"
+   * @gwt.key book_org_title
+   */
+  String book_org_title();
+
+  /**
+   * Translated "Laster ned zipfil".
+   * 
+   * @return translated "Laster ned zipfil"
+   * @gwt.key backup_downloading
+   */
+  String backup_downloading();
+
+  /**
+   * Translated "Elements".
+   * 
+   * @return translated "Elements"
+   * @gwt.key ClassName
+   */
+  String ClassName();
 }
