@@ -22,6 +22,8 @@ public class BookEditView extends Composite {
 	private TextBoxWithErrorText bookTitle;
 	private TextBoxWithErrorText bookOrgTitle;
 	private SuggestBox bookAuthor;
+	private SuggestBox bookEditor;
+	private SuggestBox bookCOAuthor;
 
 	public BookEditView(Messages messages, Constants constants,
 			Elements elements) {
@@ -39,6 +41,7 @@ public class BookEditView extends Composite {
 		table.setText(3, 0, elements.book_title());
 		table.setText(4, 0, elements.book_org_title());
 		table.setText(5, 0, elements.book_author());
+		table.setText(6, 0, elements.book_coauthor());
 
 		bookNumber = new TextBoxWithErrorText("bookNumber");
 		bookNumber.setMaxLength(6);
@@ -49,12 +52,15 @@ public class BookEditView extends Composite {
 		bookOrgTitle = new TextBoxWithErrorText("orgTitle");
 		bookOrgTitle.setMaxLength(40);
 		bookAuthor = new SuggestBox(PersonSuggestBuilder.createPeopleOracle(constants, messages, "A"));
-
+		bookCOAuthor = new SuggestBox(PersonSuggestBuilder.createPeopleOracle(constants, messages, "A"));
+		bookEditor = new SuggestBox(PersonSuggestBuilder.createPeopleOracle(constants, messages, "E"));
+		
 		table.setWidget(1, 1, bookNumber);
 		table.setWidget(2, 1, bookISBN);
 		table.setWidget(3, 1, bookTitle);
 		table.setWidget(4, 1, bookOrgTitle);
 		table.setWidget(5, 1, bookAuthor);
+		table.setWidget(6, 1, bookCOAuthor);
 
 		initWidget(table);
 	}
