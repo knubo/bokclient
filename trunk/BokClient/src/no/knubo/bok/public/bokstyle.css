@@ -18,10 +18,12 @@
   border-bottom-width: 1px; 
   border-right-width: 0px; 
   border-left-width: 0px
-
-
 }
 
+.gwt-SuggestBox {   }
+.gwt-SuggestBoxPopup { background-color: #D7E2E6; }
+.gwt-SuggestBoxPopup .item {  }
+.gwt-SuggestBoxPopup .item-selected { background-color:#B7C2C6; }
 
 .edittable {
 	border-style: solid;
