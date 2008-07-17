@@ -3,8 +3,8 @@ package no.knubo.bok.client.views;
 import no.knubo.bok.client.Constants;
 import no.knubo.bok.client.Elements;
 import no.knubo.bok.client.Messages;
+import no.knubo.bok.client.suggest.PersonSuggestBuilder;
 import no.knubo.bok.client.ui.TextBoxWithErrorText;
-import no.knubo.bok.client.util.PersonSuggestBuilder;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
