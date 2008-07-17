@@ -3,14 +3,19 @@ package no.knubo.bok.client.views;
 import no.knubo.bok.client.Constants;
 import no.knubo.bok.client.Elements;
 import no.knubo.bok.client.Messages;
+import no.knubo.bok.client.misc.ImageFactory;
 import no.knubo.bok.client.suggest.CategorySuggestBuilder;
 import no.knubo.bok.client.suggest.PersonSuggestBuilder;
 import no.knubo.bok.client.suggest.PlacementSuggestBuilder;
+import no.knubo.bok.client.suggest.SeriesSuggestBuilder;
 import no.knubo.bok.client.ui.TextBoxWithErrorText;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.SuggestBox;
+import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.Widget;
 
 public class BookEditView extends Composite {
 
@@ -28,6 +33,24 @@ public class BookEditView extends Composite {
 	private SuggestBox bookCOAuthor;
 	private SuggestBox bookPlacement;
 	private SuggestBox bookCategory;
+	private int row;
+	private int column;
+	private Image addAuthor;
+	private Image addCOAuthor;
+	private Image addEditor;
+	private Image addCategory;
+	private Image addPlacement;
+	private TextBoxWithErrorText bookPrice;
+	private SuggestBox bookSeries;
+	private TextBoxWithErrorText bookSeriesNmb;
+	private Image addIllustrator;
+	private SuggestBox bookIllustrator;
+	private TextBoxWithErrorText bookYearWritten;
+	private TextBoxWithErrorText bookYearPublished;
+	private TextBoxWithErrorText bookEdition;
+	private TextBoxWithErrorText bookImpression;
+	private TextArea bookSubtitle;
+	private int tabIndex = 1;
 
 	public BookEditView(Messages messages, Constants constants,
 			Elements elements) {
@@ -40,40 +63,98 @@ public class BookEditView extends Composite {
 
 		table.setText(0, 0, elements.title_new_book());
 		table.getRowFormatter().setStyleName(0, "header");
-		table.setText(1, 0, elements.book_number());
-		table.setText(2, 0, elements.book_isbn());
-		table.setText(3, 0, elements.book_title());
-		table.setText(4, 0, elements.book_org_title());
-		table.setText(5, 0, elements.book_author());
-		table.setText(6, 0, elements.book_coauthor());
-		table.setText(7, 0, elements.book_editor());
-		table.setText(8, 0, elements.category());
-		table.setText(9, 0, elements.book_placement());
 
 		bookNumber = new TextBoxWithErrorText("bookNumber");
 		bookNumber.setMaxLength(6);
+
 		bookISBN = new TextBoxWithErrorText("bookISBN");
 		bookISBN.setMaxLength(40);
 		bookTitle = new TextBoxWithErrorText("bookTitle");
 		bookTitle.setMaxLength(40);
-		bookOrgTitle = new TextBoxWithErrorText("orgTitle");
+		bookOrgTitle = new TextBoxWithErrorText("bookOrgTitle");
 		bookOrgTitle.setMaxLength(40);
-		bookAuthor = new SuggestBox(PersonSuggestBuilder.createPeopleOracle(constants, messages, "A"));
-		bookCOAuthor = new SuggestBox(PersonSuggestBuilder.createPeopleOracle(constants, messages, "A"));
-		bookEditor = new SuggestBox(PersonSuggestBuilder.createPeopleOracle(constants, messages, "E"));
-		bookPlacement = new SuggestBox(PlacementSuggestBuilder.createPlacementOracle(constants, messages)); 
-		bookCategory = new SuggestBox(CategorySuggestBuilder.createCategoryOracle(constants, messages));
-		table.setWidget(1, 1, bookNumber);
-		table.setWidget(2, 1, bookISBN);
-		table.setWidget(3, 1, bookTitle);
-		table.setWidget(4, 1, bookOrgTitle);
-		table.setWidget(5, 1, bookAuthor);
-		table.setWidget(6, 1, bookCOAuthor);
-		table.setWidget(7, 1, bookEditor);
-		table.setWidget(8, 1, bookCategory);
-		table.setWidget(9, 1, bookPlacement);
+		bookAuthor = new SuggestBox(PersonSuggestBuilder.createPeopleOracle(
+				constants, messages, "A"));
+		bookCOAuthor = new SuggestBox(PersonSuggestBuilder.createPeopleOracle(
+				constants, messages, "A"));
+		bookEditor = new SuggestBox(PersonSuggestBuilder.createPeopleOracle(
+				constants, messages, "E"));
+		bookIllustrator = new SuggestBox(PersonSuggestBuilder
+				.createPeopleOracle(constants, messages, "I"));
+		bookPlacement = new SuggestBox(PlacementSuggestBuilder
+				.createPlacementOracle(constants, messages));
+		bookCategory = new SuggestBox(CategorySuggestBuilder
+				.createCategoryOracle(constants, messages));
+		bookPrice = new TextBoxWithErrorText("bookPrice");
+		bookSeries = new SuggestBox(SeriesSuggestBuilder.createSeriesOracle(
+				constants, messages));
+		bookSeriesNmb = new TextBoxWithErrorText("bookSeriesNmb");
+		bookYearWritten = new TextBoxWithErrorText("bookYearWritten");
+		bookYearPublished = new TextBoxWithErrorText("bookYearPublished");
+		bookEdition = new TextBoxWithErrorText("bookEdition");
+		bookImpression = new TextBoxWithErrorText("bookImpression");
+		bookSubtitle = new TextArea();
+		bookSubtitle.setWidth("95%");
+		bookSubtitle.setHeight("4em");
+
+		addAuthor = ImageFactory.chooseImage("addAuthor");
+		addCOAuthor = ImageFactory.chooseImage("addCOAuthor");
+		addEditor = ImageFactory.chooseImage("addEditor");
+		addCategory = ImageFactory.chooseImage("addCategory");
+		addPlacement = ImageFactory.chooseImage("addPlacement");
+		addIllustrator = ImageFactory.chooseImage("addIllustrator");
+
+		row = 1;
+		column = 0;
+		addElement(elements.book_number(), bookNumber);
+		addElement(elements.book_isbn(), bookISBN);
+		addElement(elements.book_title(), bookTitle);
+		addElement(elements.book_org_title(), bookOrgTitle);
+		addElement(elements.book_subtitle(), bookSubtitle);
+		addElement(elements.category(), bookCategory, addCategory);
+		addElement(elements.book_author(), bookAuthor, addAuthor);
+		addElement(elements.book_coauthor(), bookCOAuthor, addCOAuthor);
+		addElement(elements.book_editor(), bookEditor, addEditor);
+		addElement(elements.book_price(), bookPrice);
+
+		row = 1;
+		column = 3;
+		addElement(elements.book_year_written(), bookYearWritten);
+		addElement(elements.book_year_published(), bookYearPublished);
+		addElement(elements.book_edition(), bookEdition);
+		addElement(elements.book_impression(), bookImpression);
+		addElement("", ImageFactory.blankImage(1, 1));
+		addElement(elements.book_series(), bookSeries);
+		addElement(elements.book_serie_nmb(), bookSeriesNmb);
+		addElement(elements.book_placement(), bookPlacement, addPlacement);
+		addElement(elements.book_illustrator(), bookIllustrator, addIllustrator);
 
 		initWidget(table);
+	}
+
+	private void addElement(String title, Widget... fields) {
+		table.setText(row, column, title);
+		table.getCellFormatter().setStyleName(row, column, "logline");
+		
+		int pos = 1;
+		for (Widget w : fields) {
+			setTabIndex(w);
+			table.setWidget(row, column + pos++, w);
+		}
+		row++;
+	}
+
+	private void setTabIndex(Widget w) {
+		if (w instanceof SuggestBox) {
+			SuggestBox sb = (SuggestBox) w;
+			sb.setTabIndex(tabIndex++);
+		} else if (w instanceof TextBoxWithErrorText) {
+			TextBoxWithErrorText tb = (TextBoxWithErrorText) w;
+			tb.getTextBox().setTabIndex(tabIndex++);
+		} else if (w instanceof TextArea) {
+			TextArea ta = (TextArea) w;
+			ta.setTabIndex(tabIndex++);
+		}
 	}
 
 	public static BookEditView getInstance(Constants constants,

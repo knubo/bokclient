@@ -5,11 +5,9 @@
 
 
 .header {
-  font-family: Helvetica, Geneva, Swiss, SunSans-Regular;
   font-weight: bold;
   color: #05143f;
   background-color: #b7c2c6;
-  font-size:80%;
   vertical-align:bottom;
   PADDING:2px 2px 2px 2px;
 
@@ -28,11 +26,9 @@
 .edittable {
 	border-style: solid;
 	border-color: #000000;
-	font-family: Helvetica, Geneva, Swiss, SunSans-Regular;
 	font-weight: bold;
 	color: #05143f;
 	background-color: #b7c2c6;
-	font-size: 80%;
 	vertical-align: bottom;
 	PADDING: 2px 2px 2px 2px;
 	margin-bottom: 10px;
@@ -41,14 +37,12 @@
 .error {
 	PADDING: 2px 2px 2px 2px;
 	color: red;
-	font-family: Helvetica, Geneva, Swiss, SunSans-Regular, Sans Serif;
 	font-weight: normal;
 	white-space: nowrap;
 }
 
 .line1 TD {
   background-color:#ecf1f3;
-  font-size:80%;
   border-style: solid; 
   border-top-width: 0px; 
   border-bottom-width: 0px; 
@@ -58,7 +52,6 @@
 
 .line2 TD {
   background-color:#d7e2e6;
-  font-size:80%;
   border-style: solid; 
   border-top-width: 0px; 
   border-bottom-width: 0px; 
@@ -82,26 +75,19 @@
 }
 
 .gwt-Button { 
-  font-family: Helvetica, Geneva, Swiss, SunSans-Regular;
   font-weight: bold;
   background-color:#d7e2e6;
-  font-size:80%;
 }
 
 .gwt-TextBox { 
-  font-family: Helvetica, Geneva, Swiss, SunSans-Regular;
   font-weight: normal;
-  font-size:80%;
 }
 
 .gwt-PasswordTextBox { 
-  font-family: Helvetica, Geneva, Swiss, SunSans-Regular;
   font-weight: normal;
-  font-size:80%;
 }
 
 .gwt-Label {
-  font-size:80%;
   font-weight:bold;
   vertical-align:bottom;
   padding-right:3px;
@@ -110,9 +96,7 @@
 
 
 .gwt-ListBox { 
-  font-family: Helvetica, Geneva, Swiss, SunSans-Regular;
   font-weight: normal;
-  font-size:80%;
 }
 .gwt-MenuBar .gwt-MenuItem-selected {
   background-color: #E8EEF7;
