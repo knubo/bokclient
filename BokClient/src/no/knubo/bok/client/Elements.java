@@ -288,9 +288,9 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String title_back();
 
   /**
-   * Translated "Redakt�r".
+   * Translated "Redaktør".
    * 
-   * @return translated "Redakt�r"
+   * @return translated "Redaktør"
    * @gwt.key book_editor
    */
   String book_editor();
