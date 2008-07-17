@@ -4,6 +4,7 @@ import no.knubo.bok.client.Constants;
 import no.knubo.bok.client.Elements;
 import no.knubo.bok.client.Messages;
 import no.knubo.bok.client.suggest.PersonSuggestBuilder;
+import no.knubo.bok.client.suggest.PlacementSuggestBuilder;
 import no.knubo.bok.client.ui.TextBoxWithErrorText;
 
 import com.google.gwt.user.client.ui.Composite;
@@ -24,6 +25,7 @@ public class BookEditView extends Composite {
 	private SuggestBox bookAuthor;
 	private SuggestBox bookEditor;
 	private SuggestBox bookCOAuthor;
+	private SuggestBox bookPlacement;
 
 	public BookEditView(Messages messages, Constants constants,
 			Elements elements) {
@@ -42,6 +44,8 @@ public class BookEditView extends Composite {
 		table.setText(4, 0, elements.book_org_title());
 		table.setText(5, 0, elements.book_author());
 		table.setText(6, 0, elements.book_coauthor());
+		table.setText(7, 0, elements.book_editor());
+		table.setText(8, 0, elements.book_placement());
 
 		bookNumber = new TextBoxWithErrorText("bookNumber");
 		bookNumber.setMaxLength(6);
@@ -54,6 +58,7 @@ public class BookEditView extends Composite {
 		bookAuthor = new SuggestBox(PersonSuggestBuilder.createPeopleOracle(constants, messages, "A"));
 		bookCOAuthor = new SuggestBox(PersonSuggestBuilder.createPeopleOracle(constants, messages, "A"));
 		bookEditor = new SuggestBox(PersonSuggestBuilder.createPeopleOracle(constants, messages, "E"));
+		bookPlacement = new SuggestBox(PlacementSuggestBuilder.createPlacementOracle(constants, messages)); 
 		
 		table.setWidget(1, 1, bookNumber);
 		table.setWidget(2, 1, bookISBN);
@@ -61,6 +66,8 @@ public class BookEditView extends Composite {
 		table.setWidget(4, 1, bookOrgTitle);
 		table.setWidget(5, 1, bookAuthor);
 		table.setWidget(6, 1, bookCOAuthor);
+		table.setWidget(7, 1, bookEditor);
+		table.setWidget(8, 1, bookPlacement);
 
 		initWidget(table);
 	}
