@@ -1,6 +1,7 @@
 package no.knubo.bok.client.misc;
 
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -46,6 +47,13 @@ public class ImageFactory {
         return withId(new Image("images/list-add.png"), id);
     }
 
+    public static Image chooseImage(String id, ClickListener listener) {
+        Image withId = withId(new Image("images/list-add.png"), id);
+        withId.addClickListener(listener);
+		return withId;
+    }
+
+    
     public static Widget chooseImageBig(String id) {
         return withId(new Image("images/list-add-big.png"), id);
     }

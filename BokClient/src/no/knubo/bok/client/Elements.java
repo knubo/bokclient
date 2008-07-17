@@ -352,6 +352,14 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String book_title();
 
   /**
+   * Translated "Registrer bok".
+   * 
+   * @return translated "Registrer bok"
+   * @gwt.key book_register_book
+   */
+  String book_register_book();
+
+  /**
    * Translated "Tidspunkt".
    * 
    * @return translated "Tidspunkt"

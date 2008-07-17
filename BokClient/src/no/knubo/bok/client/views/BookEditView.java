@@ -8,8 +8,10 @@ import no.knubo.bok.client.suggest.CategorySuggestBuilder;
 import no.knubo.bok.client.suggest.PersonSuggestBuilder;
 import no.knubo.bok.client.suggest.PlacementSuggestBuilder;
 import no.knubo.bok.client.suggest.SeriesSuggestBuilder;
+import no.knubo.bok.client.ui.NamedButton;
 import no.knubo.bok.client.ui.TextBoxWithErrorText;
 
+import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Image;
@@ -17,7 +19,7 @@ import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 
-public class BookEditView extends Composite {
+public class BookEditView extends Composite implements ClickListener {
 
 	private static BookEditView instance;
 	private final Messages messages;
@@ -51,6 +53,8 @@ public class BookEditView extends Composite {
 	private TextBoxWithErrorText bookImpression;
 	private TextArea bookSubtitle;
 	private int tabIndex = 1;
+	private int maxRow;
+	private NamedButton registerButton;
 
 	public BookEditView(Messages messages, Constants constants,
 			Elements elements) {
@@ -118,7 +122,7 @@ public class BookEditView extends Composite {
 		addElement(elements.book_price(), bookPrice);
 
 		table.setWidget(1, 3, ImageFactory.blankImage(10, 10));
-		
+
 		row = 1;
 		column = 4;
 		addElement(elements.book_year_written(), bookYearWritten);
@@ -131,6 +135,12 @@ public class BookEditView extends Composite {
 		addElement(elements.book_placement(), bookPlacement, addPlacement);
 		addElement(elements.book_illustrator(), bookIllustrator, addIllustrator);
 
+		registerButton = new NamedButton("registerButton", elements.book_register_book());
+		setTabIndex(registerButton);
+		registerButton.addClickListener(this);
+		
+		table.setWidget(maxRow, 0, registerButton);
+
 		initWidget(table);
 	}
 
@@ -142,8 +152,15 @@ public class BookEditView extends Composite {
 		for (Widget w : fields) {
 			setTabIndex(w);
 			table.setWidget(row, column + pos++, w);
+
+			if (w instanceof Image) {
+				((Image) w).addClickListener(this);
+			}
 		}
 		row++;
+		if (row > maxRow) {
+			maxRow = row;
+		}
 	}
 
 	private void setTabIndex(Widget w) {
@@ -169,6 +186,10 @@ public class BookEditView extends Composite {
 
 	public void init() {
 
+	}
+
+	public void onClick(Widget sender) {
+		
 	}
 
 }
