@@ -216,9 +216,9 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String userEditView_newButton();
 
   /**
-   * Translated "Illustrat�r".
+   * Translated "Illustratør".
    * 
-   * @return translated "Illustrat�r"
+   * @return translated "Illustratør"
    * @gwt.key book_illustrator
    */
   String book_illustrator();
@@ -304,12 +304,12 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String title_new_book();
 
   /**
-   * Translated "Logg ut".
+   * Translated "Skrevet år".
    * 
-   * @return translated "Logg ut"
-   * @gwt.key menuitem_logout
+   * @return translated "Skrevet år"
+   * @gwt.key book_year_written
    */
-  String menuitem_logout();
+  String book_year_written();
 
   /**
    * Translated "Melding".
@@ -318,6 +318,14 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
    * @gwt.key message
    */
   String message();
+
+  /**
+   * Translated "Logg ut".
+   * 
+   * @return translated "Logg ut"
+   * @gwt.key menuitem_logout
+   */
+  String menuitem_logout();
 
   /**
    * Translated "Info".
@@ -448,14 +456,6 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String reduced_write_access();
 
   /**
-   * Translated "Utgitt år".
-   * 
-   * @return translated "Utgitt år"
-   * @gwt.key book_year
-   */
-  String book_year();
-
-  /**
    * Translated "Forfatter".
    * 
    * @return translated "Forfatter"
@@ -494,6 +494,14 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
    * @gwt.key backup_downloading
    */
   String backup_downloading();
+
+  /**
+   * Translated "Utgitt år".
+   * 
+   * @return translated "Utgitt år"
+   * @gwt.key book_year_published
+   */
+  String book_year_published();
 
   /**
    * Translated "Elements".
