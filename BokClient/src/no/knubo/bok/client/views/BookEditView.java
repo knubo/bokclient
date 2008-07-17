@@ -94,7 +94,7 @@ public class BookEditView extends Composite {
 		bookEdition = new TextBoxWithErrorText("bookEdition");
 		bookImpression = new TextBoxWithErrorText("bookImpression");
 		bookSubtitle = new TextArea();
-		bookSubtitle.setWidth("95%");
+		bookSubtitle.setWidth("180px");
 		bookSubtitle.setHeight("4em");
 
 		addAuthor = ImageFactory.chooseImage("addAuthor");
@@ -117,8 +117,10 @@ public class BookEditView extends Composite {
 		addElement(elements.book_editor(), bookEditor, addEditor);
 		addElement(elements.book_price(), bookPrice);
 
+		table.setWidget(1, 3, ImageFactory.blankImage(10, 10));
+		
 		row = 1;
-		column = 3;
+		column = 4;
 		addElement(elements.book_year_written(), bookYearWritten);
 		addElement(elements.book_year_published(), bookYearPublished);
 		addElement(elements.book_edition(), bookEdition);
@@ -135,7 +137,7 @@ public class BookEditView extends Composite {
 	private void addElement(String title, Widget... fields) {
 		table.setText(row, column, title);
 		table.getCellFormatter().setStyleName(row, column, "logline");
-		
+
 		int pos = 1;
 		for (Widget w : fields) {
 			setTabIndex(w);
