@@ -3,6 +3,7 @@ package no.knubo.bok.client.views;
 import no.knubo.bok.client.Constants;
 import no.knubo.bok.client.Elements;
 import no.knubo.bok.client.Messages;
+import no.knubo.bok.client.suggest.CategorySuggestBuilder;
 import no.knubo.bok.client.suggest.PersonSuggestBuilder;
 import no.knubo.bok.client.suggest.PlacementSuggestBuilder;
 import no.knubo.bok.client.ui.TextBoxWithErrorText;
@@ -26,6 +27,7 @@ public class BookEditView extends Composite {
 	private SuggestBox bookEditor;
 	private SuggestBox bookCOAuthor;
 	private SuggestBox bookPlacement;
+	private SuggestBox bookCategory;
 
 	public BookEditView(Messages messages, Constants constants,
 			Elements elements) {
@@ -45,7 +47,8 @@ public class BookEditView extends Composite {
 		table.setText(5, 0, elements.book_author());
 		table.setText(6, 0, elements.book_coauthor());
 		table.setText(7, 0, elements.book_editor());
-		table.setText(8, 0, elements.book_placement());
+		table.setText(8, 0, elements.category());
+		table.setText(9, 0, elements.book_placement());
 
 		bookNumber = new TextBoxWithErrorText("bookNumber");
 		bookNumber.setMaxLength(6);
@@ -59,7 +62,7 @@ public class BookEditView extends Composite {
 		bookCOAuthor = new SuggestBox(PersonSuggestBuilder.createPeopleOracle(constants, messages, "A"));
 		bookEditor = new SuggestBox(PersonSuggestBuilder.createPeopleOracle(constants, messages, "E"));
 		bookPlacement = new SuggestBox(PlacementSuggestBuilder.createPlacementOracle(constants, messages)); 
-		
+		bookCategory = new SuggestBox(CategorySuggestBuilder.createCategoryOracle(constants, messages));
 		table.setWidget(1, 1, bookNumber);
 		table.setWidget(2, 1, bookISBN);
 		table.setWidget(3, 1, bookTitle);
@@ -67,7 +70,8 @@ public class BookEditView extends Composite {
 		table.setWidget(5, 1, bookAuthor);
 		table.setWidget(6, 1, bookCOAuthor);
 		table.setWidget(7, 1, bookEditor);
-		table.setWidget(8, 1, bookPlacement);
+		table.setWidget(8, 1, bookCategory);
+		table.setWidget(9, 1, bookPlacement);
 
 		initWidget(table);
 	}
