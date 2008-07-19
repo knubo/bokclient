@@ -8,6 +8,14 @@ package no.knubo.bok.client;
 public interface Messages extends com.google.gwt.i18n.client.Messages {
   
   /**
+   * Translated "Det finnes allerede en person med gitt fornavn og etternavn - ikke lagret.".
+   * 
+   * @return translated "Det finnes allerede en person med gitt fornavn og etternavn - ikke lagret."
+   * @gwt.key person_duplicate
+   */
+  String person_duplicate();
+
+  /**
    * Translated "Søket ga Ingen treff".
    * 
    * @return translated "Søket ga Ingen treff"
