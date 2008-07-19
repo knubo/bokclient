@@ -56,6 +56,14 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String book_impression();
 
   /**
+   * Translated "Opprett ny forekomst ".
+   * 
+   * @return translated "Opprett ny forekomst "
+   * @gwt.key create_new
+   */
+  String create_new();
+
+  /**
    * Translated "Id".
    * 
    * @return translated "Id"
@@ -80,20 +88,20 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String book_isbn();
 
   /**
-   * Translated "Siste sikkerhetskopi ".
-   * 
-   * @return translated "Siste sikkerhetskopi "
-   * @gwt.key backup_last
-   */
-  String backup_last();
-
-  /**
    * Translated "Brukere".
    * 
    * @return translated "Brukere"
    * @gwt.key menuitem_useradm
    */
   String menuitem_useradm();
+
+  /**
+   * Translated "Siste sikkerhetskopi ".
+   * 
+   * @return translated "Siste sikkerhetskopi "
+   * @gwt.key backup_last
+   */
+  String backup_last();
 
   /**
    * Translated "Standardverdier".
@@ -120,6 +128,14 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String book_subtitle();
 
   /**
+   * Translated "Etternavn".
+   * 
+   * @return translated "Etternavn"
+   * @gwt.key person_lastname
+   */
+  String person_lastname();
+
+  /**
    * Translated "Antall tabeller som skal sikkerhetskopieres:".
    * 
    * @return translated "Antall tabeller som skal sikkerhetskopieres:"
@@ -142,6 +158,14 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
    * @gwt.key book_price
    */
   String book_price();
+
+  /**
+   * Translated "Søk".
+   * 
+   * @return translated "Søk"
+   * @gwt.key search
+   */
+  String search();
 
   /**
    * Translated "Nr i serie".
@@ -190,6 +214,14 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
    * @gwt.key title_about
    */
   String title_about();
+
+  /**
+   * Translated "Oversetter".
+   * 
+   * @return translated "Oversetter"
+   * @gwt.key book_translator
+   */
+  String book_translator();
 
   /**
    * Translated "Boknummer".
@@ -416,6 +448,14 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String password();
 
   /**
+   * Translated "Avbryt".
+   * 
+   * @return translated "Avbryt"
+   * @gwt.key abort
+   */
+  String abort();
+
+  /**
    * Translated "Brukernavn".
    * 
    * @return translated "Brukernavn"
@@ -478,6 +518,14 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
    * @gwt.key backup_table
    */
   String backup_table();
+
+  /**
+   * Translated "Fornavn".
+   * 
+   * @return translated "Fornavn"
+   * @gwt.key person_firstname
+   */
+  String person_firstname();
 
   /**
    * Translated "Forlegger".

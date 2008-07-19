@@ -4,17 +4,17 @@ import no.knubo.bok.client.Constants;
 import no.knubo.bok.client.Elements;
 import no.knubo.bok.client.Messages;
 import no.knubo.bok.client.misc.ImageFactory;
-import no.knubo.bok.client.suggest.CategorySuggestBuilder;
-import no.knubo.bok.client.suggest.PersonSuggestBuilder;
-import no.knubo.bok.client.suggest.PlacementSuggestBuilder;
-import no.knubo.bok.client.suggest.SeriesSuggestBuilder;
+import no.knubo.bok.client.suggest.CategorySuggestBox;
+import no.knubo.bok.client.suggest.PersonSuggestBox;
+import no.knubo.bok.client.suggest.PlacementSuggestBox;
+import no.knubo.bok.client.suggest.PublisherSuggestBox;
+import no.knubo.bok.client.suggest.SeriesSuggestBox;
 import no.knubo.bok.client.ui.NamedButton;
 import no.knubo.bok.client.ui.TextBoxWithErrorText;
 
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
@@ -30,23 +30,11 @@ public class BookEditView extends Composite implements ClickListener {
 	private TextBoxWithErrorText bookISBN;
 	private TextBoxWithErrorText bookTitle;
 	private TextBoxWithErrorText bookOrgTitle;
-	private SuggestBox bookAuthor;
-	private SuggestBox bookEditor;
-	private SuggestBox bookCOAuthor;
-	private SuggestBox bookPlacement;
-	private SuggestBox bookCategory;
+	private PlacementSuggestBox placementSuggestBox;
 	private int row;
 	private int column;
-	private Image addAuthor;
-	private Image addCOAuthor;
-	private Image addEditor;
-	private Image addCategory;
-	private Image addPlacement;
 	private TextBoxWithErrorText bookPrice;
-	private SuggestBox bookSeries;
 	private TextBoxWithErrorText bookSeriesNmb;
-	private Image addIllustrator;
-	private SuggestBox bookIllustrator;
 	private TextBoxWithErrorText bookYearWritten;
 	private TextBoxWithErrorText bookYearPublished;
 	private TextBoxWithErrorText bookEdition;
@@ -55,6 +43,14 @@ public class BookEditView extends Composite implements ClickListener {
 	private int tabIndex = 1;
 	private int maxRow;
 	private NamedButton registerButton;
+	private PersonSuggestBox authorSuggestBox;
+	private PersonSuggestBox coAuthorSuggestBox;
+	private PersonSuggestBox editorSuggestBox;
+	private PersonSuggestBox translatorSuggestBox;
+	private PersonSuggestBox illustratorSuggestBox;
+	private CategorySuggestBox categorySuggestBox;
+	private SeriesSuggestBox seriesSuggestBox;
+	private PublisherSuggestBox publisherSuggestBox;
 
 	public BookEditView(Messages messages, Constants constants,
 			Elements elements) {
@@ -77,21 +73,27 @@ public class BookEditView extends Composite implements ClickListener {
 		bookTitle.setMaxLength(40);
 		bookOrgTitle = new TextBoxWithErrorText("bookOrgTitle");
 		bookOrgTitle.setMaxLength(40);
-		bookAuthor = new SuggestBox(PersonSuggestBuilder.createPeopleOracle(
-				constants, messages, "A"));
-		bookCOAuthor = new SuggestBox(PersonSuggestBuilder.createPeopleOracle(
-				constants, messages, "A"));
-		bookEditor = new SuggestBox(PersonSuggestBuilder.createPeopleOracle(
-				constants, messages, "E"));
-		bookIllustrator = new SuggestBox(PersonSuggestBuilder
-				.createPeopleOracle(constants, messages, "I"));
-		bookPlacement = new SuggestBox(PlacementSuggestBuilder
-				.createPlacementOracle(constants, messages));
-		bookCategory = new SuggestBox(CategorySuggestBuilder
-				.createCategoryOracle(constants, messages));
+
+		authorSuggestBox = new PersonSuggestBox("A", constants, messages,
+				elements);
+		coAuthorSuggestBox = new PersonSuggestBox("A", constants, messages,
+				elements);
+		editorSuggestBox = new PersonSuggestBox("E", constants, messages,
+				elements);
+		translatorSuggestBox = new PersonSuggestBox("T", constants, messages,
+				elements);
+		illustratorSuggestBox = new PersonSuggestBox("I", constants, messages,
+				elements);
+
+		placementSuggestBox = new PlacementSuggestBox(constants, messages,
+				elements);
+		categorySuggestBox = new CategorySuggestBox(constants, messages,
+				elements);
+		publisherSuggestBox = new PublisherSuggestBox(constants, messages,
+				elements);
+
 		bookPrice = new TextBoxWithErrorText("bookPrice");
-		bookSeries = new SuggestBox(SeriesSuggestBuilder.createSeriesOracle(
-				constants, messages));
+		seriesSuggestBox = new SeriesSuggestBox(constants, messages, elements);
 		bookSeriesNmb = new TextBoxWithErrorText("bookSeriesNmb");
 		bookYearWritten = new TextBoxWithErrorText("bookYearWritten");
 		bookYearPublished = new TextBoxWithErrorText("bookYearPublished");
@@ -101,13 +103,6 @@ public class BookEditView extends Composite implements ClickListener {
 		bookSubtitle.setWidth("180px");
 		bookSubtitle.setHeight("4em");
 
-		addAuthor = ImageFactory.chooseImage("addAuthor");
-		addCOAuthor = ImageFactory.chooseImage("addCOAuthor");
-		addEditor = ImageFactory.chooseImage("addEditor");
-		addCategory = ImageFactory.chooseImage("addCategory");
-		addPlacement = ImageFactory.chooseImage("addPlacement");
-		addIllustrator = ImageFactory.chooseImage("addIllustrator");
-
 		row = 1;
 		column = 0;
 		addElement(elements.book_number(), bookNumber);
@@ -115,12 +110,19 @@ public class BookEditView extends Composite implements ClickListener {
 		addElement(elements.book_title(), bookTitle);
 		addElement(elements.book_org_title(), bookOrgTitle);
 		addElement(elements.book_subtitle(), bookSubtitle);
-		addElement(elements.category(), bookCategory, addCategory);
-		addElement(elements.book_author(), bookAuthor, addAuthor);
-		addElement(elements.book_coauthor(), bookCOAuthor, addCOAuthor);
-		addElement(elements.book_editor(), bookEditor, addEditor);
-		addElement(elements.book_price(), bookPrice);
-
+		addElement(elements.category(), categorySuggestBox.getSuggestBox(),
+				categorySuggestBox.getImageContainer());
+		addElement(elements.book_author(), authorSuggestBox.getSuggestBox(),
+				authorSuggestBox.getImageContainer());
+		addElement(elements.book_coauthor(),
+				coAuthorSuggestBox.getSuggestBox(), coAuthorSuggestBox
+						.getImageContainer());
+		addElement(elements.book_editor(), editorSuggestBox.getSuggestBox(),
+				editorSuggestBox.getImageContainer());
+		addElement(elements.book_translator(), translatorSuggestBox
+				.getSuggestBox(), translatorSuggestBox.getImageContainer());
+		addElement(elements.book_publisher(), publisherSuggestBox
+				.getSuggestBox(), publisherSuggestBox.getImageContainer());
 		table.setWidget(1, 3, ImageFactory.blankImage(10, 10));
 
 		row = 1;
@@ -130,15 +132,20 @@ public class BookEditView extends Composite implements ClickListener {
 		addElement(elements.book_edition(), bookEdition);
 		addElement(elements.book_impression(), bookImpression);
 		addElement("", ImageFactory.blankImage(1, 1));
-		addElement(elements.book_series(), bookSeries);
+		addElement(elements.book_price(), bookPrice);
+		addElement(elements.book_series(), seriesSuggestBox.getSuggestBox(),
+				seriesSuggestBox.getImageContainer());
 		addElement(elements.book_serie_nmb(), bookSeriesNmb);
-		addElement(elements.book_placement(), bookPlacement, addPlacement);
-		addElement(elements.book_illustrator(), bookIllustrator, addIllustrator);
+		addElement(elements.book_placement(), placementSuggestBox
+				.getSuggestBox(), placementSuggestBox.getImageContainer());
+		addElement(elements.book_illustrator(), illustratorSuggestBox
+				.getSuggestBox(), illustratorSuggestBox.getImageContainer());
 
-		registerButton = new NamedButton("registerButton", elements.book_register_book());
+		registerButton = new NamedButton("registerButton", elements
+				.book_register_book());
 		setTabIndex(registerButton);
 		registerButton.addClickListener(this);
-		
+
 		table.setWidget(maxRow, 0, registerButton);
 
 		initWidget(table);
@@ -153,9 +160,6 @@ public class BookEditView extends Composite implements ClickListener {
 			setTabIndex(w);
 			table.setWidget(row, column + pos++, w);
 
-			if (w instanceof Image) {
-				((Image) w).addClickListener(this);
-			}
 		}
 		row++;
 		if (row > maxRow) {
@@ -189,7 +193,6 @@ public class BookEditView extends Composite implements ClickListener {
 	}
 
 	public void onClick(Widget sender) {
-		
 	}
 
 }

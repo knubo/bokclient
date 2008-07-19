@@ -18,7 +18,10 @@
   border-left-width: 0px
 }
 
-.gwt-SuggestBox {   }
+.gwt-SuggestBox {
+  width:180px;
+}
+
 .gwt-SuggestBoxPopup { background-color: #D7E2E6; }
 .gwt-SuggestBoxPopup .item {  }
 .gwt-SuggestBoxPopup .item-selected { background-color:#B7C2C6; }
@@ -33,11 +36,6 @@
 	PADDING: 2px 2px 2px 2px;
 	margin-bottom: 10px;
 }
-
-INPUT {
-	width:180px;
-}
-
 
 .error {
 	PADDING: 2px 2px 2px 2px;
@@ -84,7 +82,8 @@ INPUT {
   background-color:#d7e2e6;
 }
 
-.gwt-TextBox { 
+.gwt-TextBox {
+  width:180px;
   font-weight: normal;
 }
 

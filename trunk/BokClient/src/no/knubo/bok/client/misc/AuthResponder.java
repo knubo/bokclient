@@ -52,7 +52,6 @@ public class AuthResponder implements RequestCallback {
             Window.alert("DB error:" + response.getText());
         } else if (response.getStatusCode() == 513) {
             JSONValue parse = JSONParser.parse(response.getText());
-
             ArrayList<String> fields = new ArrayList<String>();
             JSONArray array = parse.isArray();
 
