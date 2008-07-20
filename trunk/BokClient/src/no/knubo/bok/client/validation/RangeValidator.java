@@ -14,6 +14,11 @@ public class RangeValidator extends ValidatorBase {
     protected boolean validate(Validateable val) {
         String sval = val.getText();
 
+        /* Handled by mandatory validator, if required */
+        if(sval.length() == 0) {
+        	return true;
+        }
+        
         try {
             int value = 0;
             if (sval != null && sval.length() > 0) {

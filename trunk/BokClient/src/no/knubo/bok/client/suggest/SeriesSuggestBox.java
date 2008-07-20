@@ -3,8 +3,8 @@ package no.knubo.bok.client.suggest;
 import no.knubo.bok.client.Constants;
 import no.knubo.bok.client.Elements;
 import no.knubo.bok.client.Messages;
+import no.knubo.bok.client.views.editors.NamedEditor;
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.SuggestOracle;
 
 public class SeriesSuggestBox extends GeneralSuggestBox {
@@ -20,7 +20,10 @@ public class SeriesSuggestBox extends GeneralSuggestBox {
 
 	@Override
 	public void openEditor() {
-		Window.alert("To be made");
+		NamedEditor personEditor = NamedEditor.getInstance("series",elements,
+				constants, messages);
+		personEditor.setReceiver(picked);
 	}
+
 
 }

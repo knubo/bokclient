@@ -22,6 +22,11 @@ public class MasterValidator {
         ValidatorBase datevalidator = new DateValidator(error);
         status &= datevalidator.validate(this, widgets);
     }
+    
+    public void year(String error, Widget[] widgets) {
+        ValidatorBase yearvalidator = new YearValidator(error);
+        status &= yearvalidator.validate(this, widgets);
+    }
 
     public void day(String error, int year, int month, Widget[] widgets) {
         ValidatorBase dayvalidator = new DayValidator(error, month, year);

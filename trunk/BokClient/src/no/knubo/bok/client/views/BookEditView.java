@@ -1,5 +1,6 @@
 package no.knubo.bok.client.views;
 
+import no.knubo.bok.client.BokGWT;
 import no.knubo.bok.client.Constants;
 import no.knubo.bok.client.Elements;
 import no.knubo.bok.client.Messages;
@@ -11,10 +12,12 @@ import no.knubo.bok.client.suggest.PublisherSuggestBox;
 import no.knubo.bok.client.suggest.SeriesSuggestBox;
 import no.knubo.bok.client.ui.NamedButton;
 import no.knubo.bok.client.ui.TextBoxWithErrorText;
+import no.knubo.bok.client.validation.MasterValidator;
 
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
@@ -51,6 +54,8 @@ public class BookEditView extends Composite implements ClickListener {
 	private CategorySuggestBox categorySuggestBox;
 	private SeriesSuggestBox seriesSuggestBox;
 	private PublisherSuggestBox publisherSuggestBox;
+	private HTML bookErrorLabel;
+	private HTML bookNumberErrorLabel;
 
 	public BookEditView(Messages messages, Constants constants,
 			Elements elements) {
@@ -64,12 +69,15 @@ public class BookEditView extends Composite implements ClickListener {
 		table.setText(0, 0, elements.title_new_book());
 		table.getRowFormatter().setStyleName(0, "header");
 
-		bookNumber = new TextBoxWithErrorText("bookNumber");
+		bookNumberErrorLabel = new HTML();
+		bookNumber = new TextBoxWithErrorText("bookNumber",
+				bookNumberErrorLabel );
 		bookNumber.setMaxLength(6);
 
 		bookISBN = new TextBoxWithErrorText("bookISBN");
 		bookISBN.setMaxLength(40);
-		bookTitle = new TextBoxWithErrorText("bookTitle");
+		bookErrorLabel = new HTML();
+		bookTitle = new TextBoxWithErrorText("bookTitle", bookErrorLabel);
 		bookTitle.setMaxLength(40);
 		bookOrgTitle = new TextBoxWithErrorText("bookOrgTitle");
 		bookOrgTitle.setMaxLength(40);
@@ -105,9 +113,9 @@ public class BookEditView extends Composite implements ClickListener {
 
 		row = 1;
 		column = 0;
-		addElement(elements.book_number(), bookNumber);
+		addElement(elements.book_number(), bookNumber, bookNumberErrorLabel);
 		addElement(elements.book_isbn(), bookISBN);
-		addElement(elements.book_title(), bookTitle);
+		addElement(elements.book_title(), bookTitle, bookErrorLabel);
 		addElement(elements.book_org_title(), bookOrgTitle);
 		addElement(elements.book_subtitle(), bookSubtitle);
 		addElement(elements.category(), categorySuggestBox.getSuggestBox(),
@@ -189,10 +197,60 @@ public class BookEditView extends Composite implements ClickListener {
 	}
 
 	public void init() {
-
+		bookEdition.setText("");
+		bookErrorLabel.setText("");
+		bookImpression.setText("");
+		bookISBN.setText("");
+		bookNumber.setText("");
+		bookOrgTitle.setText("");
+		bookPrice.setText("");
+		bookSeriesNmb.setText("");
+		bookSubtitle.setText("");
+		bookTitle.setText("");
+		bookYearPublished.setText("");
+		bookYearWritten.setText("");
+		seriesSuggestBox.clear();
+		categorySuggestBox.clear();
+		placementSuggestBox.clear();
+		publisherSuggestBox.clear();
+		authorSuggestBox.clear();
+		coAuthorSuggestBox.clear();
+		translatorSuggestBox.clear();
+		illustratorSuggestBox.clear();
+		editorSuggestBox.clear();
+		bookNumberErrorLabel.setText("");
+		
+		bookNumber.setFocus(true);
 	}
 
 	public void onClick(Widget sender) {
+		if (sender == registerButton && validate()) {
+			save();
+		}
+	}
+
+	private boolean validate() {
+		MasterValidator mv = new MasterValidator();
+
+		mv.year(messages.illegal_year(), new Widget[] { bookYearPublished,
+				bookYearWritten });
+		mv.range(messages.field_to_low_zero(), new Integer(1), null,
+				new Widget[] { bookEdition, bookImpression });
+		mv.mandatory(messages.required_field(), new Widget[] { bookTitle,
+				bookNumber });
+
+		mv.fail(authorSuggestBox, authorSuggestBox.getCurrentId() == 0,
+				messages.required_field());
+		mv.fail(categorySuggestBox, categorySuggestBox.getCurrentId() == 0,
+				messages.required_field());
+		mv.money(messages.field_money(), new Widget[] { bookPrice });
+
+		return mv.validateStatus();
+	}
+
+	private void save() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

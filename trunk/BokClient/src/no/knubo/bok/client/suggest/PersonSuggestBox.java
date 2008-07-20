@@ -25,4 +25,5 @@ public class PersonSuggestBox extends GeneralSuggestBox {
 		return PersonSuggestBuilder.createPeopleOracle(constants, messages,
 				type, picked);
 	}
+
 }

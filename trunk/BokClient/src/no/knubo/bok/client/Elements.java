@@ -5,7 +5,7 @@ package no.knubo.bok.client;
  * Interface to represent the constants contained in resource  bundle:
  * 	'/Users/knuterikborgen/Documents/workspacebok/BokClient/src/no/knubo/bok/client/Elements.properties'.
  */
-public interface Elements extends com.google.gwt.i18n.client.Constants {
+public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup {
   
   /**
    * Translated "Tilgang".
@@ -40,6 +40,14 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String login();
 
   /**
+   * Translated "Opprett/Endre person".
+   * 
+   * @return translated "Opprett/Endre person"
+   * @gwt.key alter_person
+   */
+  String alter_person();
+
+  /**
    * Translated "Plassering".
    * 
    * @return translated "Plassering"
@@ -56,14 +64,6 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String book_impression();
 
   /**
-   * Translated "Opprett ny forekomst ".
-   * 
-   * @return translated "Opprett ny forekomst "
-   * @gwt.key create_new
-   */
-  String create_new();
-
-  /**
    * Translated "Id".
    * 
    * @return translated "Id"
@@ -78,6 +78,14 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
    * @gwt.key book_series
    */
   String book_series();
+
+  /**
+   * Translated "Opprett/Endre kategori".
+   * 
+   * @return translated "Opprett/Endre kategori"
+   * @gwt.key alter_categories
+   */
+  String alter_categories();
 
   /**
    * Translated "ISBN".
@@ -152,6 +160,14 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String cancel();
 
   /**
+   * Translated "Opprett/Endre plassering".
+   * 
+   * @return translated "Opprett/Endre plassering"
+   * @gwt.key alter_placements
+   */
+  String alter_placements();
+
+  /**
    * Translated "Pris".
    * 
    * @return translated "Pris"
@@ -216,12 +232,12 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String title_about();
 
   /**
-   * Translated "Oversetter".
+   * Translated "Forlegger".
    * 
-   * @return translated "Oversetter"
-   * @gwt.key book_translator
+   * @return translated "Forlegger"
+   * @gwt.key publishers
    */
-  String book_translator();
+  String publishers();
 
   /**
    * Translated "Boknummer".
@@ -240,20 +256,20 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String backup_init();
 
   /**
+   * Translated "Oversetter".
+   * 
+   * @return translated "Oversetter"
+   * @gwt.key book_translator
+   */
+  String book_translator();
+
+  /**
    * Translated "Ny bruker".
    * 
    * @return translated "Ny bruker"
    * @gwt.key userEditView_newButton
    */
   String userEditView_newButton();
-
-  /**
-   * Translated "Illustratør".
-   * 
-   * @return translated "Illustratør"
-   * @gwt.key book_illustrator
-   */
-  String book_illustrator();
 
   /**
    * Translated "Bøker".
@@ -264,12 +280,12 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String menu_books();
 
   /**
-   * Translated "Progresjon".
+   * Translated "Illustratør".
    * 
-   * @return translated "Progresjon"
-   * @gwt.key backup_progress
+   * @return translated "Illustratør"
+   * @gwt.key book_illustrator
    */
-  String backup_progress();
+  String book_illustrator();
 
   /**
    * Translated "Logg ut".
@@ -278,6 +294,22 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
    * @gwt.key menu_logout
    */
   String menu_logout();
+
+  /**
+   * Translated "Progresjon".
+   * 
+   * @return translated "Progresjon"
+   * @gwt.key backup_progress
+   */
+  String backup_progress();
+
+  /**
+   * Translated "Info".
+   * 
+   * @return translated "Info"
+   * @gwt.key info
+   */
+  String info();
 
   /**
    * Translated "Utgave".
@@ -360,6 +392,14 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String menuitem_logout();
 
   /**
+   * Translated "Kategori".
+   * 
+   * @return translated "Kategori"
+   * @gwt.key categories
+   */
+  String categories();
+
+  /**
    * Translated "Info".
    * 
    * @return translated "Info"
@@ -400,6 +440,14 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String occured();
 
   /**
+   * Translated "Opprett/Endre serie ".
+   * 
+   * @return translated "Opprett/Endre serie "
+   * @gwt.key alter_series
+   */
+  String alter_series();
+
+  /**
    * Translated "Pakker filer".
    * 
    * @return translated "Pakker filer"
@@ -424,6 +472,14 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String name();
 
   /**
+   * Translated "Innstillinger".
+   * 
+   * @return translated "Innstillinger"
+   * @gwt.key menu_settings
+   */
+  String menu_settings();
+
+  /**
    * Translated "Logg ut".
    * 
    * @return translated "Logg ut"
@@ -432,12 +488,20 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String logout();
 
   /**
-   * Translated "Innstillinger".
+   * Translated "Plassering".
    * 
-   * @return translated "Innstillinger"
-   * @gwt.key menu_settings
+   * @return translated "Plassering"
+   * @gwt.key placements
    */
-  String menu_settings();
+  String placements();
+
+  /**
+   * Translated "Serie ".
+   * 
+   * @return translated "Serie "
+   * @gwt.key series
+   */
+  String series();
 
   /**
    * Translated "Passord".
@@ -528,12 +592,12 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
   String person_firstname();
 
   /**
-   * Translated "Forlegger".
+   * Translated "Opprett/Endre forlegger".
    * 
-   * @return translated "Forlegger"
-   * @gwt.key book_publisher
+   * @return translated "Opprett/Endre forlegger"
+   * @gwt.key alter_publishers
    */
-  String book_publisher();
+  String alter_publishers();
 
   /**
    * Translated "Org. tittel".
@@ -542,6 +606,14 @@ public interface Elements extends com.google.gwt.i18n.client.Constants {
    * @gwt.key book_org_title
    */
   String book_org_title();
+
+  /**
+   * Translated "Forlegger".
+   * 
+   * @return translated "Forlegger"
+   * @gwt.key book_publisher
+   */
+  String book_publisher();
 
   /**
    * Translated "Laster ned zipfil".

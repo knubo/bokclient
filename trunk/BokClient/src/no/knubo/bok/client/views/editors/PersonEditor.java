@@ -1,4 +1,4 @@
-package no.knubo.bok.client.views.editors;
+ package no.knubo.bok.client.views.editors;
 
 import java.util.List;
 
@@ -80,7 +80,7 @@ public class PersonEditor extends DialogBox implements ClickListener, Picked {
 		dp.add(table, DockPanel.NORTH);
 		table.setStyleName("edittable");
 
-		setText(elements.create_new());
+		setText(elements.alter_person());
 
 		personSearchBox = new TextBox();
 		personSearch = new SuggestBox(PersonSuggestBuilder.createPeopleOracle(
