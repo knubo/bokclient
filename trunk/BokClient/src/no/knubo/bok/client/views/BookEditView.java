@@ -170,7 +170,7 @@ public class BookEditView extends Composite implements ClickListener {
 
 		table.setWidget(maxRow, 0, registerButton);
 		table.setWidget(maxRow, 1, mainErrorLabel);
-		table.getFlexCellFormatter().setColSpan(maxRow, 1, 4);
+		table.getFlexCellFormatter().setColSpan(maxRow, 1, 7);
 		initWidget(table);
 	}
 
