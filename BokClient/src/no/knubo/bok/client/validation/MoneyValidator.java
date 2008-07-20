@@ -9,6 +9,11 @@ public class MoneyValidator extends ValidatorBase {
     protected boolean validate(Validateable val) {
         try {
             String money = val.getText();
+            
+            /* Handled by mandatory validator */
+            if(money.length() == 0) {
+            	return true;
+            }
 
             int comma = money.indexOf('.');
 

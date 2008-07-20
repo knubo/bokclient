@@ -5,16 +5,18 @@ import no.knubo.bok.client.Elements;
 import no.knubo.bok.client.Messages;
 import no.knubo.bok.client.misc.ImageFactory;
 import no.knubo.bok.client.util.Picked;
+import no.knubo.bok.client.validation.Validateable;
 
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-abstract class GeneralSuggestBox implements ClickListener {
+abstract class GeneralSuggestBox implements ClickListener, Validateable {
 	protected final Constants constants;
 	protected final Messages messages;
 	protected final Elements elements;
@@ -26,6 +28,7 @@ abstract class GeneralSuggestBox implements ClickListener {
 	protected HorizontalPanel imageContainer;
 	protected SuggestBox suggestBox;
 	protected final String type;
+	private Label errorLabel;
 
 	public GeneralSuggestBox(String type, Constants constants,
 			Messages messages, Elements elements) {
@@ -35,6 +38,8 @@ abstract class GeneralSuggestBox implements ClickListener {
 		this.elements = elements;
 
 		box = new TextBox();
+		errorLabel = new Label();
+		errorLabel.addStyleName("error");
 
 		addImage = ImageFactory.chooseImage("add" + type);
 		editImage = ImageFactory.editImage("edit" + type);
@@ -44,6 +49,7 @@ abstract class GeneralSuggestBox implements ClickListener {
 		imageContainer = new HorizontalPanel();
 		imageContainer.add(addImage);
 		imageContainer.add(editImage);
+		imageContainer.add(errorLabel);
 		editImage.setVisible(false);
 
 		picked = new Picked() {
@@ -61,6 +67,9 @@ abstract class GeneralSuggestBox implements ClickListener {
 
 	
 	
+
+
+
 	public HorizontalPanel getImageContainer() {
 		return imageContainer;
 	}
@@ -86,6 +95,34 @@ abstract class GeneralSuggestBox implements ClickListener {
 			box.setText("");
 			box.setFocus(true);
 		}
+	}
+
+	public int getCurrentId() {
+		return currentId;
+	}
+
+	public String getText() {
+		return suggestBox.getText();
+	}
+
+	public void setErrorText(String text) {
+		errorLabel.setText(text);
+	}
+
+	public void setFocus(boolean b) {
+		suggestBox.setFocus(b);
+	}
+
+	public void setMouseOver(String mouseOver) {
+		//Hmm
+	}
+	
+	public void clear() {
+		currentId = 0;
+		suggestBox.setText("");
+		editImage.setVisible(false);
+		box.setEnabled(true);
+		addImage.setVisible(true);
 	}
 
 }
