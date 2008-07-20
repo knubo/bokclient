@@ -26,4 +26,5 @@ public class PersonSuggestBox extends GeneralSuggestBox {
 				type, picked);
 	}
 
+
 }

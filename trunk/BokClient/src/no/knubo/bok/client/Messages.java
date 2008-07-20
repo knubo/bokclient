@@ -48,20 +48,20 @@ public interface Messages extends com.google.gwt.i18n.client.Messages {
   String no_server_response();
 
   /**
+   * Translated "Penger inngis på format 10.45 og må være større eller lik 0".
+   * 
+   * @return translated "Penger inngis på format 10.45 og må være større eller lik 0"
+   * @gwt.key field_money
+   */
+  String field_money();
+
+  /**
    * Translated "Ulovlig år".
    * 
    * @return translated "Ulovlig år"
    * @gwt.key illegal_year
    */
   String illegal_year();
-
-  /**
-   * Translated "Penger inngis på format 10.45 og må være større ".
-   * 
-   * @return translated "Penger inngis på format 10.45 og må være større "
-   * @gwt.key field_money
-   */
-  String field_money();
 
   /**
    * Translated "Fikk ikke forventet svar fra server. Operasjonen er trolig ikke gjennomført.".
@@ -86,14 +86,6 @@ public interface Messages extends com.google.gwt.i18n.client.Messages {
    * @gwt.key delete_user_question
    */
   String delete_user_question();
-
-  /**
-   * Translated "lik 0".
-   * 
-   * @return translated "lik 0"
-   * @gwt.key eller
-   */
-  String eller();
 
   /**
    * Translated "Feltet må ha større verdi enn 0".
@@ -174,6 +166,14 @@ public interface Messages extends com.google.gwt.i18n.client.Messages {
    * @gwt.key illegal_day
    */
   String illegal_day();
+
+  /**
+   * Translated "Oppgitt boknummer er allerede i bruk - ikke lagret.".
+   * 
+   * @return translated "Oppgitt boknummer er allerede i bruk - ikke lagret."
+   * @gwt.key duplicate_user_number
+   */
+  String duplicate_user_number();
 
   /**
    * Translated "Ulovlig epostadresse".
