@@ -101,6 +101,10 @@ abstract class GeneralSuggestBox implements ClickListener, Validateable {
 		return currentId;
 	}
 
+	public String getId() {
+		return String.valueOf(currentId);
+	}
+
 	public String getText() {
 		return suggestBox.getText();
 	}

@@ -25,7 +25,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class Util {
 
     /**
-     * Forwards the clientside browser to the given location.
+     * Forwards the client side browser to the given location.
      * 
      * @param msg
      *            The url to forward to.
@@ -183,7 +183,7 @@ public class Util {
     }
 
     /**
-     * Get month part of string on format dd.mm.yyyy
+     * Get month part of string on format "dd.mm.yyyy".
      * 
      * @param value
      * @return
@@ -240,7 +240,7 @@ public class Util {
      * @param message
      *            Text to set.
      * @param seconds
-     *            The amount of seconds before the text is set.
+     *            The amount of seconds before the text is set. If 0 timer is removed.
      */
     public static void timedMessage(final Label label, final String message, int seconds) {
 
@@ -249,6 +249,12 @@ public class Util {
         if (runningTimer != null) {
             runningTimer.cancel();
         }
+
+        if(seconds == 0) {
+        	timers.remove(label);
+        	return;
+        }
+        
         Timer timer = new Timer() {
 
             public void run() {

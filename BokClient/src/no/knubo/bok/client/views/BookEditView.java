@@ -1,19 +1,29 @@
 package no.knubo.bok.client.views;
 
-import no.knubo.bok.client.BokGWT;
+import java.util.List;
+
 import no.knubo.bok.client.Constants;
 import no.knubo.bok.client.Elements;
 import no.knubo.bok.client.Messages;
+import no.knubo.bok.client.Util;
+import no.knubo.bok.client.misc.AuthResponder;
+import no.knubo.bok.client.misc.FocusCallback;
 import no.knubo.bok.client.misc.ImageFactory;
+import no.knubo.bok.client.misc.ServerResponse;
+import no.knubo.bok.client.misc.ServerResponseWithValidation;
 import no.knubo.bok.client.suggest.CategorySuggestBox;
 import no.knubo.bok.client.suggest.PersonSuggestBox;
 import no.knubo.bok.client.suggest.PlacementSuggestBox;
 import no.knubo.bok.client.suggest.PublisherSuggestBox;
 import no.knubo.bok.client.suggest.SeriesSuggestBox;
+import no.knubo.bok.client.ui.ErrorLabelWidget;
 import no.knubo.bok.client.ui.NamedButton;
 import no.knubo.bok.client.ui.TextBoxWithErrorText;
 import no.knubo.bok.client.validation.MasterValidator;
+import no.knubo.bok.client.validation.Validateable;
 
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -28,7 +38,6 @@ public class BookEditView extends Composite implements ClickListener {
 	private final Messages messages;
 	private final Constants constants;
 	private FlexTable table;
-	private Elements elements;
 	private TextBoxWithErrorText bookNumber;
 	private TextBoxWithErrorText bookISBN;
 	private TextBoxWithErrorText bookTitle;
@@ -56,12 +65,13 @@ public class BookEditView extends Composite implements ClickListener {
 	private PublisherSuggestBox publisherSuggestBox;
 	private HTML bookErrorLabel;
 	private HTML bookNumberErrorLabel;
+	private HTML mainErrorLabel;
+	private int id;
 
 	public BookEditView(Messages messages, Constants constants,
 			Elements elements) {
 		this.messages = messages;
 		this.constants = constants;
-		this.elements = elements;
 
 		table = new FlexTable();
 		table.setStyleName("edittable");
@@ -71,7 +81,8 @@ public class BookEditView extends Composite implements ClickListener {
 
 		bookNumberErrorLabel = new HTML();
 		bookNumber = new TextBoxWithErrorText("bookNumber",
-				bookNumberErrorLabel );
+				bookNumberErrorLabel);
+		bookNumber.addFocusListener(fetchesUserNumber());
 		bookNumber.setMaxLength(6);
 
 		bookISBN = new TextBoxWithErrorText("bookISBN");
@@ -113,15 +124,16 @@ public class BookEditView extends Composite implements ClickListener {
 
 		row = 1;
 		column = 0;
-		addElement(elements.book_number(), bookNumber, bookNumberErrorLabel);
+		addElement(elements.book_number() + "*", bookNumber,
+				bookNumberErrorLabel);
 		addElement(elements.book_isbn(), bookISBN);
-		addElement(elements.book_title(), bookTitle, bookErrorLabel);
+		addElement(elements.book_title() + "*", bookTitle, bookErrorLabel);
 		addElement(elements.book_org_title(), bookOrgTitle);
 		addElement(elements.book_subtitle(), bookSubtitle);
-		addElement(elements.category(), categorySuggestBox.getSuggestBox(),
-				categorySuggestBox.getImageContainer());
-		addElement(elements.book_author(), authorSuggestBox.getSuggestBox(),
-				authorSuggestBox.getImageContainer());
+		addElement(elements.category() + "*", categorySuggestBox
+				.getSuggestBox(), categorySuggestBox.getImageContainer());
+		addElement(elements.book_author() + "*", authorSuggestBox
+				.getSuggestBox(), authorSuggestBox.getImageContainer());
 		addElement(elements.book_coauthor(),
 				coAuthorSuggestBox.getSuggestBox(), coAuthorSuggestBox
 						.getImageContainer());
@@ -151,12 +163,44 @@ public class BookEditView extends Composite implements ClickListener {
 
 		registerButton = new NamedButton("registerButton", elements
 				.book_register_book());
+		mainErrorLabel = new HTML();
+
 		setTabIndex(registerButton);
 		registerButton.addClickListener(this);
 
 		table.setWidget(maxRow, 0, registerButton);
-
+		table.setWidget(maxRow, 1, mainErrorLabel);
+		table.getFlexCellFormatter().setColSpan(maxRow, 1, 4);
 		initWidget(table);
+	}
+
+	private FocusCallback fetchesUserNumber() {
+		return new FocusCallback() {
+
+			public void onFocus(Validateable me) {
+			}
+
+			public void onLostFocus(ErrorLabelWidget me) {
+				if (me.getText().length() == 0) {
+					fetchNextUserNumber();
+				}
+			}
+
+		};
+	}
+
+	protected void fetchNextUserNumber() {
+		ServerResponse callback = new ServerResponse() {
+
+			public void serverResponse(JSONValue responseObj) {
+				JSONObject object = responseObj.isObject();
+
+				bookNumber.setText(Util.str(object.get("nextUserNumber")));
+			}
+
+		};
+		AuthResponder.get(constants, messages, callback,
+				"registers/books.php?action=nextUserNumber");
 	}
 
 	private void addElement(String title, Widget... fields) {
@@ -219,7 +263,8 @@ public class BookEditView extends Composite implements ClickListener {
 		illustratorSuggestBox.clear();
 		editorSuggestBox.clear();
 		bookNumberErrorLabel.setText("");
-		
+		id = 0;
+
 		bookNumber.setFocus(true);
 	}
 
@@ -249,8 +294,57 @@ public class BookEditView extends Composite implements ClickListener {
 	}
 
 	private void save() {
-		// TODO Auto-generated method stub
+		Util.timedMessage(mainErrorLabel, "", 0);
 
+		ServerResponseWithValidation callback = new ServerResponseWithValidation() {
+
+			public void serverResponse(JSONValue responseObj) {
+				JSONObject object = responseObj.isObject();
+
+				id = Util.getInt(object.get("id"));
+				mainErrorLabel.setText(messages.save_ok());
+				Util.timedMessage(mainErrorLabel, "", 10);
+			}
+
+			public void validationError(List<String> fields) {
+				if (fields.contains("usernumber")) {
+					mainErrorLabel.setText(messages.duplicate_user_number());
+				}
+			}
+
+		};
+		StringBuffer parameters = buildPostParams();
+		AuthResponder.post(constants, messages, callback, parameters,
+				"registers/books.php");
+	}
+
+	private StringBuffer buildPostParams() {
+		StringBuffer sb = new StringBuffer();
+
+		sb.append("action=save");
+		Util.addPostParam(sb, "id", String.valueOf(id));
+		Util.addPostParam(sb, "usernumber", bookNumber.getText());
+		Util.addPostParam(sb, "title", bookTitle.getText());
+		Util.addPostParam(sb, "subtitle", bookSubtitle.getText());
+		Util.addPostParam(sb, "org_title", bookOrgTitle.getText());
+		Util.addPostParam(sb, "ISBN", bookISBN.getText());
+		Util.addPostParam(sb, "author_id", authorSuggestBox.getId());
+		Util.addPostParam(sb, "coauthor_id", coAuthorSuggestBox.getId());
+		Util.addPostParam(sb, "illustrator_id", illustratorSuggestBox.getId());
+		Util.addPostParam(sb, "translator_id", translatorSuggestBox.getId());
+		Util.addPostParam(sb, "editor_id", editorSuggestBox.getId());
+		Util.addPostParam(sb, "publisher_id", publisherSuggestBox.getId());
+		Util.addPostParam(sb, "price", bookPrice.getText());
+		Util.addPostParam(sb, "published_year", bookYearPublished.getText());
+		Util.addPostParam(sb, "written_year", bookYearWritten.getText());
+		Util.addPostParam(sb, "category_id", categorySuggestBox.getId());
+		Util.addPostParam(sb, "placement_id", placementSuggestBox.getId());
+		Util.addPostParam(sb, "edition", bookEdition.getText());
+		Util.addPostParam(sb, "impression", bookImpression.getText());
+		Util.addPostParam(sb, "series", seriesSuggestBox.getId());
+		Util.addPostParam(sb, "number_in_series", bookSeriesNmb.getText());
+
+		return sb;
 	}
 
 }

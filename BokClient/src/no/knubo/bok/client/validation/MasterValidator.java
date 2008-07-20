@@ -86,9 +86,9 @@ public class MasterValidator {
         status &= dayvalidator.validate(this, widgets);
     }
 
-    public boolean fail(Validateable box, boolean shouldFail, String message) {
+    public void fail(Validateable box, boolean shouldFail, String message) {
         if (failedFields.contains(box)) {
-            return true;
+            return;
         }
 
         if (shouldFail) {
@@ -98,7 +98,7 @@ public class MasterValidator {
             box.setErrorText("");
         }
 
-        return !shouldFail;
+        status &= !shouldFail;
     }
 
     public void range(String error, Integer minVal, Integer maxVal, List<? extends Widget> widgets) {
