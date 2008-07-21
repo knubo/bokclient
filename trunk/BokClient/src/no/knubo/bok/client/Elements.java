@@ -24,6 +24,14 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String log();
 
   /**
+   * Translated "Endre bok".
+   * 
+   * @return translated "Endre bok"
+   * @gwt.key title_change_book
+   */
+  String title_change_book();
+
+  /**
    * Translated "Last ned forrige sikkerhetskopi".
    * 
    * @return translated "Last ned forrige sikkerhetskopi"
@@ -78,6 +86,14 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
    * @gwt.key book_series
    */
   String book_series();
+
+  /**
+   * Translated "Bøker per person".
+   * 
+   * @return translated "Bøker per person"
+   * @gwt.key menuitem_report_books_author
+   */
+  String menuitem_report_books_author();
 
   /**
    * Translated "Opprett/Endre kategori".
@@ -182,6 +198,14 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
    * @gwt.key search
    */
   String search();
+
+  /**
+   * Translated "Kategorier".
+   * 
+   * @return translated "Kategorier"
+   * @gwt.key menuitem_book_categories
+   */
+  String menuitem_book_categories();
 
   /**
    * Translated "Nr i serie".
@@ -304,6 +328,14 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String backup_progress();
 
   /**
+   * Translated "Rapporter".
+   * 
+   * @return translated "Rapporter"
+   * @gwt.key menu_reports
+   */
+  String menu_reports();
+
+  /**
    * Translated "Info".
    * 
    * @return translated "Info"
@@ -326,6 +358,30 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
    * @gwt.key menuitem_log
    */
   String menuitem_log();
+
+  /**
+   * Translated "Personer".
+   * 
+   * @return translated "Personer"
+   * @gwt.key menuitem_book_people
+   */
+  String menuitem_book_people();
+
+  /**
+   * Translated "Top 30 forfattere".
+   * 
+   * @return translated "Top 30 forfattere"
+   * @gwt.key menuitem_report_top_author
+   */
+  String menuitem_report_top_author();
+
+  /**
+   * Translated "Søk etter bok".
+   * 
+   * @return translated "Søk etter bok"
+   * @gwt.key menuitem_book_search
+   */
+  String menuitem_book_search();
 
   /**
    * Translated "Om bokbasen".
@@ -360,9 +416,17 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String book_editor();
 
   /**
-   * Translated "Ny/endre bok".
+   * Translated "Serier".
    * 
-   * @return translated "Ny/endre bok"
+   * @return translated "Serier"
+   * @gwt.key menuitem_book_series
+   */
+  String menuitem_book_series();
+
+  /**
+   * Translated "Registrer ny bok".
+   * 
+   * @return translated "Registrer ny bok"
    * @gwt.key title_new_book
    */
   String title_new_book();
@@ -406,6 +470,14 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
    * @gwt.key menu_info
    */
   String menu_info();
+
+  /**
+   * Translated "Plassering per b�ker".
+   * 
+   * @return translated "Plassering per b�ker"
+   * @gwt.key menuitem_report_placement
+   */
+  String menuitem_report_placement();
 
   /**
    * Translated "Kun lesetilgang".
@@ -462,6 +534,22 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
    * @gwt.key backup_error
    */
   String backup_error();
+
+  /**
+   * Translated "Alle bøer".
+   * 
+   * @return translated "Alle bøer"
+   * @gwt.key menuitem_report_all_books
+   */
+  String menuitem_report_all_books();
+
+  /**
+   * Translated "Hurtioppslag på bok".
+   * 
+   * @return translated "Hurtioppslag på bok"
+   * @gwt.key menuitem_book_fast_search
+   */
+  String menuitem_book_fast_search();
 
   /**
    * Translated "Navn".
@@ -630,6 +718,22 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
    * @gwt.key book_year_published
    */
   String book_year_published();
+
+  /**
+   * Translated "Plasseringer".
+   * 
+   * @return translated "Plasseringer"
+   * @gwt.key menuitem_book_placements
+   */
+  String menuitem_book_placements();
+
+  /**
+   * Translated "Forleggere".
+   * 
+   * @return translated "Forleggere"
+   * @gwt.key menuitem_book_publishers
+   */
+  String menuitem_book_publishers();
 
   /**
    * Translated "Elements".

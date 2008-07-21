@@ -73,12 +73,35 @@ public class BokGWT implements EntryPoint {
 
 	private void setupMenu() {
 		MenuBar booksMenu = addTopMenu(topMenu, elements.menu_books());
+		MenuBar reportsMenu = addTopMenu(topMenu, elements.menu_reports());
 		MenuBar settingsMenu = addTopMenu(topMenu, elements.menu_settings());
 		MenuBar logoutMenu = addTopMenu(topMenu, elements.menu_logout());
 		MenuBar aboutMenu = addTopMenu(topMenu, elements.menu_info());
-
+		
+		addMenuItem(reportsMenu, elements.menuitem_report_all_books(),WidgetIds.REPORT_ALL_BOOKS);
+		addMenuItem(reportsMenu, elements.menuitem_report_books_author(), WidgetIds.REPORT_AUTHOR);
+		addMenuItem(reportsMenu, elements.menuitem_report_placement(), WidgetIds.REPORT_PLACEMENT);
+		addMenuItem(reportsMenu, elements.menuitem_report_top_author(), WidgetIds.REPORT_TOP_AUTHORS);
+		
 		addMenuItem(booksMenu, elements.menuitem_new_book(),
 				WidgetIds.REGISTER_BOOK);
+		addMenuItem(booksMenu, elements.menuitem_book_fast_search(),
+				WidgetIds.QUICK_SEARCH);
+		addMenuItem(booksMenu, elements.menuitem_book_search(),
+				WidgetIds.SEARCH_BOOKS);
+		booksMenu.addSeparator();
+		addMenuItem(booksMenu, elements.menuitem_book_people(),
+				WidgetIds.PEOPLE);
+		addMenuItem(booksMenu, elements.menuitem_book_placements(),
+				WidgetIds.PLACEMENTS);
+		addMenuItem(booksMenu, elements.menuitem_book_categories(),
+				WidgetIds.CATEGORIES);
+		addMenuItem(booksMenu, elements.menuitem_book_publishers(),
+				WidgetIds.PUBLISHERS);
+		addMenuItem(booksMenu, elements.menuitem_book_series(),
+				WidgetIds.SERIES);
+
+		
 		addMenuItem(settingsMenu, elements.menuitem_useradm(),
 				WidgetIds.EDIT_USERS);
 
@@ -174,8 +197,9 @@ public class BokGWT implements EntryPoint {
 				widget = LogoutView.getInstance(constants, messages, elements);
 				break;
 			case REGISTER_BOOK:
-				widget = BookEditView.getInstance(constants, messages, elements);
-				((BookEditView)widget).init();
+				widget = BookEditView
+						.getInstance(constants, messages, elements);
+				((BookEditView) widget).init();
 				break;
 			}
 
