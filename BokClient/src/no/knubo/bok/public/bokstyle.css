@@ -4,6 +4,12 @@
 }
 
 
+.pageheading {
+	font-weight: bold;
+	font-size: large;
+	margin-bottom:10px;
+}
+
 .header {
   font-weight: bold;
   color: #05143f;

@@ -80,6 +80,14 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String id();
 
   /**
+   * Translated "Hurtisøk etter bok".
+   * 
+   * @return translated "Hurtisøk etter bok"
+   * @gwt.key title_quick_search
+   */
+  String title_quick_search();
+
+  /**
    * Translated "Serie".
    * 
    * @return translated "Serie"
@@ -102,6 +110,14 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
    * @gwt.key alter_categories
    */
   String alter_categories();
+
+  /**
+   * Translated "Nullstill".
+   * 
+   * @return translated "Nullstill"
+   * @gwt.key clear
+   */
+  String clear();
 
   /**
    * Translated "ISBN".
@@ -472,9 +488,9 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String menu_info();
 
   /**
-   * Translated "Plassering per b�ker".
+   * Translated "Antall bøker per plassering ".
    * 
-   * @return translated "Plassering per b�ker"
+   * @return translated "Antall bøker per plassering "
    * @gwt.key menuitem_report_placement
    */
   String menuitem_report_placement();
@@ -536,9 +552,9 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String backup_error();
 
   /**
-   * Translated "Alle bøer".
+   * Translated "Alle bøker".
    * 
-   * @return translated "Alle bøer"
+   * @return translated "Alle bøker"
    * @gwt.key menuitem_report_all_books
    */
   String menuitem_report_all_books();
