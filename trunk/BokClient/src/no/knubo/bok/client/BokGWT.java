@@ -8,6 +8,7 @@ import no.knubo.bok.client.views.BookEditView;
 import no.knubo.bok.client.views.LogView;
 import no.knubo.bok.client.views.LoginView;
 import no.knubo.bok.client.views.LogoutView;
+import no.knubo.bok.client.views.QuickBookSearch;
 import no.knubo.bok.client.views.registers.UsersEditView;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -200,6 +201,9 @@ public class BokGWT implements EntryPoint {
 				widget = BookEditView
 						.getInstance(constants, messages, elements);
 				((BookEditView) widget).init();
+				break;
+			case QUICK_SEARCH:
+				widget = QuickBookSearch.getInstance(elements, constants, messages);
 				break;
 			}
 
