@@ -23,7 +23,7 @@ public class AuthResponder implements RequestCallback {
     private final ServerResponse callback;
     private final Messages messages;
     private final Logger logger;
-    
+
     private AuthResponder(Constants constants, Messages messages, ServerResponse callback) {
         this.constants = constants;
         this.messages = messages;
@@ -71,6 +71,12 @@ public class AuthResponder implements RequestCallback {
                 Window.alert(messages.no_server_response());
                 return;
             }
+
+            if (callback instanceof ServerResponsePlainText) {
+                ((ServerResponsePlainText) callback).plainText(data);
+                return;
+            }
+
             data = data.trim();
 
             JSONValue jsonValue = null;
@@ -94,8 +100,7 @@ public class AuthResponder implements RequestCallback {
         }
     }
 
-    public static void get(Constants constants, Messages messages, ServerResponse callback,
-            String url) {
+    public static void get(Constants constants, Messages messages, ServerResponse callback, String url) {
         RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, constants.baseurl() + url);
 
         try {
@@ -105,15 +110,24 @@ public class AuthResponder implements RequestCallback {
         }
     }
 
-    public static void post(Constants constants, Messages messages, ServerResponse callback,
-            StringBuffer parameters, String url) {
+    public static void getPlain(Constants constants, Messages messages, ServerResponse callback, String url) {
+        RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, constants.baseurl() + url);
+
+        try {
+            AuthResponder authResponder = new AuthResponder(constants, messages, callback);
+            builder.sendRequest("", authResponder);
+        } catch (RequestException e) {
+            Window.alert("Failed to send the request: " + e.getMessage());
+        }
+    }
+
+    public static void post(Constants constants, Messages messages, ServerResponse callback, StringBuffer parameters, String url) {
 
         RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, constants.baseurl() + url);
 
         try {
             builder.setHeader("Content-Type", "application/x-www-form-urlencoded");
-            builder.sendRequest(parameters.toString(), new AuthResponder(constants, messages,
-                    callback));
+            builder.sendRequest(parameters.toString(), new AuthResponder(constants, messages, callback));
         } catch (RequestException e) {
             Window.alert("Failed to send the request: " + e.getMessage());
         }

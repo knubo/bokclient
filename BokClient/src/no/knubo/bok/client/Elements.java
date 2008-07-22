@@ -680,6 +680,14 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String book_author();
 
   /**
+   * Translated "Søk etter bok".
+   * 
+   * @return translated "Søk etter bok"
+   * @gwt.key title_search
+   */
+  String title_search();
+
+  /**
    * Translated "Tabell:".
    * 
    * @return translated "Tabell:"

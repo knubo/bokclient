@@ -10,7 +10,7 @@
 	margin-bottom:10px;
 }
 
-.header {
+.header, .searchresult TH {
   font-weight: bold;
   color: #05143f;
   background-color: #b7c2c6;
@@ -68,6 +68,11 @@
   border-left-width: 1px
 }
 
+.searchresult {
+	border-collapse: collapse;
+	border-style: solid;
+	border-color: #000000;
+}	
 
 .logline {
  vertical-align:top;
