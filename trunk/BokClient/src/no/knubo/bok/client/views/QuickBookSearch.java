@@ -19,6 +19,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TextBox;
@@ -38,6 +39,7 @@ public class QuickBookSearch extends Composite implements Picked, ClickListener 
     private TextBoxBase isbnBox;
     private NamedButton newSearchButton;
     private FlexTable infoTable;
+    private Label infoLabel;
 
     public static QuickBookSearch getInstance(Elements elements, Constants constants, Messages messages) {
 
@@ -53,7 +55,7 @@ public class QuickBookSearch extends Composite implements Picked, ClickListener 
         this.messages = messages;
 
         DockPanel dp = new DockPanel();
-        
+
         Label header = new Label(elements.title_quick_search());
         header.addStyleName("pageheading");
         dp.add(header, DockPanel.NORTH);
@@ -67,7 +69,9 @@ public class QuickBookSearch extends Composite implements Picked, ClickListener 
         table.setText(2, 0, elements.book_isbn());
 
         bookNumber = new TextBoxWithErrorText("bookNumber");
+        bookNumber.getTextBox().addKeyboardListener(enterTriggerSearch());
         searchImage = ImageFactory.searchImage("searchBook");
+        searchImage.addClickListener(this);
         titleBox = new TextBox();
         titleSuggestBox = new SuggestBox(BookSuggestBuilder.createBookOracle(constants, messages, "title", this), titleBox);
         isbnBox = new TextBox();
@@ -104,10 +108,32 @@ public class QuickBookSearch extends Composite implements Picked, ClickListener 
         infoTable.setText(row++, 0, elements.book_placement());
         infoTable.setText(row++, 0, elements.book_illustrator());
 
+        infoLabel = new Label();
+
         dp.add(table, DockPanel.NORTH);
+        dp.add(infoLabel, DockPanel.NORTH);
         dp.add(infoTable, DockPanel.NORTH);
 
         initWidget(dp);
+    }
+
+    private KeyboardListener enterTriggerSearch() {
+        return new KeyboardListener() {
+
+            public void onKeyDown(Widget sender, char keyCode, int modifiers) {
+            }
+
+            public void onKeyPress(Widget sender, char keyCode, int modifiers) {
+
+                if (keyCode == KEY_ENTER) {
+                    getBookByBookNumber();
+                }
+            }
+
+            public void onKeyUp(Widget sender, char keyCode, int modifiers) {
+            }
+
+        };
     }
 
     public void idPicked(int id, String info) {
@@ -115,20 +141,21 @@ public class QuickBookSearch extends Composite implements Picked, ClickListener 
     }
 
     private void getBookInfo(int id) {
+        infoLabel.setText("");
         ServerResponse callback = new ServerResponse() {
 
             public void serverResponse(JSONValue responseObj) {
-                setBookInfo(responseObj);
-
+                JSONObject obj = responseObj.isObject();
+                setBookInfo(obj);
             }
 
         };
         AuthResponder.get(constants, messages, callback, "registers/books.php?action=getfull&id=" + id);
     }
 
-    void setBookInfo(JSONValue responseObj) {
+    void setBookInfo(JSONObject obj) {
+        infoLabel.setText("");
         int row = 0;
-        JSONObject obj = responseObj.isObject();
         infoTable.setText(row++, 1, Util.strSkipNull(obj.get("usernumber")));
         infoTable.setText(row++, 1, Util.strSkipNull(obj.get("ISBN")));
         infoTable.setText(row++, 1, Util.strSkipNull(obj.get("title")));
@@ -152,9 +179,30 @@ public class QuickBookSearch extends Composite implements Picked, ClickListener 
     }
 
     public void onClick(Widget sender) {
-        isbnBox.setText("");
-        titleSuggestBox.setText("");
-        isbnSuggestBox.setText("");
+        if (sender == newSearchButton) {
+            titleSuggestBox.setText("");
+            isbnSuggestBox.setText("");
+            bookNumber.setText("");
+        } else if (sender == searchImage) {
+            getBookByBookNumber();
+        }
+    }
+
+    private void getBookByBookNumber() {
+        ServerResponse callback = new ServerResponse() {
+
+            public void serverResponse(JSONValue responseObj) {
+                JSONObject object = responseObj.isObject();
+
+                if (object != null && object.containsKey("usernumber")) {
+                    setBookInfo(object);
+                } else {
+                    infoLabel.setText(messages.unknown_book_number());
+                }
+            }
+
+        };
+        AuthResponder.get(constants, messages, callback, "registers/books.php?action=getfull&userNumber=" + bookNumber.getText());
     }
 
 }
