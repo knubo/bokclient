@@ -5,6 +5,7 @@ import no.knubo.bok.client.misc.WidgetIds;
 import no.knubo.bok.client.views.AboutView;
 import no.knubo.bok.client.views.BackupView;
 import no.knubo.bok.client.views.BookEditView;
+import no.knubo.bok.client.views.BookSearchView;
 import no.knubo.bok.client.views.LogView;
 import no.knubo.bok.client.views.LoginView;
 import no.knubo.bok.client.views.LogoutView;
@@ -205,6 +206,9 @@ public class BokGWT implements EntryPoint {
 			case QUICK_SEARCH:
 				widget = QuickBookSearch.getInstance(elements, constants, messages);
 				break;
+			case SEARCH_BOOKS:
+			    widget = BookSearchView.getInstance(elements, constants, messages);
+                            break;
 			}
 
 			if (widget == null) {
