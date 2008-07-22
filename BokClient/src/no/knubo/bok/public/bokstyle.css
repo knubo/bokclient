@@ -77,6 +77,13 @@
 	border-collapse: collapse;
 	border-style: solid;
 	border-color: #000000;
+	background-color:#d7e2e6
+}
+
+.tableborder TD {
+	border-style: dotted;
+	border-width: 1px;
+	padding: 3px;
 }
 
 .nowrap {
