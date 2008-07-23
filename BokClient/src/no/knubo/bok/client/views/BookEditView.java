@@ -30,6 +30,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SuggestBox;
@@ -73,6 +74,8 @@ public class BookEditView extends Composite implements ClickListener {
     private int id;
     private Image isbnSearch;
     private final Elements elements;
+    private NamedButton deleteButton;
+    private Label header;
 
     public BookEditView(Messages messages, Constants constants, Elements elements) {
         this.messages = messages;
@@ -150,17 +153,21 @@ public class BookEditView extends Composite implements ClickListener {
 
         registerButton = new NamedButton("registerButton", elements.book_register_book());
         mainErrorLabel = new HTML();
-
+        deleteButton = new NamedButton("deleteButton", elements.delete());
         setTabIndex(registerButton);
         registerButton.addClickListener(this);
+        deleteButton.addClickListener(this);
 
-        table.setWidget(maxRow, 0, registerButton);
-        table.setWidget(maxRow, 1, mainErrorLabel);
-        table.getFlexCellFormatter().setColSpan(maxRow, 1, 7);
+        HorizontalPanel hp = new HorizontalPanel();
+        hp.add(registerButton);
+        hp.add(deleteButton);
+        hp.add(mainErrorLabel);
+        table.setWidget(maxRow, 0, hp);
+        table.getFlexCellFormatter().setColSpan(maxRow, 0, 8);
 
         DockPanel dp = new DockPanel();
 
-        Label header = new Label(elements.title_new_book());
+        header = new Label(elements.title_new_book());
         header.addStyleName("pageheading");
         dp.add(header, DockPanel.NORTH);
         dp.add(table, DockPanel.NORTH);
@@ -258,7 +265,9 @@ public class BookEditView extends Composite implements ClickListener {
         id = 0;
 
         registerButton.setText(elements.book_register_book());
+        header.setText(elements.title_new_book());
         bookNumber.setFocus(true);
+        deleteButton.setVisible(false);
     }
 
     public void onClick(Widget sender) {
@@ -337,6 +346,9 @@ public class BookEditView extends Composite implements ClickListener {
     public void init(int idToOpen) {
         id = idToOpen;
         registerButton.setText(elements.save());
+        header.setText(elements.title_change_book());
+        deleteButton.setVisible(true);
+        
         ServerResponse callback = new ServerResponse() {
 
             public void serverResponse(JSONValue responseObj) {

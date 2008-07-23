@@ -90,6 +90,7 @@ public abstract class GeneralSuggestBox implements ClickListener, Validateable {
             box.setEnabled(true);
             box.setText("");
             box.setFocus(true);
+            currentId = 0;
         }
     }
 
