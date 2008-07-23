@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-abstract class GeneralSuggestBox implements ClickListener, Validateable {
+public abstract class GeneralSuggestBox implements ClickListener, Validateable {
     protected final Constants constants;
     protected final Messages messages;
     protected final Elements elements;
@@ -93,6 +93,13 @@ abstract class GeneralSuggestBox implements ClickListener, Validateable {
         }
     }
 
+    public void setValue(String id, String info) {
+        if(id.length() == 0) {
+            return;
+        }
+        picked.idPicked(Integer.parseInt(id), info);
+    }
+    
     public int getCurrentId() {
         return currentId;
     }

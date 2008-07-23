@@ -12,6 +12,7 @@ import no.knubo.bok.client.misc.ImageFactory;
 import no.knubo.bok.client.misc.ServerResponse;
 import no.knubo.bok.client.misc.ServerResponseWithValidation;
 import no.knubo.bok.client.suggest.CategorySuggestBox;
+import no.knubo.bok.client.suggest.GeneralSuggestBox;
 import no.knubo.bok.client.suggest.PersonSuggestBox;
 import no.knubo.bok.client.suggest.PlacementSuggestBox;
 import no.knubo.bok.client.suggest.PublisherSuggestBox;
@@ -29,6 +30,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TextArea;
@@ -69,10 +71,13 @@ public class BookEditView extends Composite implements ClickListener {
     private HTML bookNumberErrorLabel;
     private HTML mainErrorLabel;
     private int id;
+    private Image isbnSearch;
+    private final Elements elements;
 
     public BookEditView(Messages messages, Constants constants, Elements elements) {
         this.messages = messages;
         this.constants = constants;
+        this.elements = elements;
 
         table = new FlexTable();
         table.setStyleName("edittable");
@@ -84,6 +89,10 @@ public class BookEditView extends Composite implements ClickListener {
 
         bookISBN = new TextBoxWithErrorText("bookISBN");
         bookISBN.setMaxLength(40);
+
+        isbnSearch = ImageFactory.searchImage("isbnSearch");
+        isbnSearch.addClickListener(this);
+
         bookErrorLabel = new HTML();
         bookTitle = new TextBoxWithErrorText("bookTitle", bookErrorLabel);
         bookTitle.setMaxLength(40);
@@ -114,7 +123,7 @@ public class BookEditView extends Composite implements ClickListener {
         row = 1;
         column = 0;
         addElement(elements.book_number() + "*", bookNumber, bookNumberErrorLabel);
-        addElement(elements.book_isbn(), bookISBN);
+        addElement(elements.book_isbn(), bookISBN, isbnSearch);
         addElement(elements.book_title() + "*", bookTitle, bookErrorLabel);
         addElement(elements.book_org_title(), bookOrgTitle);
         addElement(elements.book_subtitle(), bookSubtitle);
@@ -248,6 +257,7 @@ public class BookEditView extends Composite implements ClickListener {
         bookNumberErrorLabel.setText("");
         id = 0;
 
+        registerButton.setText(elements.book_register_book());
         bookNumber.setFocus(true);
     }
 
@@ -324,4 +334,46 @@ public class BookEditView extends Composite implements ClickListener {
         return sb;
     }
 
+    public void init(int idToOpen) {
+        id = idToOpen;
+        registerButton.setText(elements.save());
+        ServerResponse callback = new ServerResponse() {
+
+            public void serverResponse(JSONValue responseObj) {
+                JSONObject obj = responseObj.isObject();
+                
+                setText(bookNumber, obj, "usernumber");
+                setText(bookISBN, obj, "ISBN");
+                setText(bookTitle, obj, "title");
+                setText(bookOrgTitle, obj, "org_title");
+                setText(bookYearWritten, obj, "written_year");
+                setText(bookYearPublished, obj, "published_year");
+                setText(bookEdition, obj, "edition");
+                setText(bookImpression, obj, "impression");
+                setText(bookPrice, obj, "price");
+                setText(bookSeriesNmb, obj, "number_in_series");
+                
+                bookSubtitle.setText(Util.strSkipNull((obj.get("subtitle"))));
+                
+                setSuggest(categorySuggestBox, obj, "category_id", "category");
+                setSuggest(authorSuggestBox, obj, "author_id", "author");
+                setSuggest(coAuthorSuggestBox, obj, "coauthor_id", "coauthor");
+                setSuggest(editorSuggestBox, obj, "editor_id", "editor");
+                setSuggest(publisherSuggestBox, obj, "publisher_id", "publisher");
+                setSuggest(seriesSuggestBox, obj, "series_id","series");
+                setSuggest(placementSuggestBox, obj, "placement_id","placement");
+                setSuggest(placementSuggestBox, obj, "illustrator_id","illustrator");
+            }
+
+        };
+        AuthResponder.get(constants, messages, callback, "registers/books.php?action=getfull&id=" + id);
+    }
+
+    protected void setText(TextBoxWithErrorText textbox, JSONObject obj, String string) {
+        textbox.setText(Util.strSkipNull((obj.get(string))));        
+    }
+
+    protected void setSuggest(GeneralSuggestBox box, JSONObject obj, String string, String string2) {
+        box.setValue(Util.strSkipNull(obj.get(string)), Util.strSkipNull(obj.get(string2)));
+    }
 }

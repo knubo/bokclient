@@ -448,6 +448,14 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String title_new_book();
 
   /**
+   * Translated "Ny/endre person".
+   * 
+   * @return translated "Ny/endre person"
+   * @gwt.key title_edit_person
+   */
+  String title_edit_person();
+
+  /**
    * Translated "Skrevet år".
    * 
    * @return translated "Skrevet år"
