@@ -24,6 +24,14 @@ public interface Messages extends com.google.gwt.i18n.client.Messages {
   String illegal_month();
 
   /**
+   * Translated "Slett bok?".
+   * 
+   * @return translated "Slett bok?"
+   * @gwt.key delete_book_question
+   */
+  String delete_book_question();
+
+  /**
    * Translated "Ulovlig år".
    * 
    * @return translated "Ulovlig år"

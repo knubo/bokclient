@@ -98,6 +98,7 @@
 .gwt-Button { 
   font-weight: bold;
   background-color:#d7e2e6;
+  margin-left:5px;
 }
 
 .gwt-TextBox {

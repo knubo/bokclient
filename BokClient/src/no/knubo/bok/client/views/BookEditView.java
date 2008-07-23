@@ -25,6 +25,7 @@ import no.knubo.bok.client.validation.Validateable;
 
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockPanel;
@@ -273,7 +274,20 @@ public class BookEditView extends Composite implements ClickListener {
     public void onClick(Widget sender) {
         if (sender == registerButton && validate()) {
             save();
+        } else if(sender == deleteButton && Window.confirm(messages.delete_book_question())) {
+            delete();
         }
+    }
+
+    private void delete() {
+        ServerResponse callback = new ServerResponse() {
+
+            public void serverResponse(JSONValue responseObj) {
+                init();
+            }
+            
+        };
+        AuthResponder.get(constants, messages, callback , "registers/books.php?action=delete&id="+id);
     }
 
     private boolean validate() {
@@ -348,12 +362,12 @@ public class BookEditView extends Composite implements ClickListener {
         registerButton.setText(elements.save());
         header.setText(elements.title_change_book());
         deleteButton.setVisible(true);
-        
+
         ServerResponse callback = new ServerResponse() {
 
             public void serverResponse(JSONValue responseObj) {
                 JSONObject obj = responseObj.isObject();
-                
+
                 setText(bookNumber, obj, "usernumber");
                 setText(bookISBN, obj, "ISBN");
                 setText(bookTitle, obj, "title");
@@ -364,17 +378,17 @@ public class BookEditView extends Composite implements ClickListener {
                 setText(bookImpression, obj, "impression");
                 setText(bookPrice, obj, "price");
                 setText(bookSeriesNmb, obj, "number_in_series");
-                
+
                 bookSubtitle.setText(Util.strSkipNull((obj.get("subtitle"))));
-                
+
                 setSuggest(categorySuggestBox, obj, "category_id", "category");
                 setSuggest(authorSuggestBox, obj, "author_id", "author");
                 setSuggest(coAuthorSuggestBox, obj, "coauthor_id", "coauthor");
                 setSuggest(editorSuggestBox, obj, "editor_id", "editor");
                 setSuggest(publisherSuggestBox, obj, "publisher_id", "publisher");
-                setSuggest(seriesSuggestBox, obj, "series_id","series");
-                setSuggest(placementSuggestBox, obj, "placement_id","placement");
-                setSuggest(placementSuggestBox, obj, "illustrator_id","illustrator");
+                setSuggest(seriesSuggestBox, obj, "series_id", "series");
+                setSuggest(placementSuggestBox, obj, "placement_id", "placement");
+                setSuggest(placementSuggestBox, obj, "illustrator_id", "illustrator");
             }
 
         };
@@ -382,7 +396,7 @@ public class BookEditView extends Composite implements ClickListener {
     }
 
     protected void setText(TextBoxWithErrorText textbox, JSONObject obj, String string) {
-        textbox.setText(Util.strSkipNull((obj.get(string))));        
+        textbox.setText(Util.strSkipNull((obj.get(string))));
     }
 
     protected void setSuggest(GeneralSuggestBox box, JSONObject obj, String string, String string2) {
