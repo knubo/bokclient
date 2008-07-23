@@ -13,7 +13,11 @@ import no.knubo.bok.client.suggest.PublisherSuggestBox;
 import no.knubo.bok.client.suggest.SeriesSuggestBox;
 import no.knubo.bok.client.ui.NamedButton;
 
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.EventPreview;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockPanel;
@@ -25,7 +29,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.TextBoxBase;
 import com.google.gwt.user.client.ui.Widget;
 
-public class BookSearchView extends Composite implements ClickListener {
+public class BookSearchView extends Composite implements ClickListener, EventPreview {
 
     private static BookSearchView me;
     private Constants constants;
@@ -45,18 +49,21 @@ public class BookSearchView extends Composite implements ClickListener {
     private PersonSuggestBox illustratorSuggestbox;
     private PlacementSuggestBox placementSuggestbox;
     private TextBox yearWritten;
+    private Element previousElement;
+    private final ViewCallback viewCallback;
 
-    public static BookSearchView getInstance(Elements elements, Constants constants, Messages messages) {
+    public static BookSearchView getInstance(Elements elements, Constants constants, Messages messages, ViewCallback viewCallback) {
 
         if (me == null) {
-            me = new BookSearchView(elements, constants, messages);
+            me = new BookSearchView(elements, constants, messages, viewCallback);
         }
         return me;
     }
 
-    public BookSearchView(Elements elements, Constants constants, Messages messages) {
+    public BookSearchView(Elements elements, Constants constants, Messages messages, ViewCallback viewCallback) {
         this.constants = constants;
         this.messages = messages;
+        this.viewCallback = viewCallback;
 
         DockPanel dp = new DockPanel();
 
@@ -141,6 +148,8 @@ public class BookSearchView extends Composite implements ClickListener {
         dp.add(table, DockPanel.NORTH);
         dp.add(searchResultHTML, DockPanel.NORTH);
 
+        DOM.addEventPreview(this);
+
         initWidget(dp);
     }
 
@@ -169,10 +178,10 @@ public class BookSearchView extends Composite implements ClickListener {
         if (titleBox.getText().length() > 0) {
             Util.addPostParam(parameters, "title", titleBox.getText() + "%");
         }
-        if(isbnBox.getText().length() > 0) {
+        if (isbnBox.getText().length() > 0) {
             Util.addPostParam(parameters, "ISBN", isbnBox.getText() + "%");
         }
-        
+
         Util.addPostParam(parameters, "usernumber", bookNumber.getText());
         Util.addPostParam(parameters, "year_written", yearWritten.getText());
         Util.addPostParam(parameters, "author_id", authorSuggestBox.getId());
@@ -196,4 +205,37 @@ public class BookSearchView extends Composite implements ClickListener {
         AuthResponder.post(constants, messages, callback, parameters, "registers/books.php");
     }
 
+    public boolean onEventPreview(Event event) {
+
+        if (event.getTarget().getParentElement() != null && event.getTarget().getParentElement().getId().startsWith("row")) {
+            if (event.getType().equals("click")) {
+                String id = event.getTarget().getParentElement().getId().substring(3);
+                viewCallback.editBook(Integer.parseInt(id));
+            }
+
+            if (event.getType().equals("mousemove")) {
+                setStyle(event.getTarget().getParentElement());
+            }
+        }
+        return true;
+    }
+
+    private void setStyle(Element parentElement) {
+
+        if (previousElement != null) {
+            setColStyles(previousElement.getFirstChildElement(), "black");
+            previousElement.getStyle().setProperty("color", "black");
+        }
+
+        setColStyles(parentElement.getFirstChildElement(), "blue");
+
+        previousElement = parentElement;
+    }
+
+    private void setColStyles(Element element, String color) {
+        do {
+            element.getStyle().setProperty("color", color);
+            element = element.getNextSiblingElement();
+        } while (element != null);
+    }
 }
