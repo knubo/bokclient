@@ -12,12 +12,10 @@ import no.knubo.bok.client.suggest.PlacementSuggestBox;
 import no.knubo.bok.client.suggest.PublisherSuggestBox;
 import no.knubo.bok.client.suggest.SeriesSuggestBox;
 import no.knubo.bok.client.ui.NamedButton;
+import no.knubo.bok.client.ui.TableRowSelected;
+import no.knubo.bok.client.ui.TableUtils;
 
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.json.client.JSONValue;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.EventPreview;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockPanel;
@@ -29,7 +27,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.TextBoxBase;
 import com.google.gwt.user.client.ui.Widget;
 
-public class BookSearchView extends Composite implements ClickListener, EventPreview {
+public class BookSearchView extends Composite implements ClickListener, TableRowSelected {
 
     private static BookSearchView me;
     private Constants constants;
@@ -49,7 +47,6 @@ public class BookSearchView extends Composite implements ClickListener, EventPre
     private PersonSuggestBox illustratorSuggestbox;
     private PlacementSuggestBox placementSuggestbox;
     private TextBox yearWritten;
-    private Element previousElement;
     private final ViewCallback viewCallback;
 
     public static BookSearchView getInstance(Elements elements, Constants constants, Messages messages, ViewCallback viewCallback) {
@@ -148,8 +145,8 @@ public class BookSearchView extends Composite implements ClickListener, EventPre
         dp.add(table, DockPanel.NORTH);
         dp.add(searchResultHTML, DockPanel.NORTH);
 
-        DOM.addEventPreview(this);
-
+        TableUtils.addTableSelect(this);
+        
         initWidget(dp);
     }
 
@@ -205,37 +202,7 @@ public class BookSearchView extends Composite implements ClickListener, EventPre
         AuthResponder.post(constants, messages, callback, parameters, "registers/books.php");
     }
 
-    public boolean onEventPreview(Event event) {
-
-        if (event.getTarget().getParentElement() != null && event.getTarget().getParentElement().getId().startsWith("row")) {
-            if (event.getType().equals("click")) {
-                String id = event.getTarget().getParentElement().getId().substring(3);
-                viewCallback.editBook(Integer.parseInt(id));
-            }
-
-            if (event.getType().equals("mousemove")) {
-                setStyle(event.getTarget().getParentElement());
-            }
-        }
-        return true;
-    }
-
-    private void setStyle(Element parentElement) {
-
-        if (previousElement != null) {
-            setColStyles(previousElement.getFirstChildElement(), "black");
-            previousElement.getStyle().setProperty("color", "black");
-        }
-
-        setColStyles(parentElement.getFirstChildElement(), "blue");
-
-        previousElement = parentElement;
-    }
-
-    private void setColStyles(Element element, String color) {
-        do {
-            element.getStyle().setProperty("color", color);
-            element = element.getNextSiblingElement();
-        } while (element != null);
+    public void selected(String id) {
+        viewCallback.editBook(Integer.parseInt(id));        
     }
 }
