@@ -56,7 +56,7 @@ public class QuickBookSearch extends Composite implements Picked, ClickListener 
 
         DockPanel dp = new DockPanel();
 
-        Label header = new Label(elements.title_quick_search());
+        Label header = new Label(elements.menuitem_book_fast_search());
         header.addStyleName("pageheading");
         dp.add(header, DockPanel.NORTH);
 

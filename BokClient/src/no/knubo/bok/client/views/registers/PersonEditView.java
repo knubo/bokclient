@@ -83,6 +83,7 @@ public class PersonEditView extends Composite implements ClickListener, TableRow
 
         TableUtils.addTableSelect(this);
         initWidget(dp);
+        setTitle(elements.menuitem_book_people());
     }
 
     public void onClick(Widget sender) {

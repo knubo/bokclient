@@ -48,14 +48,6 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String book_impression();
 
   /**
-   * Translated "Hurtisøk etter bok".
-   * 
-   * @return translated "Hurtisøk etter bok"
-   * @gwt.key title_quick_search
-   */
-  String title_quick_search();
-
-  /**
    * Translated "Ny/Endre kategori".
    * 
    * @return translated "Ny/Endre kategori"
@@ -352,20 +344,20 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String name();
 
   /**
-   * Translated "Brukernavn".
-   * 
-   * @return translated "Brukernavn"
-   * @gwt.key user
-   */
-  String user();
-
-  /**
    * Translated "Aksjon".
    * 
    * @return translated "Aksjon"
    * @gwt.key action
    */
   String action();
+
+  /**
+   * Translated "Brukernavn".
+   * 
+   * @return translated "Brukernavn"
+   * @gwt.key user
+   */
+  String user();
 
   /**
    * Translated "Registrer bok".

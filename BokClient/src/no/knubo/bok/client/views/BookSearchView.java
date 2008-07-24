@@ -148,6 +148,7 @@ public class BookSearchView extends Composite implements ClickListener, TableRow
         TableUtils.addTableSelect(this);
         
         initWidget(dp);
+        setTitle(elements.title_search());
     }
 
     public void onClick(Widget sender) {
