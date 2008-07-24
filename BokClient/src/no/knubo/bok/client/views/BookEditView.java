@@ -25,6 +25,7 @@ import no.knubo.bok.client.validation.Validateable;
 
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
@@ -77,6 +78,7 @@ public class BookEditView extends Composite implements ClickListener {
     private final Elements elements;
     private NamedButton deleteButton;
     private Label header;
+    private NamedButton backButton;
 
     public BookEditView(Messages messages, Constants constants, Elements elements) {
         this.messages = messages;
@@ -155,13 +157,15 @@ public class BookEditView extends Composite implements ClickListener {
         registerButton = new NamedButton("registerButton", elements.book_register_book());
         mainErrorLabel = new HTML();
         deleteButton = new NamedButton("deleteButton", elements.delete());
+        backButton = new NamedButton("backButton", elements.back());
         setTabIndex(registerButton);
         registerButton.addClickListener(this);
         deleteButton.addClickListener(this);
-
+        backButton.addClickListener(this);
         HorizontalPanel hp = new HorizontalPanel();
         hp.add(registerButton);
         hp.add(deleteButton);
+        hp.add(backButton);
         hp.add(mainErrorLabel);
         table.setWidget(maxRow, 0, hp);
         table.getFlexCellFormatter().setColSpan(maxRow, 0, 8);
@@ -174,6 +178,7 @@ public class BookEditView extends Composite implements ClickListener {
         dp.add(table, DockPanel.NORTH);
 
         initWidget(dp);
+        setTitle(elements.title_new_book());
     }
 
     private FocusCallback fetchesUserNumber() {
@@ -267,8 +272,10 @@ public class BookEditView extends Composite implements ClickListener {
 
         registerButton.setText(elements.book_register_book());
         header.setText(elements.title_new_book());
+        setTitle(elements.title_new_book());
         bookNumber.setFocus(true);
         deleteButton.setVisible(false);
+        backButton.setVisible(false);
     }
 
     public void onClick(Widget sender) {
@@ -276,6 +283,8 @@ public class BookEditView extends Composite implements ClickListener {
             save();
         } else if(sender == deleteButton && Window.confirm(messages.delete_book_question())) {
             delete();
+        } else if(sender == backButton) {
+            History.back();
         }
     }
 
@@ -361,7 +370,9 @@ public class BookEditView extends Composite implements ClickListener {
         id = idToOpen;
         registerButton.setText(elements.save());
         header.setText(elements.title_change_book());
+        setTitle(elements.title_change_book());
         deleteButton.setVisible(true);
+        backButton.setVisible(true);
 
         ServerResponse callback = new ServerResponse() {
 

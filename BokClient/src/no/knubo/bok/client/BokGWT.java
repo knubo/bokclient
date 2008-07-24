@@ -18,6 +18,8 @@ import no.knubo.bok.client.views.registers.UsersEditView;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.HistoryListener;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
@@ -30,7 +32,7 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class BokGWT implements EntryPoint, ViewCallback {
+public class BokGWT implements EntryPoint, ViewCallback, HistoryListener {
 
     private DockPanel activeView;
     private static BokGWT meBook;
@@ -40,7 +42,6 @@ public class BokGWT implements EntryPoint, ViewCallback {
     private Messages messages;
     private Constants constants;
     private Elements elements;
-    private Widget activeWidget;
 
     /**
      * This is the entry point method.
@@ -72,8 +73,8 @@ public class BokGWT implements EntryPoint, ViewCallback {
         activeView.setStyleName("activeview");
         docPanel.add(activeView, DockPanel.CENTER);
 
-        new Commando(WidgetIds.ABOUT, elements.menuitem_about()).execute();
-
+        openWidget(WidgetIds.ABOUT, 0);
+        History.addHistoryListener(this);
         RootPanel.get().add(docPanel);
     }
 
@@ -106,8 +107,14 @@ public class BokGWT implements EntryPoint, ViewCallback {
 
     }
 
-    private void addMenuItem(MenuBar menu, String title, WidgetIds widgetId) {
-        menu.addItem(title, true, new Commando(widgetId, title));
+    private void addMenuItem(MenuBar menu, String title, final WidgetIds widgetId) {
+        menu.addItem(title, true, new Command() {
+
+            public void execute() {
+                History.newItem(widgetId.name());
+            }
+
+        });
     }
 
     private MenuBar addTopMenu(MenuBar topMenu, String header) {
@@ -140,7 +147,7 @@ public class BokGWT implements EntryPoint, ViewCallback {
 
     private void loginModeInt() {
         topMenu.setVisible(false);
-        new Commando(WidgetIds.LOGIN, elements.login()).execute();
+        openWidget(WidgetIds.LOGIN, 0);
     }
 
     public static void normalMode() {
@@ -149,89 +156,79 @@ public class BokGWT implements EntryPoint, ViewCallback {
 
     private void normalModeInt() {
         topMenu.setVisible(true);
-        new Commando(WidgetIds.ABOUT, elements.menuitem_about()).execute();
+        openWidget(WidgetIds.ABOUT, 0);
     }
 
-    class Commando implements Command {
+    void openWidget(WidgetIds action, int id) {
+        Widget widget = null;
 
-        WidgetIds action;
+        switch (action) {
+        case ABOUT:
+            widget = AboutView.getInstance(constants, messages, elements);
+            ((AboutView) widget).init();
+            break;
+        case BACKUP:
+            widget = BackupView.getInstance(constants, messages, elements);
+            ((BackupView) widget).init();
+            break;
+        case EDIT_USERS:
+            widget = UsersEditView.show(messages, constants, elements);
+            ((UsersEditView) widget).init();
+            break;
+        case LOGGING:
+            widget = LogView.show(messages, constants, elements);
+            ((LogView) widget).init();
+            break;
+        case LOGIN:
+            widget = LoginView.getInstance(elements, constants, messages);
+            ((LoginView) widget).init();
+            break;
+        case LOGOUT:
+            widget = LogoutView.getInstance(constants, messages, elements);
+            break;
+        case REGISTER_BOOK:
+            widget = BookEditView.getInstance(constants, messages, elements);
 
-        private String title;
-
-        Commando(WidgetIds action, String title) {
-            this.action = action;
-            this.title = title;
+            if (id > 0) {
+                ((BookEditView) widget).init(id);
+            } else {
+                ((BookEditView) widget).init();
+            }
+            break;
+        case QUICK_SEARCH:
+            widget = QuickBookSearch.getInstance(elements, constants, messages);
+            break;
+        case SEARCH_BOOKS:
+            widget = BookSearchView.getInstance(elements, constants, messages, meBook);
+            break;
+        case PEOPLE:
+            widget = PersonEditView.getInstance(elements, constants, messages);
+            break;
+        case PLACEMENTS:
+            widget = NamedEditView.getInstance("placements", elements, constants, messages);
+            break;
+        case PUBLISHERS:
+            widget = NamedEditView.getInstance("publishers", elements, constants, messages);
+            break;
+        case CATEGORIES:
+            widget = NamedEditView.getInstance("categories", elements, constants, messages);
+            break;
+        case SERIES:
+            widget = NamedEditView.getInstance("series", elements, constants, messages);
+            break;
         }
 
-        public void execute() {
-            Widget widget = null;
-
-            switch (action) {
-            case ABOUT:
-                widget = AboutView.getInstance(constants, messages, elements);
-                ((AboutView) widget).init();
-                break;
-            case BACKUP:
-                widget = BackupView.getInstance(constants, messages, elements);
-                ((BackupView) widget).init();
-                break;
-            case EDIT_USERS:
-                widget = UsersEditView.show(messages, constants, elements);
-                ((UsersEditView) widget).init();
-                break;
-            case LOGGING:
-                widget = LogView.show(messages, constants, elements);
-                ((LogView) widget).init();
-                break;
-            case LOGIN:
-                widget = LoginView.getInstance(elements, constants, messages);
-                ((LoginView) widget).init();
-                break;
-            case LOGOUT:
-                widget = LogoutView.getInstance(constants, messages, elements);
-                break;
-            case REGISTER_BOOK:
-                widget = BookEditView.getInstance(constants, messages, elements);
-                ((BookEditView) widget).init();
-                break;
-            case QUICK_SEARCH:
-                widget = QuickBookSearch.getInstance(elements, constants, messages);
-                break;
-            case SEARCH_BOOKS:
-                widget = BookSearchView.getInstance(elements, constants, messages, meBook);
-                break;
-            case PEOPLE:
-                widget = PersonEditView.getInstance(elements, constants, messages);
-                break;
-            case PLACEMENTS:
-                widget = NamedEditView.getInstance("placements", elements, constants, messages);
-                break;
-            case PUBLISHERS:
-                widget = NamedEditView.getInstance("publishers", elements, constants, messages);
-                break;
-            case CATEGORIES:
-                widget = NamedEditView.getInstance("categories", elements, constants, messages);
-                break;                
-            case SERIES:
-                widget = NamedEditView.getInstance("series", elements, constants, messages);
-                break;                
-            }
-
-            if (widget == null) {
-                Window.alert("No action");
-                return;
-            }
-            setActiveWidget(widget);
-            if (widget.getTitle() != null && widget.getTitle().length() > 0) {
-                Window.setTitle(widget.getTitle());
-            } else {
-                Window.setTitle(title);
-            }
+        if (widget == null) {
+            Window.alert("No action");
+            return;
+        }
+        setActiveWidget(widget);
+        if (widget.getTitle() != null && widget.getTitle().length() > 0) {
+            Window.setTitle(widget.getTitle());
         }
     }
 
     private void setActiveWidget(Widget widget) {
-        this.activeWidget = widget;
         activeView.clear();
         activeView.add(widget, DockPanel.CENTER);
         activeView.setCellHeight(widget, "100%");
@@ -240,8 +237,24 @@ public class BokGWT implements EntryPoint, ViewCallback {
     }
 
     public void editBook(int id) {
-        new Commando(WidgetIds.REGISTER_BOOK, elements.title_change_book()).execute();
-        ((BookEditView)activeWidget).init(id);
+        History.newItem(WidgetIds.REGISTER_BOOK.name() + "-" + id);
+    }
+
+    public void onHistoryChanged(String historyToken) {
+
+        if (historyToken == null || historyToken.equals("")) {
+            openWidget(WidgetIds.ABOUT, 0);
+            return;
+        }
+
+        int pos = historyToken.indexOf('-');
+
+        if (pos == -1) {
+            openWidget(WidgetIds.valueOf(historyToken), 0);
+        } else {
+            openWidget(WidgetIds.valueOf(historyToken.substring(0, pos)), Integer.parseInt(historyToken.substring(pos + 1)));
+        }
+
     }
 
 }
