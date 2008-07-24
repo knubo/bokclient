@@ -1,5 +1,7 @@
 package no.knubo.bok.client.views.registers;
 
+import java.util.HashMap;
+
 import no.knubo.bok.client.Constants;
 import no.knubo.bok.client.Elements;
 import no.knubo.bok.client.Messages;
@@ -12,7 +14,7 @@ import no.knubo.bok.client.ui.TableRowSelected;
 import no.knubo.bok.client.ui.TableUtils;
 import no.knubo.bok.client.ui.TextBoxWithErrorText;
 import no.knubo.bok.client.util.Picked;
-import no.knubo.bok.client.views.editors.PersonEditor;
+import no.knubo.bok.client.views.editors.NamedEditor;
 
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
@@ -25,27 +27,34 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class PersonEditView extends Composite implements ClickListener, TableRowSelected, Picked {
+public class NamedEditView extends Composite implements ClickListener, TableRowSelected, Picked {
 
-    private static PersonEditView me;
+    private static HashMap<String, NamedEditView> me = new HashMap<String, NamedEditView>();
     private Constants constants;
     private Messages messages;
-    private TextBoxWithErrorText firstName;
-    private TextBoxWithErrorText lastName;
+    private TextBoxWithErrorText name;
+    private TextBoxWithErrorText info;
     private NamedButton newSearchButton;
     private NamedButton searchButton;
     private HTML searchResult;
     private final Elements elements;
+    private final String type;
 
-    public static PersonEditView getInstance(Elements elements, Constants constants, Messages messages) {
+    public static NamedEditView getInstance(String type, Elements elements, Constants constants, Messages messages) {
 
-        if (me == null) {
-            me = new PersonEditView(elements, constants, messages);
+        NamedEditView instance = null;
+        if (!me.containsKey("type")) {
+            instance = new NamedEditView(type, elements, constants, messages);
+            me.put(type, instance);
+        } else {
+            instance = me.get(type);
         }
-        return me;
+
+        return instance;
     }
 
-    public PersonEditView(Elements elements, Constants constants, Messages messages) {
+    public NamedEditView(String type, Elements elements, Constants constants, Messages messages) {
+        this.type = type;
         this.elements = elements;
         this.constants = constants;
         this.messages = messages;
@@ -58,13 +67,17 @@ public class PersonEditView extends Composite implements ClickListener, TableRow
 
         FlexTable table = new FlexTable();
         table.addStyleName("edittable");
-        table.setText(0, 0, elements.person_firstname());
-        table.setText(1, 0, elements.person_lastname());
 
-        firstName = new TextBoxWithErrorText("firstName");
-        lastName = new TextBoxWithErrorText("lastName");
-        table.setWidget(0, 1, firstName);
-        table.setWidget(1, 1, lastName);
+        name = new TextBoxWithErrorText("name");
+        info = new TextBoxWithErrorText("info");
+
+        table.setText(0, 0, elements.getString(type));
+        table.setWidget(0, 1, name);
+
+        if (type.equals("placement")) {
+            table.setText(1, 0, elements.info());
+            table.setWidget(1, 1, info);
+        }
 
         newSearchButton = new NamedButton("newSearchButton", elements.clear());
         searchButton = new NamedButton("searchButton", elements.search());
@@ -89,8 +102,8 @@ public class PersonEditView extends Composite implements ClickListener, TableRow
         if (sender == searchButton) {
             doSearch();
         } else {
-            firstName.setText("");
-            lastName.setText("");
+            name.setText("");
+            info.setText("");
         }
     }
 
@@ -98,8 +111,7 @@ public class PersonEditView extends Composite implements ClickListener, TableRow
         StringBuffer parameters = new StringBuffer();
         parameters.append("action=detailedsearch");
 
-        Util.addPostParam(parameters, "firstname", firstName.getText());
-        Util.addPostParam(parameters, "lastname", lastName.getText());
+        Util.addPostParam(parameters, "search", name.getText());
 
         ServerResponsePlainText callback = new ServerResponsePlainText() {
 
@@ -111,13 +123,13 @@ public class PersonEditView extends Composite implements ClickListener, TableRow
             }
 
         };
-        AuthResponder.post(constants, messages, callback, parameters, "registers/people.php");
+        AuthResponder.post(constants, messages, callback, parameters, "registers/" + type + ".php");
     }
 
     public void selected(String id) {
-        PersonEditor personEditor = PersonEditor.getInstance(elements, constants, messages);
-        personEditor.setReceiver(this);
-        personEditor.idPicked(Integer.parseInt(id), null);
+        NamedEditor namedEditor = NamedEditor.getInstance(type, elements, constants, messages);
+        namedEditor.setReceiver(this);
+        namedEditor.idPicked(Integer.parseInt(id), null);
     }
 
     public void idPicked(final int id, String info) {
@@ -125,19 +137,19 @@ public class PersonEditView extends Composite implements ClickListener, TableRow
 
             public void serverResponse(JSONValue responseObj) {
                 JSONObject object = responseObj.isObject();
-                String firstNameStr = Util.str(object.get("firstname"));
-                String lastNameStr = Util.str(object.get("lastname"));
-                boolean author = Util.getBoolean(object.get("author"));
-                boolean illustrator = Util.getBoolean(object.get("illustrator"));
-                boolean editor = Util.getBoolean(object.get("editor"));
-                boolean translator = Util.getBoolean(object.get("translator"));
+                if (object.containsKey("info")) {
+                    String infoStr = Util.str(object.get("info"));
+                    String placement = Util.str(object.get("placement"));
+                    TableUtils.setTableText(id, placement, infoStr);
+                } else {
+                    String nameStr = Util.str(object.get("name"));
+                    TableUtils.setTableText(id, nameStr);
+                }
 
-                TableUtils.setTableText(id, firstNameStr, lastNameStr, author ? "f" : "", translator ? "o" : "", editor ? "r" : "", illustrator ? "i"
-                        : "");
             }
 
         };
-        AuthResponder.get(constants, messages, callback, "registers/people.php?action=get&id=" + id);
+        AuthResponder.get(constants, messages, callback, "registers/" + type + ".php?action=get&id=" + id);
 
     }
 }

@@ -11,6 +11,7 @@ import no.knubo.bok.client.views.LoginView;
 import no.knubo.bok.client.views.LogoutView;
 import no.knubo.bok.client.views.QuickBookSearch;
 import no.knubo.bok.client.views.ViewCallback;
+import no.knubo.bok.client.views.registers.NamedEditView;
 import no.knubo.bok.client.views.registers.PersonEditView;
 import no.knubo.bok.client.views.registers.UsersEditView;
 
@@ -201,6 +202,19 @@ public class BokGWT implements EntryPoint, ViewCallback {
                 break;
             case PEOPLE:
                 widget = PersonEditView.getInstance(elements, constants, messages);
+                break;
+            case PLACEMENTS:
+                widget = NamedEditView.getInstance("placements", elements, constants, messages);
+                break;
+            case PUBLISHERS:
+                widget = NamedEditView.getInstance("publishers", elements, constants, messages);
+                break;
+            case CATEGORIES:
+                widget = NamedEditView.getInstance("categories", elements, constants, messages);
+                break;                
+            case SERIES:
+                widget = NamedEditView.getInstance("series", elements, constants, messages);
+                break;                
             }
 
             if (widget == null) {

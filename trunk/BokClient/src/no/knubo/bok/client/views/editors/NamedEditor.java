@@ -32,187 +32,175 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class NamedEditor extends DialogBox implements ClickListener, Picked {
 
-	private static NamedEditor me;
-	private TextBoxWithErrorText nameBox;
-	private Picked receiver;
-	private NamedButton saveButton;
-	private NamedButton cancelButton;
-	private HTML mainErrorLabel;
-	private TextBox nameSearchBox;
-	private final Constants constants;
-	private final Messages messages;
-	private int id;
-	private final Elements elements;
-	private String type;
-	private FlexTable table;
-	private SuggestBox suggestBox;
-	private TextBoxWithErrorText infoBox;
+    private static NamedEditor me;
+    private TextBoxWithErrorText nameBox;
+    private Picked receiver;
+    private NamedButton saveButton;
+    private NamedButton cancelButton;
+    private HTML mainErrorLabel;
+    private TextBox nameSearchBox;
+    private final Constants constants;
+    private final Messages messages;
+    private int id;
+    private final Elements elements;
+    private String type;
+    private FlexTable table;
+    private SuggestBox suggestBox;
+    private TextBoxWithErrorText infoBox;
 
-	public static NamedEditor getInstance(String type, Elements elements,
-			Constants constants, Messages messages) {
-		if (me == null) {
-			me = new NamedEditor(elements, constants, messages);
-		}
+    public static NamedEditor getInstance(String type, Elements elements, Constants constants, Messages messages) {
+        if (me == null) {
+            me = new NamedEditor(elements, constants, messages);
+        }
 
-		me.init(type);
-		me.center();
-		me.nameSearchBox.setFocus(true);
-		return me;
-	}
+        me.init(type);
+        me.center();
+        me.nameSearchBox.setFocus(true);
+        return me;
+    }
 
-	private void init(String type) {
-		this.type = type;
-		id = 0;
-		nameBox.setText("");
-		setText(elements.getString("alter_" + type));
-		table.setText(1, 0, elements.getString(type));
+    private void init(String type) {
+        this.type = type;
+        id = 0;
+        nameBox.setText("");
+        setText(elements.getString("alter_" + type));
+        table.setText(1, 0, elements.getString(type));
 
-		nameSearchBox = new TextBox();
-		mainErrorLabel.setText("");
+        nameSearchBox = new TextBox();
+        mainErrorLabel.setText("");
 
-		if (type.equals("publishers")) {
-			suggestBox = new SuggestBox(PublisherSuggestBuilder
-					.createPublisherOracle(constants, messages, this),
-					nameSearchBox);
-		} else if (type.equals("placements")) {
-			suggestBox = new SuggestBox(PlacementSuggestBuilder
-					.createPlacementOracle(constants, messages, this),
-					nameSearchBox);
+        if (type.equals("publishers")) {
+            suggestBox = new SuggestBox(PublisherSuggestBuilder.createPublisherOracle(constants, messages, this), nameSearchBox);
+        } else if (type.equals("placements")) {
+            suggestBox = new SuggestBox(PlacementSuggestBuilder.createPlacementOracle(constants, messages, this), nameSearchBox);
 
-		} else if (type.equals("categories")) {
-			suggestBox = new SuggestBox(CategorySuggestBuilder
-					.createCategoryOracle(constants, messages, this),
-					nameSearchBox);
-		} else if (type.equals("series")) {
-			suggestBox = new SuggestBox(SeriesSuggestBuilder
-					.createSeriesOracle(constants, messages, this),
-					nameSearchBox);
-		} else {
-			throw new RuntimeException("Unexpected type:" + type);
-		}
+        } else if (type.equals("categories")) {
+            suggestBox = new SuggestBox(CategorySuggestBuilder.createCategoryOracle(constants, messages, this), nameSearchBox);
+        } else if (type.equals("series")) {
+            suggestBox = new SuggestBox(SeriesSuggestBuilder.createSeriesOracle(constants, messages, this), nameSearchBox);
+        } else {
+            throw new RuntimeException("Unexpected type:" + type);
+        }
 
-		table.setWidget(0, 1, suggestBox);
+        table.setWidget(0, 1, suggestBox);
 
-		if (!type.equals("placements") && table.getRowCount() > 2) {
-			table.removeRow(2);
-		} else if (table.getRowCount() == 2) {
-			table.setText(2, 0, elements.info());
-			table.setWidget(2, 1, infoBox);
-		} 
-		
-		if(type.equals("placements")) {
-			infoBox.setText("");
-		}
-	}
+        if (!type.equals("placements") && table.getRowCount() > 2) {
+            table.removeRow(2);
+        } else if (table.getRowCount() == 2) {
+            table.setText(2, 0, elements.info());
+            table.setWidget(2, 1, infoBox);
+        }
 
-	NamedEditor(Elements elements, Constants constants, Messages messages) {
-		this.elements = elements;
-		this.constants = constants;
-		this.messages = messages;
-		DockPanel dp = new DockPanel();
-		table = new FlexTable();
-		dp.add(table, DockPanel.NORTH);
-		table.setStyleName("edittable");
+        if (type.equals("placements")) {
+            infoBox.setText("");
+        }
+    }
 
-		nameBox = new TextBoxWithErrorText("name");
-		infoBox = new TextBoxWithErrorText("info");
+    NamedEditor(Elements elements, Constants constants, Messages messages) {
+        this.elements = elements;
+        this.constants = constants;
+        this.messages = messages;
+        DockPanel dp = new DockPanel();
+        table = new FlexTable();
+        dp.add(table, DockPanel.NORTH);
+        table.setStyleName("edittable");
 
-		table.setText(0, 0, elements.search());
-		table.setWidget(1, 1, nameBox);
+        nameBox = new TextBoxWithErrorText("name");
+        infoBox = new TextBoxWithErrorText("info");
 
-		saveButton = new NamedButton("save", elements.save());
-		saveButton.addClickListener(this);
-		cancelButton = new NamedButton("cancel", elements.cancel());
-		cancelButton.addClickListener(this);
+        table.setText(0, 0, elements.search());
+        table.setWidget(1, 1, nameBox);
 
-		mainErrorLabel = new HTML();
-		mainErrorLabel.setStyleName("error");
+        saveButton = new NamedButton("save", elements.save());
+        saveButton.addClickListener(this);
+        cancelButton = new NamedButton("cancel", elements.cancel());
+        cancelButton.addClickListener(this);
 
-		HorizontalPanel buttonPanel = new HorizontalPanel();
-		buttonPanel.add(saveButton);
-		buttonPanel.add(cancelButton);
-		buttonPanel.add(mainErrorLabel);
-		dp.add(buttonPanel, DockPanel.NORTH);
-		setWidget(dp);
+        mainErrorLabel = new HTML();
+        mainErrorLabel.setStyleName("error");
 
-	}
+        HorizontalPanel buttonPanel = new HorizontalPanel();
+        buttonPanel.add(saveButton);
+        buttonPanel.add(cancelButton);
+        buttonPanel.add(mainErrorLabel);
+        dp.add(buttonPanel, DockPanel.NORTH);
+        setWidget(dp);
 
-	public void setReceiver(Picked receiver) {
-		this.receiver = receiver;
+    }
 
-	}
+    public void setReceiver(Picked receiver) {
+        this.receiver = receiver;
 
-	public void onClick(Widget sender) {
-		if (sender == cancelButton) {
-			hide();
-			return;
-		}
-		if (sender == saveButton && validateSave()) {
-			save();
-		}
-	}
+    }
 
-	private boolean validateSave() {
-		MasterValidator mv = new MasterValidator();
-		Widget[] widgets = new Widget[] { nameBox };
-		mv.mandatory(messages.required_field(), widgets);
-		return mv.validateStatus();
-	}
+    public void onClick(Widget sender) {
+        if (sender == cancelButton) {
+            hide();
+            return;
+        }
+        if (sender == saveButton && validateSave()) {
+            save();
+        }
+    }
 
-	private void save() {
+    private boolean validateSave() {
+        MasterValidator mv = new MasterValidator();
+        Widget[] widgets = new Widget[] { nameBox };
+        mv.mandatory(messages.required_field(), widgets);
+        return mv.validateStatus();
+    }
 
-		StringBuffer params = new StringBuffer();
-		params.append("action=save");
-		Util.addPostParam(params, "id", String.valueOf(id));
+    private void save() {
 
-		if (type.equals("placements")) {
-			Util.addPostParam(params, "placement", nameBox.getText());
-			Util.addPostParam(params, "info", infoBox.getText());
-		} else {			
-			Util.addPostParam(params, "name", nameBox.getText());
-		}
+        StringBuffer params = new StringBuffer();
+        params.append("action=save");
+        Util.addPostParam(params, "id", String.valueOf(id));
 
-		ServerResponseWithValidation callback = new ServerResponseWithValidation() {
+        if (type.equals("placements")) {
+            Util.addPostParam(params, "placement", nameBox.getText());
+            Util.addPostParam(params, "info", infoBox.getText());
+        } else {
+            Util.addPostParam(params, "name", nameBox.getText());
+        }
 
-			public void serverResponse(JSONValue responseObj) {
-				JSONObject object = responseObj.isObject();
-				id = Util.getInt(object.get("id"));
-				String name = Util.str(object
-						.get(type.equals("placements") ? "placement" : "name"));
-				receiver.idPicked(id, name);
-				hide();
-			}
+        ServerResponseWithValidation callback = new ServerResponseWithValidation() {
 
-			public void validationError(List<String> fields) {
-				if (fields.contains("duplicate")) {
-					mainErrorLabel.setText(messages.duplicate());
-				}
-			}
+            public void serverResponse(JSONValue responseObj) {
+                JSONObject object = responseObj.isObject();
+                id = Util.getInt(object.get("id"));
+                String name = Util.str(object.get(type.equals("placements") ? "placement" : "name"));
+                receiver.idPicked(id, name);
+                hide();
+            }
 
-		};
+            public void validationError(List<String> fields) {
+                if (fields.contains("duplicate")) {
+                    mainErrorLabel.setText(messages.duplicate());
+                }
+            }
 
-		AuthResponder.post(constants, messages, callback, params, "registers/"
-				+ type + ".php");
+        };
 
-	}
+        AuthResponder.post(constants, messages, callback, params, "registers/" + type + ".php");
 
-	public void idPicked(int id, String info) {
-		this.id = id;
-		nameSearchBox.setEnabled(false);
+    }
 
-		ServerResponse callback = new ServerResponse() {
+    public void idPicked(int id, String info) {
+        this.id = id;
+        nameSearchBox.setEnabled(false);
 
-			public void serverResponse(JSONValue responseObj) {
-				JSONObject object = responseObj.isObject();
-				nameBox.setText(Util.str(object.get(type.equals("placements") ? "placement" : "name")));
+        ServerResponse callback = new ServerResponse() {
 
-				if (object.containsKey("info")) {
-					infoBox.setText(Util.str(object.get("info")));
-				}
-			}
+            public void serverResponse(JSONValue responseObj) {
+                JSONObject object = responseObj.isObject();
+                nameBox.setText(Util.str(object.get(type.equals("placements") ? "placement" : "name")));
 
-		};
-		AuthResponder.get(constants, messages, callback, "registers/" + type
-				+ ".php?action=get&id=" + id);
-	}
+                if (object.containsKey("info")) {
+                    infoBox.setText(Util.str(object.get("info")));
+                }
+            }
+
+        };
+        AuthResponder.get(constants, messages, callback, "registers/" + type + ".php?action=get&id=" + id);
+    }
 }
