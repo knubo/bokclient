@@ -10,6 +10,7 @@ import no.knubo.bok.client.views.LogView;
 import no.knubo.bok.client.views.LoginView;
 import no.knubo.bok.client.views.LogoutView;
 import no.knubo.bok.client.views.QuickBookSearch;
+import no.knubo.bok.client.views.ReportView;
 import no.knubo.bok.client.views.ViewCallback;
 import no.knubo.bok.client.views.registers.NamedEditView;
 import no.knubo.bok.client.views.registers.PersonEditView;
@@ -156,7 +157,7 @@ public class BokGWT implements EntryPoint, ViewCallback, HistoryListener {
 
     private void normalModeInt() {
         topMenu.setVisible(true);
-        openWidget(WidgetIds.ABOUT, 0);
+        History.newItem(WidgetIds.ABOUT.name());
     }
 
     void openWidget(WidgetIds action, int id) {
@@ -216,6 +217,15 @@ public class BokGWT implements EntryPoint, ViewCallback, HistoryListener {
         case SERIES:
             widget = NamedEditView.getInstance("series", elements, constants, messages);
             break;
+        case REPORT_PLACEMENT:
+            widget = ReportView.getInstance("registers/books.php?action=placementSummary", elements.menuitem_report_placement(), elements, constants,
+                    messages);
+            break;
+        case REPORT_TOP_AUTHORS:
+            widget = ReportView.getInstance("registers/books.php?action=top30authors", elements.menuitem_report_top_author(), elements, constants,
+                    messages);
+            break;
+
         }
 
         if (widget == null) {

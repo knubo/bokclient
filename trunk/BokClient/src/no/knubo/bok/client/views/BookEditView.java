@@ -367,6 +367,7 @@ public class BookEditView extends Composite implements ClickListener {
     }
 
     public void init(int idToOpen) {
+        init();
         id = idToOpen;
         registerButton.setText(elements.save());
         header.setText(elements.title_change_book());

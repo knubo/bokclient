@@ -10,7 +10,7 @@
 	margin-bottom:10px;
 }
 
-.header, .searchresult TH {
+.header, .searchresult TH, .report TH {
   font-weight: bold;
   color: #05143f;
   background-color: #b7c2c6;
@@ -68,7 +68,7 @@
   border-left-width: 1px
 }
 
-.searchresult {
+.searchresult,.report {
 	border-collapse: collapse;
 	border-style: solid;
 	border-color: #000000;

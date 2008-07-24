@@ -61,7 +61,7 @@ public class NamedEditView extends Composite implements ClickListener, TableRowS
 
         DockPanel dp = new DockPanel();
 
-        Label header = new Label(elements.menuitem_book_people());
+        Label header = new Label(elements.getString("menuitem_book_"+type));
         header.addStyleName("pageheading");
         dp.add(header, DockPanel.NORTH);
 
@@ -96,6 +96,7 @@ public class NamedEditView extends Composite implements ClickListener, TableRowS
 
         TableUtils.addTableSelect(this);
         initWidget(dp);
+        setTitle(elements.getString("menuitem_book_"+type));
     }
 
     public void onClick(Widget sender) {
