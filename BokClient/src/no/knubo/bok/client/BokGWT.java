@@ -11,6 +11,7 @@ import no.knubo.bok.client.views.LoginView;
 import no.knubo.bok.client.views.LogoutView;
 import no.knubo.bok.client.views.QuickBookSearch;
 import no.knubo.bok.client.views.ViewCallback;
+import no.knubo.bok.client.views.registers.PersonEditView;
 import no.knubo.bok.client.views.registers.UsersEditView;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -198,6 +199,8 @@ public class BokGWT implements EntryPoint, ViewCallback {
             case SEARCH_BOOKS:
                 widget = BookSearchView.getInstance(elements, constants, messages, meBook);
                 break;
+            case PEOPLE:
+                widget = PersonEditView.getInstance(elements, constants, messages);
             }
 
             if (widget == null) {
@@ -226,4 +229,5 @@ public class BokGWT implements EntryPoint, ViewCallback {
         new Commando(WidgetIds.REGISTER_BOOK, elements.title_change_book()).execute();
         ((BookEditView)activeWidget).init(id);
     }
+
 }

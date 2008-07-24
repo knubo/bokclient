@@ -74,6 +74,10 @@
 	border-color: #000000;
 }	
 
+#personsearch TR > TD+TD+TD {
+	text-align: center;
+}
+
 .logline {
  vertical-align:top;
 }
