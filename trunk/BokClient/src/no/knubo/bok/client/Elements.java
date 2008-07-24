@@ -168,20 +168,20 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String publishers();
 
   /**
-   * Translated "Starter sikkerhetskopiering".
-   * 
-   * @return translated "Starter sikkerhetskopiering"
-   * @gwt.key backup_init
-   */
-  String backup_init();
-
-  /**
    * Translated "Boknummer".
    * 
    * @return translated "Boknummer"
    * @gwt.key book_number
    */
   String book_number();
+
+  /**
+   * Translated "Starter sikkerhetskopiering".
+   * 
+   * @return translated "Starter sikkerhetskopiering"
+   * @gwt.key backup_init
+   */
+  String backup_init();
 
   /**
    * Translated "Bøker".
@@ -352,20 +352,20 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String name();
 
   /**
-   * Translated "Aksjon".
-   * 
-   * @return translated "Aksjon"
-   * @gwt.key action
-   */
-  String action();
-
-  /**
    * Translated "Brukernavn".
    * 
    * @return translated "Brukernavn"
    * @gwt.key user
    */
   String user();
+
+  /**
+   * Translated "Aksjon".
+   * 
+   * @return translated "Aksjon"
+   * @gwt.key action
+   */
+  String action();
 
   /**
    * Translated "Registrer bok".
@@ -454,6 +454,14 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
    * @gwt.key ClassName
    */
   String ClassName();
+
+  /**
+   * Translated "Antall bøker:".
+   * 
+   * @return translated "Antall bøker:"
+   * @gwt.key book_count
+   */
+  String book_count();
 
   /**
    * Translated "Logg".
@@ -576,20 +584,20 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String book_translator();
 
   /**
-   * Translated "Illustratør".
-   * 
-   * @return translated "Illustratør"
-   * @gwt.key book_illustrator
-   */
-  String book_illustrator();
-
-  /**
    * Translated "Ny bruker".
    * 
    * @return translated "Ny bruker"
    * @gwt.key userEditView_newButton
    */
   String userEditView_newButton();
+
+  /**
+   * Translated "Illustratør".
+   * 
+   * @return translated "Illustratør"
+   * @gwt.key book_illustrator
+   */
+  String book_illustrator();
 
   /**
    * Translated "Logg ut".
@@ -758,6 +766,14 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
    * @gwt.key title_search
    */
   String title_search();
+
+  /**
+   * Translated "Personer:".
+   * 
+   * @return translated "Personer:"
+   * @gwt.key book_person_info
+   */
+  String book_person_info();
 
   /**
    * Translated "Ny/Endre forlegger".
