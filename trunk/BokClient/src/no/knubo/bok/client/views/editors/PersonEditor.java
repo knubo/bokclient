@@ -46,6 +46,7 @@ public class PersonEditor extends DialogBox implements ClickListener, Picked {
     private final Constants constants;
     private final Messages messages;
     private int id;
+    private NamedCheckBox readByBox;
 
     public static PersonEditor getInstance(Elements elements, Constants constants, Messages messages) {
         if (me == null) {
@@ -69,6 +70,7 @@ public class PersonEditor extends DialogBox implements ClickListener, Picked {
         editorBox.setChecked(false);
         translatorBox.setChecked(false);
         illustratorBox.setChecked(false);
+        readByBox.setChecked(false);
     }
 
     PersonEditor(Elements elements, Constants constants, Messages messages) {
@@ -89,6 +91,7 @@ public class PersonEditor extends DialogBox implements ClickListener, Picked {
         editorBox = new NamedCheckBox("editorBox");
         translatorBox = new NamedCheckBox("translatorBox");
         illustratorBox = new NamedCheckBox("illustratorBox");
+        readByBox = new NamedCheckBox("readByBox");
 
         table.setText(0, 0, elements.search());
         table.setText(1, 0, elements.person_firstname());
@@ -97,6 +100,7 @@ public class PersonEditor extends DialogBox implements ClickListener, Picked {
         table.setText(4, 0, elements.book_editor());
         table.setText(5, 0, elements.book_translator());
         table.setText(6, 0, elements.book_illustrator());
+        table.setText(7, 0, elements.book_read_by());
 
         table.setWidget(0, 1, personSearch);
         table.setWidget(1, 1, firstName);
@@ -105,6 +109,7 @@ public class PersonEditor extends DialogBox implements ClickListener, Picked {
         table.setWidget(4, 1, editorBox);
         table.setWidget(5, 1, translatorBox);
         table.setWidget(6, 1, illustratorBox);
+        table.setWidget(7, 1, readByBox);
 
         saveButton = new NamedButton("savePerson", elements.save());
 
@@ -157,6 +162,7 @@ public class PersonEditor extends DialogBox implements ClickListener, Picked {
         Util.addPostParam(params, "editor", editorBox.getStrBool());
         Util.addPostParam(params, "translator", translatorBox.getStrBool());
         Util.addPostParam(params, "illustrator", illustratorBox.getStrBool());
+        Util.addPostParam(params, "reader", readByBox.getStrBool());
 
         ServerResponseWithValidation callback = new ServerResponseWithValidation() {
 
@@ -195,6 +201,7 @@ public class PersonEditor extends DialogBox implements ClickListener, Picked {
                 illustratorBox.setChecked(Util.getBoolean(object.get("illustrator")));
                 editorBox.setChecked(Util.getBoolean(object.get("editor")));
                 translatorBox.setChecked(Util.getBoolean(object.get("translator")));
+                readByBox.setChecked(Util.getBoolean(object.get("reader")));
             }
 
         };

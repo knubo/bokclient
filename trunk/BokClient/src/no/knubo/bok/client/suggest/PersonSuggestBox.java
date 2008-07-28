@@ -9,23 +9,18 @@ import com.google.gwt.user.client.ui.SuggestOracle;
 
 public class PersonSuggestBox extends GeneralSuggestBox {
 
-	public PersonSuggestBox(String type, Constants constants,
-			Messages messages, Elements elements) {
-		super(type, constants, messages, elements);
-	}
+    public PersonSuggestBox(String type, Constants constants, Messages messages, Elements elements) {
+        super(type, constants, messages, elements);
+    }
 
-	public void openEditor() {
-		PersonEditor personEditor = PersonEditor.getInstance(elements,
-				constants, messages);
-		personEditor.setReceiver(picked);
-	}
+    public void openEditor() {
+        PersonEditor personEditor = PersonEditor.getInstance(elements, constants, messages);
+        personEditor.setReceiver(picked);
+    }
 
-	@Override
-	public SuggestOracle getOracle() {
-		return PersonSuggestBuilder.createPeopleOracle(constants, messages,
-				type, picked);
-	}
-
-
+    @Override
+    public SuggestOracle getOracle() {
+        return PersonSuggestBuilder.createPeopleOracle(constants, messages, type, picked);
+    }
 
 }

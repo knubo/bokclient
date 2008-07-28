@@ -12,6 +12,7 @@ import no.knubo.bok.client.misc.ImageFactory;
 import no.knubo.bok.client.misc.ServerResponse;
 import no.knubo.bok.client.misc.ServerResponseWithValidation;
 import no.knubo.bok.client.suggest.CategorySuggestBox;
+import no.knubo.bok.client.suggest.CoAuthorSuggestBuilder;
 import no.knubo.bok.client.suggest.GeneralSuggestBox;
 import no.knubo.bok.client.suggest.PersonSuggestBox;
 import no.knubo.bok.client.suggest.PlacementSuggestBox;
@@ -63,7 +64,7 @@ public class BookEditView extends Composite implements ClickListener {
     private int maxRow;
     private NamedButton registerButton;
     private PersonSuggestBox authorSuggestBox;
-    private PersonSuggestBox coAuthorSuggestBox;
+    private PersonSuggestBox readBySuggestBox;
     private PersonSuggestBox editorSuggestBox;
     private PersonSuggestBox translatorSuggestBox;
     private PersonSuggestBox illustratorSuggestBox;
@@ -79,6 +80,8 @@ public class BookEditView extends Composite implements ClickListener {
     private NamedButton deleteButton;
     private Label header;
     private NamedButton backButton;
+    private SuggestBox coAuthorSuggestBox;
+    private TextBoxWithErrorText bookSubNumber;
 
     public BookEditView(Messages messages, Constants constants, Elements elements) {
         this.messages = messages;
@@ -92,6 +95,9 @@ public class BookEditView extends Composite implements ClickListener {
         bookNumber = new TextBoxWithErrorText("bookNumber", bookNumberErrorLabel);
         bookNumber.addFocusListener(fetchesUserNumber());
         bookNumber.setMaxLength(6);
+        bookSubNumber = new TextBoxWithErrorText("subbook");
+        bookSubNumber.setMaxLength(1);
+        bookSubNumber.setStyleName("letter");
 
         bookISBN = new TextBoxWithErrorText("bookISBN");
         bookISBN.setMaxLength(40);
@@ -106,11 +112,11 @@ public class BookEditView extends Composite implements ClickListener {
         bookOrgTitle.setMaxLength(40);
 
         authorSuggestBox = new PersonSuggestBox("A", constants, messages, elements);
-        coAuthorSuggestBox = new PersonSuggestBox("A", constants, messages, elements);
+        readBySuggestBox = new PersonSuggestBox("R", constants, messages, elements);
         editorSuggestBox = new PersonSuggestBox("E", constants, messages, elements);
         translatorSuggestBox = new PersonSuggestBox("T", constants, messages, elements);
         illustratorSuggestBox = new PersonSuggestBox("I", constants, messages, elements);
-
+        coAuthorSuggestBox = new SuggestBox(CoAuthorSuggestBuilder.createCoAuthorOracle(constants, messages));
         placementSuggestBox = new PlacementSuggestBox(constants, messages, elements);
         categorySuggestBox = new CategorySuggestBox(constants, messages, elements);
         publisherSuggestBox = new PublisherSuggestBox(constants, messages, elements);
@@ -128,14 +134,18 @@ public class BookEditView extends Composite implements ClickListener {
 
         row = 1;
         column = 0;
-        addElement(elements.book_number() + "*", bookNumber, bookNumberErrorLabel);
+        
+        HorizontalPanel hpBook = new HorizontalPanel();
+        hpBook.add(bookNumber);
+        hpBook.add(bookSubNumber);
+        addElement(elements.book_number() + "*", hpBook, bookNumberErrorLabel);
         addElement(elements.book_isbn(), bookISBN, isbnSearch);
         addElement(elements.book_title() + "*", bookTitle, bookErrorLabel);
         addElement(elements.book_org_title(), bookOrgTitle);
         addElement(elements.book_subtitle(), bookSubtitle);
         addElement(elements.category() + "*", categorySuggestBox.getSuggestBox(), categorySuggestBox.getImageContainer());
         addElement(elements.book_author() + "*", authorSuggestBox.getSuggestBox(), authorSuggestBox.getImageContainer());
-        addElement(elements.book_coauthor(), coAuthorSuggestBox.getSuggestBox(), coAuthorSuggestBox.getImageContainer());
+        addElement(elements.book_coauthor(), coAuthorSuggestBox);
         addElement(elements.book_editor(), editorSuggestBox.getSuggestBox(), editorSuggestBox.getImageContainer());
         addElement(elements.book_translator(), translatorSuggestBox.getSuggestBox(), translatorSuggestBox.getImageContainer());
         addElement(elements.book_publisher(), publisherSuggestBox.getSuggestBox(), publisherSuggestBox.getImageContainer());
@@ -153,6 +163,7 @@ public class BookEditView extends Composite implements ClickListener {
         addElement(elements.book_serie_nmb(), bookSeriesNmb);
         addElement(elements.book_placement(), placementSuggestBox.getSuggestBox(), placementSuggestBox.getImageContainer());
         addElement(elements.book_illustrator(), illustratorSuggestBox.getSuggestBox(), illustratorSuggestBox.getImageContainer());
+        addElement(elements.book_read_by(), readBySuggestBox.getSuggestBox(), readBySuggestBox.getImageContainer());
 
         registerButton = new NamedButton("registerButton", elements.book_register_book());
         mainErrorLabel = new HTML();
@@ -251,6 +262,7 @@ public class BookEditView extends Composite implements ClickListener {
         bookImpression.setText("");
         bookISBN.setText("");
         bookNumber.setText("");
+        bookSubNumber.setText("");
         bookOrgTitle.setText("");
         bookPrice.setText("");
         bookSeriesNmb.setText("");
@@ -263,7 +275,7 @@ public class BookEditView extends Composite implements ClickListener {
         placementSuggestBox.clear();
         publisherSuggestBox.clear();
         authorSuggestBox.clear();
-        coAuthorSuggestBox.clear();
+        readBySuggestBox.clear();
         translatorSuggestBox.clear();
         illustratorSuggestBox.clear();
         editorSuggestBox.clear();
@@ -343,12 +355,13 @@ public class BookEditView extends Composite implements ClickListener {
         sb.append("action=save");
         Util.addPostParam(sb, "id", String.valueOf(id));
         Util.addPostParam(sb, "usernumber", bookNumber.getText());
+        Util.addPostParam(sb, "subbook", bookSubNumber.getText());
         Util.addPostParam(sb, "title", bookTitle.getText());
         Util.addPostParam(sb, "subtitle", bookSubtitle.getText());
         Util.addPostParam(sb, "org_title", bookOrgTitle.getText());
         Util.addPostParam(sb, "ISBN", bookISBN.getText());
         Util.addPostParam(sb, "author_id", authorSuggestBox.getId());
-        Util.addPostParam(sb, "coauthor_id", coAuthorSuggestBox.getId());
+        Util.addPostParam(sb, "read_by_id", readBySuggestBox.getId());
         Util.addPostParam(sb, "illustrator_id", illustratorSuggestBox.getId());
         Util.addPostParam(sb, "translator_id", translatorSuggestBox.getId());
         Util.addPostParam(sb, "editor_id", editorSuggestBox.getId());
@@ -381,6 +394,7 @@ public class BookEditView extends Composite implements ClickListener {
                 JSONObject obj = responseObj.isObject();
 
                 setText(bookNumber, obj, "usernumber");
+                setText(bookSubNumber, obj, "subbook");
                 setText(bookISBN, obj, "ISBN");
                 setText(bookTitle, obj, "title");
                 setText(bookOrgTitle, obj, "org_title");
@@ -395,7 +409,7 @@ public class BookEditView extends Composite implements ClickListener {
 
                 setSuggest(categorySuggestBox, obj, "category_id", "category");
                 setSuggest(authorSuggestBox, obj, "author_id", "author");
-                setSuggest(coAuthorSuggestBox, obj, "coauthor_id", "coauthor");
+                setSuggest(readBySuggestBox, obj, "read_by_id", "readby");
                 setSuggest(editorSuggestBox, obj, "editor_id", "editor");
                 setSuggest(publisherSuggestBox, obj, "publisher_id", "publisher");
                 setSuggest(seriesSuggestBox, obj, "series_id", "series");
