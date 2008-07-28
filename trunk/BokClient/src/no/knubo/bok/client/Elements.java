@@ -40,9 +40,9 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String book_placement();
 
   /**
-   * Translated "Opplest av".
+   * Translated "Oppleser".
    * 
-   * @return translated "Opplest av"
+   * @return translated "Oppleser"
    * @gwt.key book_read_by
    */
   String book_read_by();
@@ -238,6 +238,14 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
    * @gwt.key menuitem_about
    */
   String menuitem_about();
+
+  /**
+   * Translated "Neste boknummer".
+   * 
+   * @return translated "Neste boknummer"
+   * @gwt.key book_next_user_number
+   */
+  String book_next_user_number();
 
   /**
    * Translated "Brukere".

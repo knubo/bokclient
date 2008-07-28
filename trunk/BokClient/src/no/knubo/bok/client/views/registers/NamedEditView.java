@@ -24,10 +24,11 @@ import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class NamedEditView extends Composite implements ClickListener, TableRowSelected, Picked {
+public class NamedEditView extends Composite implements ClickListener, TableRowSelected, Picked, KeyboardListener {
 
     private static HashMap<String, NamedEditView> me = new HashMap<String, NamedEditView>();
     private Constants constants;
@@ -69,8 +70,9 @@ public class NamedEditView extends Composite implements ClickListener, TableRowS
         table.addStyleName("edittable");
 
         name = new TextBoxWithErrorText("name");
+        name.getTextBox().addKeyboardListener(this);
         info = new TextBoxWithErrorText("info");
-
+        info.getTextBox().addKeyboardListener(this);
         table.setText(0, 0, elements.getString(type));
         table.setWidget(0, 1, name);
 
@@ -152,5 +154,18 @@ public class NamedEditView extends Composite implements ClickListener, TableRowS
         };
         AuthResponder.get(constants, messages, callback, "registers/" + type + ".php?action=get&id=" + id);
 
+    }
+
+    public void onKeyDown(Widget sender, char keyCode, int modifiers) {
+    }
+
+    public void onKeyPress(Widget sender, char keyCode, int modifiers) {
+        if (keyCode == KEY_ENTER) {
+            doSearch();
+        }
+        
+    }
+
+    public void onKeyUp(Widget sender, char keyCode, int modifiers) {
     }
 }

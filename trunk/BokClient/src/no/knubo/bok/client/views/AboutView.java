@@ -40,9 +40,10 @@ public class AboutView extends Composite {
         dp.add(table, DockPanel.NORTH);
 
         table.setText(0, 0, elements.book_count());
-        table.setText(1, 0, elements.book_person_info());
+        table.setText(1, 0, elements.book_next_user_number());
 
         initWidget(dp);
+        setTitle(elements.menuitem_about());
     }
 
     public static AboutView getInstance(Constants constants, Messages messages, Elements elements) {
@@ -53,13 +54,18 @@ public class AboutView extends Composite {
     }
 
     public void init() {
+        while(table.getRowCount() > 2) {
+            table.removeRow(2);
+        }
+        table.setText(2, 0, elements.book_person_info());
+        
         ServerResponse callback = new ServerResponse() {
 
             public void serverResponse(JSONValue responseObj) {
                 JSONObject object = responseObj.isObject();
 
                 table.setText(0, 1, Util.str(object.get("bookCount")));
-
+                table.setText(1, 1, Util.str(object.get("nextUserNumber")));
                 JSONArray arr = object.get("people").isArray();
 
                 for (int i = 0; i < arr.size(); i++) {
@@ -70,26 +76,30 @@ public class AboutView extends Composite {
                     sb.append(" som er ");
 
                     int count = (Util.getBoolean(one.get("author")) ? 1 : 0) + (Util.getBoolean(one.get("editor")) ? 1 : 0)
-                            + (Util.getBoolean(one.get("translator")) ? 1 : 0) + (Util.getBoolean(one.get("illustrator")) ? 1 : 0);
+                            + (Util.getBoolean(one.get("translator")) ? 1 : 0) + (Util.getBoolean(one.get("illustrator")) ? 1 : 0)
+                            + (Util.getBoolean(one.get("reader")) ? 1 : 0);
 
                     if (Util.getBoolean(one.get("author"))) {
                         sb.append(elements.book_author().toLowerCase());
-                        count--;
+                        addAndComma(sb, --count);
                     }
                     if (Util.getBoolean(one.get("editor"))) {
-                        addAndComma(sb, count--);
                         sb.append(elements.book_editor().toLowerCase());
+                        addAndComma(sb, --count);
                     }
                     if (Util.getBoolean(one.get("translator"))) {
-                        addAndComma(sb, count--);
                         sb.append(elements.book_translator().toLowerCase());
+                        addAndComma(sb, --count);
                     }
                     if (Util.getBoolean(one.get("illustrator"))) {
-                        addAndComma(sb, count--);
                         sb.append(elements.book_illustrator().toLowerCase());
+                        addAndComma(sb, --count);
+                    }
+                    if (Util.getBoolean(one.get("reader"))) {
+                        sb.append(elements.book_read_by().toLowerCase());
                     }
                     sb.append(".");
-                    table.setText(1 + i, 1, sb.toString());
+                    table.setText(2 + i, 1, sb.toString());
                 }
             }
         };
@@ -97,10 +107,10 @@ public class AboutView extends Composite {
     }
 
     protected void addAndComma(StringBuffer sb, int count) {
-        if(count >= 2) {
+        if (count > 1) {
             sb.append(", ");
         }
-        if(count == 1) {
+        if (count == 1) {
             sb.append(" og ");
         }
     }

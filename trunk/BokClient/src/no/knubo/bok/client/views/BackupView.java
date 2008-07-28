@@ -70,6 +70,7 @@ public class BackupView extends Composite implements ClickListener {
         dp.add(table, DockPanel.NORTH);
 
         initWidget(dp);
+        setTitle(elements.menuitem_backup());
     }
 
     public static BackupView getInstance(Constants constants, Messages messages,

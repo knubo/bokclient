@@ -51,6 +51,7 @@ public class LogView extends Composite {
         dp.add(table, DockPanel.NORTH);
 
         initWidget(dp);
+        setTitle(elements.menuitem_log());
     }
 
     public void init() {
