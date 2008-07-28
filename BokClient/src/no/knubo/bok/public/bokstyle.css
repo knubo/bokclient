@@ -99,6 +99,10 @@
   white-space:nowrap;
 }
 
+.letter {
+	width:1em;
+}
+
 .gwt-Button { 
   font-weight: bold;
   background-color:#d7e2e6;
@@ -106,7 +110,6 @@
 }
 
 .gwt-TextBox {
-  width:180px;
   font-weight: normal;
 }
 

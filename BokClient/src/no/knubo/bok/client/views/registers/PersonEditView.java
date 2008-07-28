@@ -132,9 +132,10 @@ public class PersonEditView extends Composite implements ClickListener, TableRow
                 boolean illustrator = Util.getBoolean(object.get("illustrator"));
                 boolean editor = Util.getBoolean(object.get("editor"));
                 boolean translator = Util.getBoolean(object.get("translator"));
+                boolean reader = Util.getBoolean(object.get("reader"));
 
                 TableUtils.setTableText(id, firstNameStr, lastNameStr, author ? "f" : "", translator ? "o" : "", editor ? "r" : "", illustrator ? "i"
-                        : "");
+                        : "", reader ? "l" : "");
             }
 
         };

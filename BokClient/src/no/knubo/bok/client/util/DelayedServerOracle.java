@@ -5,42 +5,42 @@ import com.google.gwt.user.client.ui.SuggestOracle;
 
 public abstract class DelayedServerOracle extends SuggestOracle {
 
-	protected Request currentRequest;
-	protected Callback currentCallback;
-	private Timer timer;
-	private int id;
+    protected Request currentRequest;
+    protected Callback currentCallback;
+    private Timer timer;
+    private int id;
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	@Override
-	public void requestSuggestions(Request request, Callback callback) {
-		this.currentRequest = request;
-		this.currentCallback = callback;
+    @Override
+    public void requestSuggestions(Request request, Callback callback) {
+        this.currentRequest = request;
+        this.currentCallback = callback;
 
-		startTimer();
-	}
+        startTimer();
+    }
 
-	abstract public void fetchSuggestions();
+    abstract public void fetchSuggestions();
 
-	private void startTimer() {
-		if (timer == null) {
-			timer = new Timer() {
+    private void startTimer() {
+        if (timer == null) {
+            timer = new Timer() {
 
-				@Override
-				public void run() {
-					fetchSuggestions();
-					timer = null;
-				}
+                @Override
+                public void run() {
+                    fetchSuggestions();
+                    timer = null;
+                }
 
-			};
-			timer.schedule(500);
-		}
-	}
+            };
+            timer.schedule(500);
+        }
+    }
 
 }

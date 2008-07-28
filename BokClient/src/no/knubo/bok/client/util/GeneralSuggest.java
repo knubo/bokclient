@@ -2,38 +2,32 @@ package no.knubo.bok.client.util;
 
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 
-public class GeneralSuggest implements Suggestion {
+public class GeneralSuggest extends SimpleSuggest implements Suggestion {
 
-	private final String display;
-	private final String replace;
-	private final int id;
-	private final Picked picked;
+    private final int id;
+    private final Picked picked;
 
-	public GeneralSuggest(String display, String replace, int id, Picked picked) {
-		this.display = display;
-		this.replace = replace;
-		this.id = id;
-		this.picked = picked;
+    public GeneralSuggest(String display, String replace, int id, Picked picked) {
+        super(display, replace);
+        this.id = id;
+        this.picked = picked;
 
-	}
+    }
 
-	public GeneralSuggest(String suggest, int id, Picked picked) {
-		this.display = suggest;
-		this.replace = suggest;
-		this.id = id;
-		this.picked = picked;
-	}
+    public GeneralSuggest(String suggest, int id, Picked picked) {
+        super(suggest, suggest);
+        this.id = id;
+        this.picked = picked;
+    }
 
-	public String getDisplayString() {
-		return display;
-	}
+    @Override
+    public String getReplacementString() {
+        String rep = super.getReplacementString();
+        if (picked != null) {
+            picked.idPicked(id, rep);
+        }
 
-	public String getReplacementString() {
-		if(picked != null) {
-			picked.idPicked(id, replace);
-		}
-		
-		return replace;
-	}
+        return rep;
+    }
 
 }

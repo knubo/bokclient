@@ -8,52 +8,48 @@ import no.knubo.bok.client.Util;
 import no.knubo.bok.client.misc.AuthResponder;
 import no.knubo.bok.client.misc.ServerResponse;
 import no.knubo.bok.client.util.DelayedServerOracle;
-import no.knubo.bok.client.util.GeneralSuggest;
-import no.knubo.bok.client.util.Picked;
+import no.knubo.bok.client.util.SimpleSuggest;
 
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.ui.SuggestOracle;
 
-public class PersonSuggestBuilder {
+public class CoAuthorSuggestBuilder {
 
-    public static SuggestOracle createPeopleOracle(final Constants constants, final Messages messages, final String type, final Picked picked) {
+    public static SuggestOracle createCoAuthorOracle(final Constants constants, final Messages messages) {
 
         return new DelayedServerOracle() {
 
             @Override
             public void fetchSuggestions() {
-                fetch(type, constants, messages, currentRequest, currentCallback, picked);
+                fetch(constants, messages, currentRequest, currentCallback);
             }
 
-            protected void fetch(String type, Constants constants, Messages messages, Request request, Callback callback, Picked picked) {
+            protected void fetch(Constants constants, Messages messages, Request request, Callback callback) {
                 StringBuffer sb = new StringBuffer();
                 sb.append("action=search");
                 Util.addPostParam(sb, "search", request.getQuery());
                 Util.addPostParam(sb, "limit", String.valueOf(request.getLimit()));
-                Util.addPostParam(sb, "type", type);
+                Util.addPostParam(sb, "type", "coauthor");
 
-                AuthResponder.post(constants, messages, requestCallback(callback, request, picked), sb, "registers/people.php");
+                AuthResponder.post(constants, messages, requestCallback(callback, request), sb, "registers/books.php");
             }
 
-            private ServerResponse requestCallback(final Callback callback, final Request suggestRequest, final Picked picked) {
+            private ServerResponse requestCallback(final Callback callback, final Request suggestRequest) {
                 return new ServerResponse() {
 
                     public void serverResponse(JSONValue responseObj) {
                         JSONArray array = responseObj.isArray();
-                        LinkedList<GeneralSuggest> res = new LinkedList<GeneralSuggest>();
+                        LinkedList<SimpleSuggest> res = new LinkedList<SimpleSuggest>();
 
                         for (int i = 0; i < array.size(); i++) {
                             JSONValue value = array.get(i);
 
                             JSONObject object = value.isObject();
 
-                            int id = Util.getInt(object.get("id"));
-                            String firstname = Util.str(object.get("firstname"));
-                            String lastname = Util.str(object.get("lastname"));
-                            String suggest = lastname + ", " + firstname;
-                            res.add(new GeneralSuggest(suggest, id, picked));
+                            String coauthor = Util.str(object.get("coauthor"));
+                            res.add(new SimpleSuggest(coauthor));
                         }
                         callback.onSuggestionsReady(suggestRequest, new Response(res));
                     }

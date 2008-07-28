@@ -40,6 +40,14 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String book_placement();
 
   /**
+   * Translated "Opplest av".
+   * 
+   * @return translated "Opplest av"
+   * @gwt.key book_read_by
+   */
+  String book_read_by();
+
+  /**
    * Translated "Opplag".
    * 
    * @return translated "Opplag"
@@ -344,20 +352,20 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String name();
 
   /**
-   * Translated "Aksjon".
-   * 
-   * @return translated "Aksjon"
-   * @gwt.key action
-   */
-  String action();
-
-  /**
    * Translated "Brukernavn".
    * 
    * @return translated "Brukernavn"
    * @gwt.key user
    */
   String user();
+
+  /**
+   * Translated "Aksjon".
+   * 
+   * @return translated "Aksjon"
+   * @gwt.key action
+   */
+  String action();
 
   /**
    * Translated "Registrer bok".

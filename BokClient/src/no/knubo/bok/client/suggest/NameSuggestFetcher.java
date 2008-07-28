@@ -18,41 +18,38 @@ import com.google.gwt.user.client.ui.SuggestOracle.Request;
 import com.google.gwt.user.client.ui.SuggestOracle.Response;
 
 final public class NameSuggestFetcher {
-	private NameSuggestFetcher() {
-		/* Empty */
-	}
+    private NameSuggestFetcher() {
+        /* Empty */
+    }
 
-	public static void fetch(Constants constants, Messages messages,
-			Request request, Callback callback, String registerType, Picked picked) {
-		StringBuffer sb = new StringBuffer();
-		sb.append("action=search");
-		Util.addPostParam(sb, "search", request.getQuery());
-		Util.addPostParam(sb, "limit", String.valueOf(request.getLimit()));
+    public static void fetch(Constants constants, Messages messages, Request request, Callback callback, String registerType, Picked picked) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("action=search");
+        Util.addPostParam(sb, "search", request.getQuery());
+        Util.addPostParam(sb, "limit", String.valueOf(request.getLimit()));
 
-		AuthResponder.post(constants, messages, requestCallback(callback,
-				request, picked), sb, "registers/" + registerType + ".php");
-	}
+        AuthResponder.post(constants, messages, requestCallback(callback, request, picked), sb, "registers/" + registerType + ".php");
+    }
 
-	private static ServerResponse requestCallback(final Callback callback,
-			final Request suggestRequest, final Picked picked) {
-		return new ServerResponse() {
+    private static ServerResponse requestCallback(final Callback callback, final Request suggestRequest, final Picked picked) {
+        return new ServerResponse() {
 
-			public void serverResponse(JSONValue responseObj) {
-				JSONArray array = responseObj.isArray();
-				LinkedList<GeneralSuggest> res = new LinkedList<GeneralSuggest>();
+            public void serverResponse(JSONValue responseObj) {
+                JSONArray array = responseObj.isArray();
+                LinkedList<GeneralSuggest> res = new LinkedList<GeneralSuggest>();
 
-				for (int i = 0; i < array.size(); i++) {
-					JSONValue value = array.get(i);
+                for (int i = 0; i < array.size(); i++) {
+                    JSONValue value = array.get(i);
 
-					JSONObject object = value.isObject();
+                    JSONObject object = value.isObject();
 
-					String category = Util.str(object.get("name"));
-					int id = Util.getInt(object.get("id"));
-					res.add(new GeneralSuggest(category, id, picked));
-				}
-				callback.onSuggestionsReady(suggestRequest, new Response(res));
-			}
+                    String category = Util.str(object.get("name"));
+                    int id = Util.getInt(object.get("id"));
+                    res.add(new GeneralSuggest(category, id, picked));
+                }
+                callback.onSuggestionsReady(suggestRequest, new Response(res));
+            }
 
-		};
-	}
+        };
+    }
 }

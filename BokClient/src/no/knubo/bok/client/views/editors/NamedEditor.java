@@ -86,7 +86,7 @@ public class NamedEditor extends DialogBox implements ClickListener, Picked {
 
         if (!type.equals("placements") && table.getRowCount() > 2) {
             table.removeRow(2);
-        } else if (table.getRowCount() == 2) {
+        } else if (table.getRowCount() == 2 && type.equals("placements")) {
             table.setText(2, 0, elements.info());
             table.setWidget(2, 1, infoBox);
         }
