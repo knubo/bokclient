@@ -10,6 +10,7 @@ import no.knubo.bok.client.misc.ServerResponse;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -22,6 +23,9 @@ public class AboutView extends Composite {
     private final Constants constants;
     private FlexTable table;
     private Elements elements;
+
+    /** This must match Version.php's version */
+    public static final String CLIENT_VERSION = "1.0";
 
     public AboutView(Messages messages, Constants constants, Elements elements) {
         this.messages = messages;
@@ -50,20 +54,22 @@ public class AboutView extends Composite {
         if (instance == null) {
             instance = new AboutView(messages, constants, elements);
         }
+
         return instance;
     }
 
     public void init() {
-        while(table.getRowCount() > 2) {
+        while (table.getRowCount() > 2) {
             table.removeRow(2);
         }
         table.setText(2, 0, elements.book_person_info());
-        
+
         ServerResponse callback = new ServerResponse() {
 
             public void serverResponse(JSONValue responseObj) {
                 JSONObject object = responseObj.isObject();
 
+                checkServerVersion(object);
                 table.setText(0, 1, Util.str(object.get("bookCount")));
                 table.setText(1, 1, Util.str(object.get("nextUserNumber")));
                 JSONArray arr = object.get("people").isArray();
@@ -114,4 +120,14 @@ public class AboutView extends Composite {
             sb.append(" og ");
         }
     }
+
+    private void checkServerVersion(JSONObject object) {
+
+        String serverVersion = Util.str(object.get("serverversion"));
+
+        if (!(CLIENT_VERSION.equals(serverVersion))) {
+            Window.alert(messages.version_mismatch(CLIENT_VERSION, serverVersion));
+        }
+    }
+
 }

@@ -268,7 +268,6 @@ public class BookEditView extends Composite implements ClickListener {
         bookImpression.setText("");
         bookISBN.setText("");
         bookNumber.setText("");
-        bookSubNumber.setText("");
         bookOrgTitle.setText("");
         bookPrice.setText("");
         bookSeriesNmb.setText("");
@@ -286,6 +285,8 @@ public class BookEditView extends Composite implements ClickListener {
         illustratorSuggestBox.clear();
         editorSuggestBox.clear();
         bookNumberErrorLabel.setText("");
+        coAuthorSuggestBox.setText("");
+        bookSubNumber.setText("");
         id = 0;
 
         registerButton.setText(elements.book_register_book());

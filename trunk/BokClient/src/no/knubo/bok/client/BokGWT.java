@@ -88,6 +88,7 @@ public class BokGWT implements EntryPoint, ViewCallback, HistoryListener {
 
         addMenuItem(reportsMenu, elements.menuitem_report_placement(), WidgetIds.REPORT_PLACEMENT);
         addMenuItem(reportsMenu, elements.menuitem_report_top_author(), WidgetIds.REPORT_TOP_AUTHORS);
+        addMenuItem(reportsMenu, elements.menuitem_report_no_placement(), WidgetIds.REPORT_NO_PLACEMENT);
 
         addMenuItem(booksMenu, elements.menuitem_new_book(), WidgetIds.REGISTER_BOOK);
         addMenuItem(booksMenu, elements.menuitem_book_fast_search(), WidgetIds.QUICK_SEARCH);
@@ -197,7 +198,7 @@ public class BokGWT implements EntryPoint, ViewCallback, HistoryListener {
             }
             break;
         case QUICK_SEARCH:
-            widget = QuickBookSearch.getInstance(elements, constants, messages);
+            widget = QuickBookSearch.getInstance(this, elements, constants, messages);
             break;
         case SEARCH_BOOKS:
             widget = BookSearchView.getInstance(elements, constants, messages, meBook);
@@ -224,6 +225,11 @@ public class BokGWT implements EntryPoint, ViewCallback, HistoryListener {
         case REPORT_TOP_AUTHORS:
             widget = ReportView.getInstance("registers/books.php?action=top30authors", elements.menuitem_report_top_author(), elements, constants,
                     messages);
+            break;
+        case REPORT_NO_PLACEMENT:
+            widget = ReportView.getInstance("registers/books.php?action=noplacement", elements.menuitem_report_no_placement(), elements, constants,
+                    messages);  
+            ((ReportView) widget).addBookLookup(this);
             break;
 
         }

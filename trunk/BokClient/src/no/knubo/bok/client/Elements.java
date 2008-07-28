@@ -328,14 +328,6 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String backup_zipping();
 
   /**
-   * Translated "Alle bøker".
-   * 
-   * @return translated "Alle bøker"
-   * @gwt.key menuitem_report_all_books
-   */
-  String menuitem_report_all_books();
-
-  /**
    * Translated "Logg ut".
    * 
    * @return translated "Logg ut"
@@ -502,6 +494,14 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
    * @gwt.key id
    */
   String id();
+
+  /**
+   * Translated "Bøker uten plassering".
+   * 
+   * @return translated "Bøker uten plassering"
+   * @gwt.key menuitem_report_no_placement
+   */
+  String menuitem_report_no_placement();
 
   /**
    * Translated "Serie".
