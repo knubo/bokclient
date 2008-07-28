@@ -18,6 +18,7 @@ import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
@@ -40,17 +41,21 @@ public class QuickBookSearch extends Composite implements Picked, ClickListener 
     private NamedButton newSearchButton;
     private FlexTable infoTable;
     private Label infoLabel;
+    private Image editImage;
+    private final ViewCallback viewCallback;
+    private int currentId;
 
-    public static QuickBookSearch getInstance(Elements elements, Constants constants, Messages messages) {
+    public static QuickBookSearch getInstance(ViewCallback viewCallback, Elements elements, Constants constants, Messages messages) {
 
         if (me == null) {
-            me = new QuickBookSearch(elements, constants, messages);
+            me = new QuickBookSearch(viewCallback, elements, constants, messages);
         }
         me.onClick(null);
         return me;
     }
 
-    public QuickBookSearch(Elements elements, Constants constants, Messages messages) {
+    public QuickBookSearch(ViewCallback viewCallback, Elements elements, Constants constants, Messages messages) {
+        this.viewCallback = viewCallback;
         this.constants = constants;
         this.messages = messages;
 
@@ -109,7 +114,9 @@ public class QuickBookSearch extends Composite implements Picked, ClickListener 
         infoTable.setText(row++, 0, elements.book_illustrator());
 
         infoLabel = new Label();
-
+        editImage = ImageFactory.editImage("editBook");
+        editImage.addClickListener(this);
+        infoTable.setWidget(0, 2, editImage);
         dp.add(table, DockPanel.NORTH);
         dp.add(infoLabel, DockPanel.NORTH);
         dp.add(infoTable, DockPanel.NORTH);
@@ -157,7 +164,8 @@ public class QuickBookSearch extends Composite implements Picked, ClickListener 
     void setBookInfo(JSONObject obj) {
         infoLabel.setText("");
         int row = 0;
-        infoTable.setText(row++, 1, Util.strSkipNull(obj.get("usernumber")));
+        currentId = Util.getInt(obj.get("id"));
+        infoTable.setText(row++, 1, Util.strSkipNull(obj.get("usernumber"))+Util.strSkipNull(obj.get("subbook")));
         infoTable.setText(row++, 1, Util.strSkipNull(obj.get("ISBN")));
         infoTable.setText(row++, 1, Util.strSkipNull(obj.get("title")));
         infoTable.setText(row++, 1, Util.strSkipNull(obj.get("org_title")));
@@ -177,6 +185,10 @@ public class QuickBookSearch extends Composite implements Picked, ClickListener 
         infoTable.setText(row++, 1, Util.strSkipNull(obj.get("number_in_series")));
         infoTable.setText(row++, 1, Util.strSkipNull(obj.get("placement")));
         infoTable.setText(row++, 1, Util.strSkipNull(obj.get("illustrator")));
+        
+        for(int i=1;i<row;i++) {
+            infoTable.getFlexCellFormatter().setColSpan(i, 1, 2);
+        }
     }
 
     public void onClick(Widget sender) {
@@ -186,6 +198,8 @@ public class QuickBookSearch extends Composite implements Picked, ClickListener 
             bookNumber.setText("");
         } else if (sender == searchImage) {
             getBookByBookNumber();
+        } else if (sender == editImage && currentId > 0) {
+            viewCallback.editBook(currentId);
         }
     }
 

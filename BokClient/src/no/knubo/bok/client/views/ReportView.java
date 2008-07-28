@@ -5,6 +5,8 @@ import no.knubo.bok.client.Elements;
 import no.knubo.bok.client.Messages;
 import no.knubo.bok.client.misc.AuthResponder;
 import no.knubo.bok.client.misc.ServerResponsePlainText;
+import no.knubo.bok.client.ui.TableRowSelected;
+import no.knubo.bok.client.ui.TableUtils;
 
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.ui.Composite;
@@ -32,6 +34,19 @@ public class ReportView extends Composite {
         me.init(report);
         me.setTitle(title);
         return me;
+    }
+
+    public void addBookLookup(final ViewCallback viewCallback) {
+
+        TableRowSelected lookup = new TableRowSelected() {
+
+            public void selected(String id) {
+                viewCallback.editBook(Integer.parseInt(id));
+
+            }
+
+        };
+        TableUtils.addTableSelect(lookup);
     }
 
     private void init(String report) {
