@@ -240,20 +240,20 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String menuitem_about();
 
   /**
-   * Translated "Neste boknummer".
-   * 
-   * @return translated "Neste boknummer"
-   * @gwt.key book_next_user_number
-   */
-  String book_next_user_number();
-
-  /**
    * Translated "Brukere".
    * 
    * @return translated "Brukere"
    * @gwt.key title_user_adm
    */
   String title_user_adm();
+
+  /**
+   * Translated "Neste boknummer".
+   * 
+   * @return translated "Neste boknummer"
+   * @gwt.key book_next_user_number
+   */
+  String book_next_user_number();
 
   /**
    * Translated "Sikkerhetskopi av database".
@@ -632,6 +632,14 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String book_edition();
 
   /**
+   * Translated "Antall bøker per kategori".
+   * 
+   * @return translated "Antall bøker per kategori"
+   * @gwt.key menuitem_report_book_category
+   */
+  String menuitem_report_book_category();
+
+  /**
    * Translated "Top 30 forfattere".
    * 
    * @return translated "Top 30 forfattere"
@@ -704,9 +712,9 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String backup_error();
 
   /**
-   * Translated "Hurtioppslag på bok".
+   * Translated "Hurtigoppslag på bok".
    * 
-   * @return translated "Hurtioppslag på bok"
+   * @return translated "Hurtigoppslag på bok"
    * @gwt.key menuitem_book_fast_search
    */
   String menuitem_book_fast_search();

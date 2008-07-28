@@ -156,6 +156,7 @@ public class BookSearchView extends Composite implements ClickListener, TableRow
             doSearch();
         } else {
             bookNumber.setText("");
+            categorySuggestBox.clear();
             publisherSuggestBox.clear();
             placementSuggestbox.clear();
             illustratorSuggestbox.clear();
@@ -184,6 +185,7 @@ public class BookSearchView extends Composite implements ClickListener, TableRow
         Util.addPostParam(parameters, "year_written", yearWritten.getText());
         Util.addPostParam(parameters, "author_id", authorSuggestBox.getId());
         Util.addPostParam(parameters, "editor_id", editorSuggestBox.getId());
+        Util.addPostParam(parameters, "category_id", categorySuggestBox.getId());
         Util.addPostParam(parameters, "translator_id", translatorSuggestBox.getId());
         Util.addPostParam(parameters, "illustrator_id", illustratorSuggestbox.getId());
         Util.addPostParam(parameters, "publisher_id", publisherSuggestBox.getId());
