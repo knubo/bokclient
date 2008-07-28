@@ -42,6 +42,7 @@ public class LogoutView extends Composite implements ClickListener, ServerRespon
         dp.add(logoutButton, DockPanel.NORTH);
 
         initWidget(dp);
+        setTitle(elements.logout());
     }
 
     public void onClick(Widget sender) {

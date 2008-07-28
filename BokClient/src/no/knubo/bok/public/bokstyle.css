@@ -3,34 +3,40 @@
 	margin-top: 50px;
 }
 
-
 .pageheading {
 	font-weight: bold;
 	font-size: large;
-	margin-bottom:10px;
+	margin-bottom: 10px;
 }
 
-.header, .searchresult TH, .report TH {
-  font-weight: bold;
-  color: #05143f;
-  background-color: #b7c2c6;
-  vertical-align:bottom;
-  PADDING:2px 2px 2px 2px;
-
-  border-style: solid; 
-  border-top-width: 0px; 
-  border-bottom-width: 1px; 
-  border-right-width: 0px; 
-  border-left-width: 0px
+.header,.searchresult TH,.report TH {
+	font-weight: bold;
+	color: #05143f;
+	background-color: #b7c2c6;
+	vertical-align: bottom;
+	PADDING: 2px 2px 2px 2px;
+	border-style: solid;
+	border-top-width: 0px;
+	border-bottom-width: 1px;
+	border-right-width: 0px;
+	border-left-width: 0px
 }
 
 .gwt-SuggestBox {
-  width:180px;
+	width: 180px;
 }
 
-.gwt-SuggestBoxPopup { background-color: #D7E2E6; }
-.gwt-SuggestBoxPopup .item {  }
-.gwt-SuggestBoxPopup .item-selected { background-color:#B7C2C6; }
+.gwt-SuggestBoxPopup {
+	background-color: #D7E2E6;
+}
+
+.gwt-SuggestBoxPopup .item {
+	
+}
+
+.gwt-SuggestBoxPopup .item-selected {
+	background-color: #B7C2C6;
+}
 
 .edittable {
 	border-style: solid;
@@ -51,42 +57,42 @@
 }
 
 .line1 TD {
-  background-color:#ecf1f3;
-  border-style: solid; 
-  border-top-width: 0px; 
-  border-bottom-width: 0px; 
-  border-right-width: 1px; 
-  border-left-width: 1px
+	background-color: #ecf1f3;
+	border-style: solid;
+	border-top-width: 0px;
+	border-bottom-width: 0px;
+	border-right-width: 1px;
+	border-left-width: 1px
 }
 
 .line2 TD {
-  background-color:#d7e2e6;
-  border-style: solid; 
-  border-top-width: 0px; 
-  border-bottom-width: 0px; 
-  border-right-width: 1px; 
-  border-left-width: 1px
+	background-color: #d7e2e6;
+	border-style: solid;
+	border-top-width: 0px;
+	border-bottom-width: 0px;
+	border-right-width: 1px;
+	border-left-width: 1px
 }
 
 .searchresult,.report {
 	border-collapse: collapse;
 	border-style: solid;
 	border-color: #000000;
-}	
+}
 
-#personsearch TR > TD+TD+TD {
+#personsearch TR>TD+TD+TD {
 	text-align: center;
 }
 
 .logline {
- vertical-align:top;
+	vertical-align: top;
 }
 
 .tableborder {
 	border-collapse: collapse;
 	border-style: solid;
 	border-color: #000000;
-	background-color:#d7e2e6
+	background-color: #d7e2e6
 }
 
 .tableborder TD {
@@ -96,83 +102,89 @@
 }
 
 .nowrap {
-  white-space:nowrap;
+	white-space: nowrap;
 }
 
 .letter {
-	width:1em;
+	width: 1em;
 }
 
-.gwt-Button { 
-  font-weight: bold;
-  background-color:#d7e2e6;
-  margin-left:5px;
+.gwt-Button {
+	font-weight: bold;
+	background-color: #d7e2e6;
+	margin-left: 5px;
+}
+
+#bookNumber {
+	width: 130px;
+}
+
+#subbook {
+	width: 30px;
 }
 
 .gwt-TextBox {
-  font-weight: normal;
+	font-weight: normal;
+	width: 180px;
 }
 
-.gwt-PasswordTextBox { 
-  font-weight: normal;
+.gwt-PasswordTextBox {
+	font-weight: normal;
 }
 
 .gwt-Label {
-  font-weight:bold;
-  vertical-align:bottom;
-  padding-right:3px;
-  padding-top:2px;
+	font-weight: bold;
+	vertical-align: bottom;
+	padding-right: 3px;
+	padding-top: 2px;
 }
 
-
-.gwt-ListBox { 
-  font-weight: normal;
+.gwt-ListBox {
+	font-weight: normal;
 }
+
 .gwt-MenuBar .gwt-MenuItem-selected {
-  background-color: #E8EEF7;
+	background-color: #E8EEF7;
 }
 
-.gwt-MenuBar, .gwt-MenuItem {
-  padding: 1px 4px 1px 4px;
-  background-color:#d7e2e6;
-  font-size: smaller;
-  cursor: pointer;
+.gwt-MenuBar,.gwt-MenuItem {
+	padding: 1px 4px 1px 4px;
+	background-color: #d7e2e6;
+	font-size: smaller;
+	cursor: pointer;
 }
 
 .gwt-DialogBox {
-  color: black;
-  background-color: white;
-  PADDING:3px 3px 3px 3px;
+	color: black;
+	background-color: white;
+	PADDING: 3px 3px 3px 3px;
 }
 
 .gwt-DialogBox .Caption {
-  color: #05143f;
-  background-color: #b7c2c6;
- }
-
+	color: #05143f;
+	background-color: #b7c2c6;
+}
 
 .gwt-TabBarItem {
-  padding: 4px 4px 4px 4px;
-  background-color:#d7e2e6;
-  border:1px dotted black;
-  cursor: pointer;
+	padding: 4px 4px 4px 4px;
+	background-color: #d7e2e6;
+	border: 1px dotted black;
+	cursor: pointer;
 }
 
 .gwt-TabBarItem-selected {
-  background-color: #E8EEF7;
-  border-top:3px solid black;
-  border-left:3px solid black;
-  border-right:3px solid black;
-  border-bottom:none;
+	background-color: #E8EEF7;
+	border-top: 3px solid black;
+	border-left: 3px solid black;
+	border-right: 3px solid black;
+	border-bottom: none;
 }
 
 .gwt-TabPanelBottom {
-  background-color: #E8EEF7;
-  border-left:2px solid black;
-  border-right:2px solid black;
-  border-bottom:2px solid black;
-  border-top:2px solid black;
-  padding:10px;
+	background-color: #E8EEF7;
+	border-left: 2px solid black;
+	border-right: 2px solid black;
+	border-bottom: 2px solid black;
+	border-top: 2px solid black;
+	padding: 10px;
 }
-
-

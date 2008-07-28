@@ -246,6 +246,12 @@ public class BookEditView extends Composite implements ClickListener {
         } else if (w instanceof TextArea) {
             TextArea ta = (TextArea) w;
             ta.setTabIndex(tabIndex++);
+        } else if(w instanceof HorizontalPanel) {
+            HorizontalPanel hp = ((HorizontalPanel)w);
+            
+            for(int i= 0; i < hp.getWidgetCount(); i++) {
+                setTabIndex(hp.getWidget(i));
+            }
         }
     }
 

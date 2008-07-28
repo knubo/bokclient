@@ -115,6 +115,7 @@ public class QuickBookSearch extends Composite implements Picked, ClickListener 
         dp.add(infoTable, DockPanel.NORTH);
 
         initWidget(dp);
+        setTitle(elements.menuitem_book_fast_search());
     }
 
     private KeyboardListener enterTriggerSearch() {
