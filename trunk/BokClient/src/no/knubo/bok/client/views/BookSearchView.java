@@ -92,6 +92,7 @@ public class BookSearchView extends Composite implements ClickListener, TableRow
         newSearchButton = new NamedButton("newSearchButton", elements.clear());
         searchButton = new NamedButton("searchButton", elements.search());
         searchButton.addClickListener(this);
+        searchButton.setAccessKey('s');
         newSearchButton.addClickListener(this);
         authorSuggestBox = new PersonSuggestBox("A", constants, messages, elements);
         authorSuggestBox.hideAddImage();

@@ -1,7 +1,7 @@
 #!/bin/sh
 APPDIR=`dirname $0`;
 
-GWT_ROOT='/Users/knuterikborgen/Documents/workspacephp/gwt-mac-0.0.2415'
+GWT_ROOT='/Users/knuterikborgen/Documents/workspacephp/gwt-mac-1.5.0'
 CP="$APPDIR/src:$APPDIR/bin:$GWT_ROOT/gwt-user.jar:$GWT_ROOT/gwt-dev-mac.jar"
 
 java -Xmx256M -XstartOnFirstThread -cp "$CP" com.google.gwt.dev.GWTCompiler -logLevel INFO -style PRETTY com.google.gwt.dev.GWTCompiler -out "$APPDIR/www" "$@" no.knubo.bok.BokGWT;
