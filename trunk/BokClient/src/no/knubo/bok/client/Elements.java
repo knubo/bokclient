@@ -56,6 +56,14 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String book_impression();
 
   /**
+   * Translated "Antall bøker per serie".
+   * 
+   * @return translated "Antall bøker per serie"
+   * @gwt.key menuitem_report_book_series
+   */
+  String menuitem_report_book_series();
+
+  /**
    * Translated "Ny/Endre kategori".
    * 
    * @return translated "Ny/Endre kategori"
