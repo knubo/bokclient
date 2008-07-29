@@ -86,10 +86,11 @@ public class BokGWT implements EntryPoint, ViewCallback, HistoryListener {
         MenuBar logoutMenu = addTopMenu(topMenu, elements.menu_logout());
         MenuBar aboutMenu = addTopMenu(topMenu, elements.menu_info());
 
-        addMenuItem(reportsMenu, elements.menuitem_report_placement(), WidgetIds.REPORT_PLACEMENT);
         addMenuItem(reportsMenu, elements.menuitem_report_top_author(), WidgetIds.REPORT_TOP_AUTHORS);
+        addMenuItem(reportsMenu, elements.menuitem_report_placement(), WidgetIds.REPORT_PLACEMENT);
         addMenuItem(reportsMenu, elements.menuitem_report_no_placement(), WidgetIds.REPORT_NO_PLACEMENT);
         addMenuItem(reportsMenu, elements.menuitem_report_book_category(), WidgetIds.REPORT_CATEGORY);
+        addMenuItem(reportsMenu, elements.menuitem_report_book_series(), WidgetIds.REPORT_SERIES);
 
         addMenuItem(booksMenu, elements.menuitem_new_book(), WidgetIds.REGISTER_BOOK);
         addMenuItem(booksMenu, elements.menuitem_book_fast_search(), WidgetIds.QUICK_SEARCH);
@@ -239,6 +240,10 @@ public class BokGWT implements EntryPoint, ViewCallback, HistoryListener {
             widget = ReportView.getInstance("registers/books.php?action=countByCategory", elements.menuitem_report_book_category(), elements, constants,
                     messages);  
             break;
+        case REPORT_SERIES:
+            widget = ReportView.getInstance("registers/books.php?action=countBySeries", elements.menuitem_report_book_series(), elements, constants,
+                    messages);  
+            break;            
             
         }
 

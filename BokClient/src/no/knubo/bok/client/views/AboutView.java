@@ -24,8 +24,8 @@ public class AboutView extends Composite {
     private FlexTable table;
     private Elements elements;
 
-    /** This must match Version.php's version */
-    public static final String CLIENT_VERSION = "1.0";
+    /** This must match Version.php's version. */
+    public static final String CLIENT_VERSION = "1.1";
 
     public AboutView(Messages messages, Constants constants, Elements elements) {
         this.messages = messages;
