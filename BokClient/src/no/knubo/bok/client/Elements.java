@@ -120,6 +120,14 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String backup_start();
 
   /**
+   * Translated "Se kildeside".
+   * 
+   * @return translated "Se kildeside"
+   * @gwt.key external_link
+   */
+  String external_link();
+
+  /**
    * Translated "Avbryt".
    * 
    * @return translated "Avbryt"
@@ -150,6 +158,14 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
    * @gwt.key search
    */
   String search();
+
+  /**
+   * Translated "Eksternt oppslag mot ISBN nummer".
+   * 
+   * @return translated "Eksternt oppslag mot ISBN nummer"
+   * @gwt.key external_isbn
+   */
+  String external_isbn();
 
   /**
    * Translated "Ny/endre bruker".
@@ -286,6 +302,14 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
    * @gwt.key book_year_written
    */
   String book_year_written();
+
+  /**
+   * Translated "Bibsys".
+   * 
+   * @return translated "Bibsys"
+   * @gwt.key external_bibsys
+   */
+  String external_bibsys();
 
   /**
    * Translated "Logg ut".
@@ -456,6 +480,14 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String menuitem_book_placements();
 
   /**
+   * Translated "Noter".
+   * 
+   * @return translated "Noter"
+   * @gwt.key external_note
+   */
+  String external_note();
+
+  /**
    * Translated "Elements".
    * 
    * @return translated "Elements"
@@ -486,6 +518,14 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
    * @gwt.key title_change_book
    */
   String title_change_book();
+
+  /**
+   * Translated "Bruk valgte felter".
+   * 
+   * @return translated "Bruk valgte felter"
+   * @gwt.key use
+   */
+  String use();
 
   /**
    * Translated "Ny/Endre person".

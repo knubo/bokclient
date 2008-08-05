@@ -1,5 +1,7 @@
 package no.knubo.bok.client.views;
 
+import java.util.List;
+
 import no.knubo.bok.client.Constants;
 import no.knubo.bok.client.Elements;
 import no.knubo.bok.client.Messages;
@@ -14,6 +16,7 @@ import no.knubo.bok.client.suggest.SeriesSuggestBox;
 import no.knubo.bok.client.ui.NamedButton;
 import no.knubo.bok.client.ui.TableRowSelected;
 import no.knubo.bok.client.ui.TableUtils;
+import no.knubo.bok.client.views.net.IsbnLookupView;
 
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -48,6 +51,7 @@ public class BookSearchView extends Composite implements ClickListener, TableRow
     private PlacementSuggestBox placementSuggestbox;
     private TextBox yearWritten;
     private final ViewCallback viewCallback;
+    private final Elements elements;
 
     public static BookSearchView getInstance(Elements elements, Constants constants, Messages messages, ViewCallback viewCallback) {
 
@@ -58,6 +62,7 @@ public class BookSearchView extends Composite implements ClickListener, TableRow
     }
 
     public BookSearchView(Elements elements, Constants constants, Messages messages, ViewCallback viewCallback) {
+        this.elements = elements;
         this.constants = constants;
         this.messages = messages;
         this.viewCallback = viewCallback;
@@ -146,7 +151,7 @@ public class BookSearchView extends Composite implements ClickListener, TableRow
         dp.add(table, DockPanel.NORTH);
         dp.add(searchResultHTML, DockPanel.NORTH);
 
-        TableUtils.addTableSelect(this);
+        TableUtils.addTableSelect(this, this);
         
         initWidget(dp);
         setTitle(elements.title_search());
@@ -208,5 +213,12 @@ public class BookSearchView extends Composite implements ClickListener, TableRow
 
     public void selected(String id) {
         viewCallback.editBook(Integer.parseInt(id));        
+    }
+
+    public void selectedWithShift(List<String> data) {
+        String isbn = data.get(2).trim();
+        if(isbn.length() > 0) {
+            IsbnLookupView.getInstance(isbn, null, elements, constants, messages);
+        }
     }
 }

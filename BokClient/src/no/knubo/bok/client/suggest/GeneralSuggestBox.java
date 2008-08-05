@@ -94,13 +94,22 @@ public abstract class GeneralSuggestBox implements ClickListener, Validateable {
         }
     }
 
+    public void setValue(int id, String info) {
+        if (id == 0) {
+            return;
+        }
+
+        picked.idPicked(id, info);
+
+    }
+
     public void setValue(String id, String info) {
-        if(id.length() == 0) {
+        if (id.length() == 0) {
             return;
         }
         picked.idPicked(Integer.parseInt(id), info);
     }
-    
+
     public int getCurrentId() {
         return currentId;
     }

@@ -1,5 +1,7 @@
 package no.knubo.bok.client.views.registers;
 
+import java.util.List;
+
 import no.knubo.bok.client.Constants;
 import no.knubo.bok.client.Elements;
 import no.knubo.bok.client.Messages;
@@ -84,7 +86,7 @@ public class PersonEditView extends Composite implements ClickListener, TableRow
         searchResult = new HTML();
         dp.add(searchResult, DockPanel.NORTH);
 
-        TableUtils.addTableSelect(this);
+        TableUtils.addTableSelect(this, this);
         initWidget(dp);
         setTitle(elements.menuitem_book_people());
     }
@@ -156,5 +158,9 @@ public class PersonEditView extends Composite implements ClickListener, TableRow
     }
 
     public void onKeyUp(Widget sender, char keyCode, int modifiers) {
+    }
+
+    public void selectedWithShift(List<String> data) {
+        
     }
 }

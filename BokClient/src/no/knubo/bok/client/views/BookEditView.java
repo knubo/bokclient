@@ -11,6 +11,8 @@ import no.knubo.bok.client.misc.FocusCallback;
 import no.knubo.bok.client.misc.ImageFactory;
 import no.knubo.bok.client.misc.ServerResponse;
 import no.knubo.bok.client.misc.ServerResponseWithValidation;
+import no.knubo.bok.client.model.Book;
+import no.knubo.bok.client.model.BookInfo;
 import no.knubo.bok.client.suggest.CategorySuggestBox;
 import no.knubo.bok.client.suggest.CoAuthorSuggestBuilder;
 import no.knubo.bok.client.suggest.GeneralSuggestBox;
@@ -23,6 +25,7 @@ import no.knubo.bok.client.ui.NamedButton;
 import no.knubo.bok.client.ui.TextBoxWithErrorText;
 import no.knubo.bok.client.validation.MasterValidator;
 import no.knubo.bok.client.validation.Validateable;
+import no.knubo.bok.client.views.net.IsbnLookupView;
 
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
@@ -40,7 +43,7 @@ import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 
-public class BookEditView extends Composite implements ClickListener {
+public class BookEditView extends Composite implements ClickListener, BookInfo {
 
     private static BookEditView instance;
     private final Messages messages;
@@ -134,7 +137,7 @@ public class BookEditView extends Composite implements ClickListener {
 
         row = 1;
         column = 0;
-        
+
         HorizontalPanel hpBook = new HorizontalPanel();
         hpBook.add(bookNumber);
         hpBook.add(bookSubNumber);
@@ -246,10 +249,10 @@ public class BookEditView extends Composite implements ClickListener {
         } else if (w instanceof TextArea) {
             TextArea ta = (TextArea) w;
             ta.setTabIndex(tabIndex++);
-        } else if(w instanceof HorizontalPanel) {
-            HorizontalPanel hp = ((HorizontalPanel)w);
-            
-            for(int i= 0; i < hp.getWidgetCount(); i++) {
+        } else if (w instanceof HorizontalPanel) {
+            HorizontalPanel hp = ((HorizontalPanel) w);
+
+            for (int i = 0; i < hp.getWidgetCount(); i++) {
                 setTabIndex(hp.getWidget(i));
             }
         }
@@ -300,10 +303,12 @@ public class BookEditView extends Composite implements ClickListener {
     public void onClick(Widget sender) {
         if (sender == registerButton && validate()) {
             save();
-        } else if(sender == deleteButton && Window.confirm(messages.delete_book_question())) {
+        } else if (sender == deleteButton && Window.confirm(messages.delete_book_question())) {
             delete();
-        } else if(sender == backButton) {
+        } else if (sender == backButton) {
             History.back();
+        } else if (sender == isbnSearch) {
+            IsbnLookupView.getInstance(bookISBN.getText(), this, elements, constants, messages);
         }
     }
 
@@ -313,9 +318,9 @@ public class BookEditView extends Composite implements ClickListener {
             public void serverResponse(JSONValue responseObj) {
                 init();
             }
-            
+
         };
-        AuthResponder.get(constants, messages, callback , "registers/books.php?action=delete&id="+id);
+        AuthResponder.get(constants, messages, callback, "registers/books.php?action=delete&id=" + id);
     }
 
     private boolean validate() {
@@ -434,5 +439,20 @@ public class BookEditView extends Composite implements ClickListener {
 
     protected void setSuggest(GeneralSuggestBox box, JSONObject obj, String string, String string2) {
         box.setValue(Util.strSkipNull(obj.get(string)), Util.strSkipNull(obj.get(string2)));
+    }
+
+    public void setBookInfo(Book book) {
+        if(book.getTitle() != null) {
+            bookTitle.setText(book.getTitle());            
+        }
+        if (book.getAuthorId() > 0) {
+            authorSuggestBox.setValue(book.getAuthorId(), book.getAuthor());
+        }
+        if(book.getPublisherId() > 0) {
+            publisherSuggestBox.setValue(book.getPublisherId(), book.getPublisher());
+        }
+        if(book.getWrittenYear() > 0) {
+            bookYearWritten.setText(String.valueOf(book.getWrittenYear()));
+        }
     }
 }

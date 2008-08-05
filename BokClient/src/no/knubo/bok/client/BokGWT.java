@@ -2,6 +2,7 @@ package no.knubo.bok.client;
 
 import no.knubo.bok.client.misc.ImageFactory;
 import no.knubo.bok.client.misc.WidgetIds;
+import no.knubo.bok.client.ui.TableUtils;
 import no.knubo.bok.client.views.AboutView;
 import no.knubo.bok.client.views.BackupView;
 import no.knubo.bok.client.views.BookEditView;
@@ -258,6 +259,7 @@ public class BokGWT implements EntryPoint, ViewCallback, HistoryListener {
     }
 
     private void setActiveWidget(Widget widget) {
+        TableUtils.getAsListener().changedTo(widget);
         activeView.clear();
         activeView.add(widget, DockPanel.CENTER);
         activeView.setCellHeight(widget, "100%");
