@@ -1,6 +1,7 @@
 package no.knubo.bok.client.views.registers;
 
 import java.util.HashMap;
+import java.util.List;
 
 import no.knubo.bok.client.Constants;
 import no.knubo.bok.client.Elements;
@@ -62,7 +63,7 @@ public class NamedEditView extends Composite implements ClickListener, TableRowS
 
         DockPanel dp = new DockPanel();
 
-        Label header = new Label(elements.getString("menuitem_book_"+type));
+        Label header = new Label(elements.getString("menuitem_book_" + type));
         header.addStyleName("pageheading");
         dp.add(header, DockPanel.NORTH);
 
@@ -96,9 +97,9 @@ public class NamedEditView extends Composite implements ClickListener, TableRowS
         searchResult = new HTML();
         dp.add(searchResult, DockPanel.NORTH);
 
-        TableUtils.addTableSelect(this);
+        TableUtils.addTableSelect(this, this);
         initWidget(dp);
-        setTitle(elements.getString("menuitem_book_"+type));
+        setTitle(elements.getString("menuitem_book_" + type));
     }
 
     public void onClick(Widget sender) {
@@ -163,9 +164,12 @@ public class NamedEditView extends Composite implements ClickListener, TableRowS
         if (keyCode == KEY_ENTER) {
             doSearch();
         }
-        
+
     }
 
     public void onKeyUp(Widget sender, char keyCode, int modifiers) {
+    }
+
+    public void selectedWithShift(List<String> data) {
     }
 }

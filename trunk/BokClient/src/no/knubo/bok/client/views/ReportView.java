@@ -1,5 +1,7 @@
 package no.knubo.bok.client.views;
 
+import java.util.List;
+
 import no.knubo.bok.client.Constants;
 import no.knubo.bok.client.Elements;
 import no.knubo.bok.client.Messages;
@@ -45,8 +47,12 @@ public class ReportView extends Composite {
 
             }
 
+            public void selectedWithShift(List<String> data) {
+                
+            }
+
         };
-        TableUtils.addTableSelect(lookup);
+        TableUtils.addTableSelect(this, lookup);
     }
 
     private void init(String report) {

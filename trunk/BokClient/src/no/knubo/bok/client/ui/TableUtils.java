@@ -1,37 +1,94 @@
 package no.knubo.bok.client.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import no.knubo.bok.client.Util;
+
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventPreview;
+import com.google.gwt.user.client.ui.Widget;
 
-public class TableUtils implements EventPreview {
+public class TableUtils implements EventPreview, ActiveWidget {
 
-    private TableRowSelected callback;
+    private List<Widget> callbackWidgets = new ArrayList<Widget>();
+    private List<TableRowSelected> callbacks = new ArrayList<TableRowSelected>();
     private Element previousElement;
+    private Widget activeWidget;
+    private static TableUtils me;
 
     private TableUtils() {
-        /* Empty */
+        DOM.addEventPreview(this);
+
     };
 
-    public static void addTableSelect(TableRowSelected callback) {
-        TableUtils t = new TableUtils();
-        t.callback = callback;
-        DOM.addEventPreview(t);
+    public static void addTableSelect(Widget widget, TableRowSelected callback) {
+        if (me == null) {
+            me = new TableUtils();
+        }
+        me.addCallback(widget, callback);
+    }
+
+    public static ActiveWidget getAsListener() {
+        if (me == null) {
+            me = new TableUtils();
+        }
+        return me;
+    }
+
+    private void addCallback(Widget widget, TableRowSelected callback) {
+        callbackWidgets.add(widget);
+        callbacks.add(callback);
     }
 
     public boolean onEventPreview(Event event) {
         if (event.getTarget().getParentElement() != null && event.getTarget().getParentElement().getId().startsWith("row")) {
+
             if (event.getType().equals("click")) {
                 String id = event.getTarget().getParentElement().getId().substring(3);
-                callback.selected(id);
-            }
 
-            if (event.getType().equals("mousemove")) {
+                TableRowSelected eventOwner = findEventOwner();
+                if (event.getShiftKey()) {
+                    eventOwner.selectedWithShift(getDataForId(id));
+                } else {
+                    if (eventOwner != null) {
+                        eventOwner.selected(id);
+                    }
+                }
+            } else if (event.getType().equals("mousemove")) {
                 setStyle(event.getTarget().getParentElement());
             }
         }
         return true;
+    }
+
+    private List<String> getDataForId(String id) {
+        ArrayList<String> data = new ArrayList<String>();
+
+        Element tr = DOM.getElementById("row" + id);
+        Element td = tr.getFirstChildElement();
+
+        while (td != null) {
+            data.add(td.getInnerText());
+            td = td.getNextSiblingElement();
+        }
+
+        return data;
+    }
+
+    private TableRowSelected findEventOwner() {
+
+        int pos = 0;
+        for (Widget callback : callbackWidgets) {
+            if (callback == activeWidget) {
+                return callbacks.get(pos);
+            }
+            pos++;
+        }
+
+        return null;
     }
 
     private void setStyle(Element parentElement) {
@@ -54,7 +111,7 @@ public class TableUtils implements EventPreview {
     }
 
     public static void setTableText(int id, String... data) {
-        Element tr = DOM.getElementById("row"+id);
+        Element tr = DOM.getElementById("row" + id);
         Element td = tr.getFirstChildElement();
 
         for (String string : data) {
@@ -62,5 +119,10 @@ public class TableUtils implements EventPreview {
             td = td.getNextSiblingElement();
         }
     }
-    
+
+    public void changedTo(Widget widget) {
+        Util.log("Change to widget:"+widget.getTitle());
+        activeWidget = widget;
+    }
+
 }
