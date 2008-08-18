@@ -22,6 +22,7 @@ public class IsbnLookupView extends DialogBox implements ClickListener {
     private Button useButton;
     private BookInfo bookEditView;
     private ExternalBookHelper bibsysBookHelper;
+    private ExternalBookHelper bokkildenBookHelper;
 
     public IsbnLookupView(Elements elements, Constants constants, Messages messages) {
 
@@ -32,6 +33,7 @@ public class IsbnLookupView extends DialogBox implements ClickListener {
         table = new FlexTable();
         table.addStyleName("edittable");
         table.setText(0, 0, elements.external_bibsys());
+        table.setText(0, 3, elements.external_bokkilden());
         table.setText(1, 0, elements.book_title());
         table.setText(2, 0, elements.book_author());
         table.setText(4, 0, elements.book_publisher());
@@ -39,11 +41,18 @@ public class IsbnLookupView extends DialogBox implements ClickListener {
         table.setText(7, 0, elements.external_note());
 
         bibsysBookHelper = new ExternalBookHelper(constants, messages, elements);
+        bokkildenBookHelper = new ExternalBookHelper(constants, messages, elements);
         table.setWidget(1, 2, bibsysBookHelper.getTitleCheckBox());
         table.setWidget(3, 2, bibsysBookHelper.getAuthorCheckBox());
         table.setWidget(5, 2, bibsysBookHelper.getPublisherCheckBox());
         table.setWidget(6, 2, bibsysBookHelper.getYearWrittenCheckBox());
 
+        table.setWidget(1, 3, bokkildenBookHelper.getTitleCheckBox());
+        table.setWidget(3, 3, bokkildenBookHelper.getAuthorCheckBox());
+        table.setWidget(5, 3, bokkildenBookHelper.getPublisherCheckBox());
+        table.setWidget(6, 3, bokkildenBookHelper.getYearWrittenCheckBox());
+
+        
         table.setWidget(1, 1, bibsysBookHelper.getTitleLabel());
         table.setWidget(2, 1, bibsysBookHelper.getAuthorLabel());
         table.setWidget(3, 1, bibsysBookHelper.getAuthorBox());
@@ -51,8 +60,20 @@ public class IsbnLookupView extends DialogBox implements ClickListener {
         table.setWidget(5, 1, bibsysBookHelper.getPublisherBox());
         table.setWidget(6, 1, bibsysBookHelper.getWrittenYearLabel());
         table.setWidget(7, 1, bibsysBookHelper.getNoteLabel());
-        HorizontalPanel hp = new HorizontalPanel();
+        table.setWidget(8, 1, bibsysBookHelper.getExternalURL());
 
+        table.setWidget(1, 3, bokkildenBookHelper.getTitleLabel());
+        table.setWidget(2, 3, bokkildenBookHelper.getAuthorLabel());
+        table.setWidget(3, 3, bokkildenBookHelper.getAuthorBox());
+        table.setWidget(4, 3, bokkildenBookHelper.getPublisherLabel());
+        table.setWidget(5, 3, bokkildenBookHelper.getPublisherBox());
+        table.setWidget(6, 3, bokkildenBookHelper.getWrittenYearLabel());
+        table.setWidget(7, 3, bokkildenBookHelper.getNoteLabel());
+        table.setWidget(8, 3, bokkildenBookHelper.getExternalURL());
+
+        bibsysBookHelper.link(bokkildenBookHelper);
+        
+        HorizontalPanel hp = new HorizontalPanel();
         cancelButton = new Button(elements.cancel());
         cancelButton.addClickListener(this);
         useButton = new Button(elements.use());
@@ -80,6 +101,7 @@ public class IsbnLookupView extends DialogBox implements ClickListener {
         this.bookEditView = bookEditView;
         useButton.setVisible(this.bookEditView != null);
         bibsysBookHelper.init("webscrape/webscrape.php?action=bibsys&isbn=" + isbn);
+        bokkildenBookHelper.init("webscrape/webscrape.php?action=bokkilden&isbn=" + isbn);
     }
 
     public void onClick(Widget sender) {
@@ -94,6 +116,7 @@ public class IsbnLookupView extends DialogBox implements ClickListener {
     private void returnToSender() {
         Book book = new Book();
         bibsysBookHelper.fillBookInfo(book);
+        bokkildenBookHelper.fillBookInfo(book);
         bookEditView.setBookInfo(book);
 
     }
