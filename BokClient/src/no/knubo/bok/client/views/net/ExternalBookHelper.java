@@ -12,9 +12,11 @@ import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.Widget;
 
 public class ExternalBookHelper {
     private ListBox authorBox;
@@ -241,5 +243,29 @@ public class ExternalBookHelper {
     public HTML getNoteLabel() {
         return noteLabel;
     }
+
+    public void link(ExternalBookHelper bokkildenBookHelper) {
+        linkCheckbox(titleCheckBox, bokkildenBookHelper.getTitleCheckBox());
+        linkCheckbox(authorCheckBox, bokkildenBookHelper.getAuthorCheckBox());
+        linkCheckbox(publisherCheckBox, bokkildenBookHelper.getPublisherCheckBox());
+        linkCheckbox(yearWrittenCheckBox, bokkildenBookHelper.getYearWrittenCheckBox());
+    }
+
+    private void linkCheckbox(final CheckBox check1, final CheckBox check2) {
+        ClickListener cl = new ClickListener() {
+
+            public void onClick(Widget sender) {
+                if(sender == check1 && check1.isChecked()) {
+                    check2.setChecked(false);
+                } else if(sender == check2 && check2.isChecked()) {
+                    check1.setChecked(false);
+                }
+            }
+            
+        };
+        check1.addClickListener(cl);
+        check2.addClickListener(cl);
+    }
+
 
 }

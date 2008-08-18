@@ -64,6 +64,14 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String menuitem_report_book_series();
 
   /**
+   * Translated "Bokkilden".
+   * 
+   * @return translated "Bokkilden"
+   * @gwt.key external_bokkilden
+   */
+  String external_bokkilden();
+
+  /**
    * Translated "Ny/Endre kategori".
    * 
    * @return translated "Ny/Endre kategori"
@@ -144,20 +152,20 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String alter_placements();
 
   /**
-   * Translated "Søk etter kategorier".
-   * 
-   * @return translated "Søk etter kategorier"
-   * @gwt.key menuitem_book_categories
-   */
-  String menuitem_book_categories();
-
-  /**
    * Translated "Søk".
    * 
    * @return translated "Søk"
    * @gwt.key search
    */
   String search();
+
+  /**
+   * Translated "Søk etter kategorier".
+   * 
+   * @return translated "Søk etter kategorier"
+   * @gwt.key menuitem_book_categories
+   */
+  String menuitem_book_categories();
 
   /**
    * Translated "Eksternt oppslag mot ISBN nummer".
