@@ -430,7 +430,9 @@ public class Util {
         return sb.toString();
     }
 
+    
     public static native void log(String string) /*-{
+        if(window['console'])
         window['console'].log(string);
         }-*/;
 

@@ -244,17 +244,18 @@ public class ExternalBookHelper {
         return noteLabel;
     }
 
-    public void link(ExternalBookHelper bokkildenBookHelper) {
-        linkCheckbox(titleCheckBox, bokkildenBookHelper.getTitleCheckBox());
-        linkCheckbox(authorCheckBox, bokkildenBookHelper.getAuthorCheckBox());
-        linkCheckbox(publisherCheckBox, bokkildenBookHelper.getPublisherCheckBox());
-        linkCheckbox(yearWrittenCheckBox, bokkildenBookHelper.getYearWrittenCheckBox());
+    public void link(ExternalBookHelper otherHelper) {
+        linkCheckbox(titleCheckBox, otherHelper.getTitleCheckBox());
+        linkCheckbox(authorCheckBox, otherHelper.getAuthorCheckBox());
+        linkCheckbox(publisherCheckBox, otherHelper.getPublisherCheckBox());
+        linkCheckbox(yearWrittenCheckBox, otherHelper.getYearWrittenCheckBox());
     }
 
     private void linkCheckbox(final CheckBox check1, final CheckBox check2) {
         ClickListener cl = new ClickListener() {
 
             public void onClick(Widget sender) {
+                
                 if(sender == check1 && check1.isChecked()) {
                     check2.setChecked(false);
                 } else if(sender == check2 && check2.isChecked()) {

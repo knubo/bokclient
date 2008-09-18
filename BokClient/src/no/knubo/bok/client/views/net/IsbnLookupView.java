@@ -47,10 +47,10 @@ public class IsbnLookupView extends DialogBox implements ClickListener {
         table.setWidget(5, 2, bibsysBookHelper.getPublisherCheckBox());
         table.setWidget(6, 2, bibsysBookHelper.getYearWrittenCheckBox());
 
-        table.setWidget(1, 3, bokkildenBookHelper.getTitleCheckBox());
-        table.setWidget(3, 3, bokkildenBookHelper.getAuthorCheckBox());
-        table.setWidget(5, 3, bokkildenBookHelper.getPublisherCheckBox());
-        table.setWidget(6, 3, bokkildenBookHelper.getYearWrittenCheckBox());
+        table.setWidget(1, 4, bokkildenBookHelper.getTitleCheckBox());
+        table.setWidget(3, 4, bokkildenBookHelper.getAuthorCheckBox());
+        table.setWidget(5, 4, bokkildenBookHelper.getPublisherCheckBox());
+        table.setWidget(6, 4, bokkildenBookHelper.getYearWrittenCheckBox());
 
         
         table.setWidget(1, 1, bibsysBookHelper.getTitleLabel());
@@ -71,7 +71,6 @@ public class IsbnLookupView extends DialogBox implements ClickListener {
         table.setWidget(7, 3, bokkildenBookHelper.getNoteLabel());
         table.setWidget(8, 3, bokkildenBookHelper.getExternalURL());
 
-        bibsysBookHelper.link(bokkildenBookHelper);
         
         HorizontalPanel hp = new HorizontalPanel();
         cancelButton = new Button(elements.cancel());
@@ -83,6 +82,7 @@ public class IsbnLookupView extends DialogBox implements ClickListener {
 
         dp.add(table, DockPanel.NORTH);
         dp.add(hp, DockPanel.NORTH);
+        bibsysBookHelper.link(bokkildenBookHelper);
 
         setWidget(dp);
     }
@@ -101,7 +101,7 @@ public class IsbnLookupView extends DialogBox implements ClickListener {
         this.bookEditView = bookEditView;
         useButton.setVisible(this.bookEditView != null);
         bibsysBookHelper.init("webscrape/webscrape.php?action=bibsys&isbn=" + isbn);
-        bokkildenBookHelper.init("webscrape/webscrape.php?action=bokkilden&isbn=" + isbn);
+        //bokkildenBookHelper.init("webscrape/webscrape.php?action=bokkilden&isbn=" + isbn);
     }
 
     public void onClick(Widget sender) {
