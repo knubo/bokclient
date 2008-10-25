@@ -56,6 +56,14 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String book_impression();
 
   /**
+   * Translated "Bok".
+   * 
+   * @return translated "Bok"
+   * @gwt.key title_book_quickview
+   */
+  String title_book_quickview();
+
+  /**
    * Translated "Antall bøker per serie".
    * 
    * @return translated "Antall bøker per serie"
@@ -302,6 +310,14 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
    * @gwt.key book_editor
    */
   String book_editor();
+
+  /**
+   * Translated "Lukk".
+   * 
+   * @return translated "Lukk"
+   * @gwt.key close
+   */
+  String close();
 
   /**
    * Translated "Skrevet år".

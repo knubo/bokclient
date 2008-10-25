@@ -116,7 +116,11 @@ public class BokGWT implements EntryPoint, ViewCallback, HistoryListener {
         menu.addItem(title, true, new Command() {
 
             public void execute() {
-                History.newItem(widgetId.name());
+                if(History.getToken().equals(widgetId.name())) {
+                    openWidget(widgetId, 0);
+                } else {
+                    History.newItem(widgetId.name());
+                }
             }
 
         });
@@ -195,7 +199,7 @@ public class BokGWT implements EntryPoint, ViewCallback, HistoryListener {
             widget = LogoutView.getInstance(constants, messages, elements);
             break;
         case REGISTER_BOOK:
-            widget = BookEditView.getInstance(constants, messages, elements);
+            widget = BookEditView.getInstance(this, constants, messages, elements);
 
             if (id > 0) {
                 ((BookEditView) widget).init(id);

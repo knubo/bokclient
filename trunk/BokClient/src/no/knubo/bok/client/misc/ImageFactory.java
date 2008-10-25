@@ -11,6 +11,13 @@ public class ImageFactory {
         return withId(new Image("images/go-previous.png"), id);
     }
 
+    public static Image warnImage(String id) {
+        Image warnImg = withId(new Image("images/warning.png"), id);
+        warnImg.setWidth("30px");
+        warnImg.setHeight("30px");
+        return warnImg;
+    }
+    
     public static Image nextImage(String id) {
         return withId(new Image("images/go-next.png"), id);
     }

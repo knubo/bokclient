@@ -3,7 +3,6 @@ package no.knubo.bok.client.views;
 import no.knubo.bok.client.Constants;
 import no.knubo.bok.client.Elements;
 import no.knubo.bok.client.Messages;
-import no.knubo.bok.client.Util;
 import no.knubo.bok.client.misc.AuthResponder;
 import no.knubo.bok.client.misc.ImageFactory;
 import no.knubo.bok.client.misc.ServerResponse;
@@ -38,11 +37,8 @@ public class QuickBookSearch extends Composite implements Picked, ClickListener 
     private TextBoxBase titleBox;
     private TextBoxBase isbnBox;
     private NamedButton newSearchButton;
-    private FlexTable infoTable;
     private Label infoLabel;
-    private Image editImage;
-    private final ViewCallback viewCallback;
-    private int currentId;
+    QuickBookSearchFields data;
 
     public static QuickBookSearch getInstance(ViewCallback viewCallback, Elements elements, Constants constants, Messages messages) {
 
@@ -54,7 +50,7 @@ public class QuickBookSearch extends Composite implements Picked, ClickListener 
     }
 
     public QuickBookSearch(ViewCallback viewCallback, Elements elements, Constants constants, Messages messages) {
-        this.viewCallback = viewCallback;
+        data = new QuickBookSearchFields(viewCallback, elements);
         this.constants = constants;
         this.messages = messages;
 
@@ -88,37 +84,12 @@ public class QuickBookSearch extends Composite implements Picked, ClickListener 
         table.setWidget(2, 1, isbnSuggestBox);
         table.setWidget(3, 1, newSearchButton);
 
-        infoTable = new FlexTable();
-        infoTable.addStyleName("tableborder");
-        int row = 0;
-        infoTable.setText(row++, 0, elements.book_number());
-        infoTable.setText(row++, 0, elements.book_isbn());
-        infoTable.setText(row++, 0, elements.book_title());
-        infoTable.setText(row++, 0, elements.book_org_title());
-        infoTable.setText(row++, 0, elements.book_subtitle());
-        infoTable.setText(row++, 0, elements.category());
-        infoTable.setText(row++, 0, elements.book_author());
-        infoTable.setText(row++, 0, elements.book_coauthor());
-        infoTable.setText(row++, 0, elements.book_editor());
-        infoTable.setText(row++, 0, elements.book_translator());
-        infoTable.setText(row++, 0, elements.book_publisher());
-        infoTable.setText(row++, 0, elements.book_year_written());
-        infoTable.setText(row++, 0, elements.book_year_published());
-        infoTable.setText(row++, 0, elements.book_edition());
-        infoTable.setText(row++, 0, elements.book_impression());
-        infoTable.setText(row++, 0, elements.book_price());
-        infoTable.setText(row++, 0, elements.book_series());
-        infoTable.setText(row++, 0, elements.book_serie_nmb());
-        infoTable.setText(row++, 0, elements.book_placement());
-        infoTable.setText(row++, 0, elements.book_illustrator());
+        data.drawBookLabels();
 
         infoLabel = new Label();
-        editImage = ImageFactory.editImage("editBook");
-        editImage.addClickListener(this);
-        infoTable.setWidget(0, 2, editImage);
         dp.add(table, DockPanel.NORTH);
         dp.add(infoLabel, DockPanel.NORTH);
-        dp.add(infoTable, DockPanel.NORTH);
+        dp.add(data.getInfoTable(), DockPanel.NORTH);
 
         initWidget(dp);
         setTitle(elements.menuitem_book_fast_search());
@@ -162,32 +133,7 @@ public class QuickBookSearch extends Composite implements Picked, ClickListener 
 
     void setBookInfo(JSONObject obj) {
         infoLabel.setText("");
-        int row = 0;
-        currentId = Util.getInt(obj.get("id"));
-        infoTable.setText(row++, 1, Util.strSkipNull(obj.get("usernumber"))+Util.strSkipNull(obj.get("subbook")));
-        infoTable.setText(row++, 1, Util.strSkipNull(obj.get("ISBN")));
-        infoTable.setText(row++, 1, Util.strSkipNull(obj.get("title")));
-        infoTable.setText(row++, 1, Util.strSkipNull(obj.get("org_title")));
-        infoTable.setText(row++, 1, Util.strSkipNull(obj.get("subtitle")));
-        infoTable.setText(row++, 1, Util.strSkipNull(obj.get("category")));
-        infoTable.setText(row++, 1, Util.strSkipNull(obj.get("author")));
-        infoTable.setText(row++, 1, Util.strSkipNull(obj.get("coauthor")));
-        infoTable.setText(row++, 1, Util.strSkipNull(obj.get("editor")));
-        infoTable.setText(row++, 1, Util.strSkipNull(obj.get("translator")));
-        infoTable.setText(row++, 1, Util.strSkipNull(obj.get("publisher")));
-        infoTable.setText(row++, 1, Util.strSkipNull(obj.get("written_year")));
-        infoTable.setText(row++, 1, Util.strSkipNull(obj.get("published_year")));
-        infoTable.setText(row++, 1, Util.strSkipNull(obj.get("edition")));
-        infoTable.setText(row++, 1, Util.strSkipNull(obj.get("impression")));
-        infoTable.setText(row++, 1, Util.strSkipNull(obj.get("price")));
-        infoTable.setText(row++, 1, Util.strSkipNull(obj.get("series")));
-        infoTable.setText(row++, 1, Util.strSkipNull(obj.get("number_in_series")));
-        infoTable.setText(row++, 1, Util.strSkipNull(obj.get("placement")));
-        infoTable.setText(row++, 1, Util.strSkipNull(obj.get("illustrator")));
-        
-        for(int i=1;i<row;i++) {
-            infoTable.getFlexCellFormatter().setColSpan(i, 1, 2);
-        }
+        data.setBookInfo(obj);
     }
 
     public void onClick(Widget sender) {
@@ -197,8 +143,6 @@ public class QuickBookSearch extends Composite implements Picked, ClickListener 
             bookNumber.setText("");
         } else if (sender == searchImage) {
             getBookByBookNumber();
-        } else if (sender == editImage && currentId > 0) {
-            viewCallback.editBook(currentId);
         }
     }
 
