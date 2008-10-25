@@ -32,20 +32,20 @@ public interface Messages extends com.google.gwt.i18n.client.Messages {
   String delete_book_question();
 
   /**
-   * Translated "Ulovlig år".
-   * 
-   * @return translated "Ulovlig år"
-   * @gwt.key illegal_year
-   */
-  String illegal_year();
-
-  /**
    * Translated "Penger inngis på format 10.45 og må være større eller lik 0".
    * 
    * @return translated "Penger inngis på format 10.45 og må være større eller lik 0"
    * @gwt.key field_money
    */
   String field_money();
+
+  /**
+   * Translated "Ulovlig år".
+   * 
+   * @return translated "Ulovlig år"
+   * @gwt.key illegal_year
+   */
+  String illegal_year();
 
   /**
    * Translated "Fikk ikke forventet svar fra server. Operasjonen er trolig ikke gjennomført.".
@@ -134,6 +134,14 @@ public interface Messages extends com.google.gwt.i18n.client.Messages {
    * @gwt.key save_failed
    */
   String save_failed();
+
+  /**
+   * Translated "Boken med gitt ISBN nummer finnes fra før.<br>Trykk på varseltrekant for å se på boken.".
+   * 
+   * @return translated "Boken med gitt ISBN nummer finnes fra før.<br>Trykk på varseltrekant for å se på boken."
+   * @gwt.key duplicate_book
+   */
+  String duplicate_book();
 
   /**
    * Translated "For mange treff. Viser kun {0}.".

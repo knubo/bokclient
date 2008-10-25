@@ -27,12 +27,15 @@ import no.knubo.bok.client.validation.MasterValidator;
 import no.knubo.bok.client.validation.Validateable;
 import no.knubo.bok.client.views.net.IsbnLookupView;
 
+import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
@@ -41,6 +44,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class BookEditView extends Composite implements ClickListener, BookInfo {
@@ -85,12 +89,20 @@ public class BookEditView extends Composite implements ClickListener, BookInfo {
     private NamedButton backButton;
     private SuggestBox coAuthorSuggestBox;
     private TextBoxWithErrorText bookSubNumber;
+    private Image warnImage;
+    protected JSONObject warnBook;
+    private final ViewCallback viewCallback;
+    private DialogBox warningDialogBox;
+    private QuickBookSearchFields warningFields;
 
-    public BookEditView(Messages messages, Constants constants, Elements elements) {
+    public BookEditView(ViewCallback viewCallback, Messages messages, Constants constants, Elements elements) {
+        this.viewCallback = viewCallback;
         this.messages = messages;
         this.constants = constants;
         this.elements = elements;
 
+        createWarningBookPopup();
+        
         table = new FlexTable();
         table.setStyleName("edittable");
 
@@ -104,6 +116,7 @@ public class BookEditView extends Composite implements ClickListener, BookInfo {
 
         bookISBN = new TextBoxWithErrorText("bookISBN");
         bookISBN.setMaxLength(40);
+        bookISBN.addFocusListener(focusListnerForBookISBN());
 
         isbnSearch = ImageFactory.searchImage("isbnSearch");
         isbnSearch.addClickListener(this);
@@ -142,6 +155,7 @@ public class BookEditView extends Composite implements ClickListener, BookInfo {
         hpBook.add(bookNumber);
         hpBook.add(bookSubNumber);
         addElement(elements.book_number() + "*", hpBook, bookNumberErrorLabel);
+
         addElement(elements.book_isbn(), bookISBN, isbnSearch);
         addElement(elements.book_title() + "*", bookTitle, bookErrorLabel);
         addElement(elements.book_org_title(), bookOrgTitle);
@@ -176,10 +190,14 @@ public class BookEditView extends Composite implements ClickListener, BookInfo {
         registerButton.addClickListener(this);
         deleteButton.addClickListener(this);
         backButton.addClickListener(this);
+        warnImage = ImageFactory.warnImage("warn");
+        warnImage.addClickListener(this);
+        warnImage.setVisible(false);
         HorizontalPanel hp = new HorizontalPanel();
         hp.add(registerButton);
         hp.add(deleteButton);
         hp.add(backButton);
+        hp.add(warnImage);
         hp.add(mainErrorLabel);
         table.setWidget(maxRow, 0, hp);
         table.getFlexCellFormatter().setColSpan(maxRow, 0, 8);
@@ -193,6 +211,60 @@ public class BookEditView extends Composite implements ClickListener, BookInfo {
 
         initWidget(dp);
         setTitle(elements.title_new_book());
+    }
+
+    private void createWarningBookPopup() {
+        warningDialogBox = new DialogBox();
+        warningDialogBox.setText(elements.title_book_quickview());
+        warningFields = new QuickBookSearchFields(viewCallback, elements);
+        warningFields.drawBookLabels();
+        VerticalPanel vp = new VerticalPanel();
+        vp.add(warningFields.getInfoTable());
+        Button closeButton = new Button(elements.close());
+        vp.add(closeButton);
+        
+        closeButton.addClickListener(new ClickListener() {
+
+            public void onClick(Widget sender) {
+                warningDialogBox.hide();
+            }
+            
+        });
+        warningDialogBox.setWidget(vp);
+    }
+
+
+    private FocusCallback focusListnerForBookISBN() {
+        return new FocusCallback() {
+
+            public void onFocus(Validateable me) {
+            }
+
+            public void onLostFocus(ErrorLabelWidget me) {
+                if (id == 0 && me.getText().length() > 0) {
+                    callCheckForDuplicateISBN();
+                } else {
+                    warnImage.setVisible(false);
+                    mainErrorLabel.setText("");
+                }
+            }
+
+        };
+    }
+
+    protected void callCheckForDuplicateISBN() {
+        ServerResponse callback = new ServerResponse() {
+
+            public void serverResponse(JSONValue responseObj) {
+                JSONArray arr = responseObj.isArray();
+                warnImage.setVisible(arr.size() > 0);
+                warnBook = arr.get(0).isObject();
+                if(arr.size() > 0) {
+                    mainErrorLabel.setHTML(messages.duplicate_book());
+                }
+            }
+        };
+        AuthResponder.get(constants, messages, callback, "registers/books.php?action=getfull&ISBN=" + bookISBN.getText());
     }
 
     private FocusCallback fetchesUserNumber() {
@@ -258,9 +330,9 @@ public class BookEditView extends Composite implements ClickListener, BookInfo {
         }
     }
 
-    public static BookEditView getInstance(Constants constants, Messages messages, Elements elements) {
+    public static BookEditView getInstance(ViewCallback viewCallback, Constants constants, Messages messages, Elements elements) {
         if (instance == null) {
-            instance = new BookEditView(messages, constants, elements);
+            instance = new BookEditView(viewCallback, messages, constants, elements);
         }
         return instance;
     }
@@ -291,7 +363,9 @@ public class BookEditView extends Composite implements ClickListener, BookInfo {
         coAuthorSuggestBox.setText("");
         bookSubNumber.setText("");
         id = 0;
-
+        
+        mainErrorLabel.setText("");
+        warnImage.setVisible(false);
         registerButton.setText(elements.book_register_book());
         header.setText(elements.title_new_book());
         setTitle(elements.title_new_book());
@@ -309,7 +383,16 @@ public class BookEditView extends Composite implements ClickListener, BookInfo {
             History.back();
         } else if (sender == isbnSearch) {
             IsbnLookupView.getInstance(bookISBN.getText(), this, elements, constants, messages);
+        } else if(sender == warnImage) {
+            showWarninBookPopup();
         }
+    }
+
+
+
+    private void showWarninBookPopup() {
+        warningDialogBox.center();
+        warningFields.setBookInfo(warnBook);
     }
 
     private void delete() {
@@ -442,16 +525,16 @@ public class BookEditView extends Composite implements ClickListener, BookInfo {
     }
 
     public void setBookInfo(Book book) {
-        if(book.getTitle() != null) {
-            bookTitle.setText(book.getTitle());            
+        if (book.getTitle() != null) {
+            bookTitle.setText(book.getTitle());
         }
         if (book.getAuthorId() > 0) {
             authorSuggestBox.setValue(book.getAuthorId(), book.getAuthor());
         }
-        if(book.getPublisherId() > 0) {
+        if (book.getPublisherId() > 0) {
             publisherSuggestBox.setValue(book.getPublisherId(), book.getPublisher());
         }
-        if(book.getWrittenYear() > 0) {
+        if (book.getWrittenYear() > 0) {
             bookYearWritten.setText(String.valueOf(book.getWrittenYear()));
         }
     }
