@@ -258,8 +258,8 @@ public class BookEditView extends Composite implements ClickListener, BookInfo {
             public void serverResponse(JSONValue responseObj) {
                 JSONArray arr = responseObj.isArray();
                 warnImage.setVisible(arr.size() > 0);
-                warnBook = arr.get(0).isObject();
                 if(arr.size() > 0) {
+                    warnBook = arr.get(0).isObject();
                     mainErrorLabel.setHTML(messages.duplicate_book());
                 }
             }

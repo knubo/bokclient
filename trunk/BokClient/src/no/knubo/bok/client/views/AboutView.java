@@ -25,7 +25,7 @@ public class AboutView extends Composite {
     private Elements elements;
 
     /** This must match Version.php's version. */
-    public static final String CLIENT_VERSION = "1.2";
+    public static final String CLIENT_VERSION = "1.21";
 
     public AboutView(Messages messages, Constants constants, Elements elements) {
         this.messages = messages;
@@ -47,7 +47,7 @@ public class AboutView extends Composite {
         table.setText(1, 0, elements.book_next_user_number());
 
         initWidget(dp);
-        setTitle(elements.menuitem_about());
+        setTitle(elements.menuitem_about()+"-"+CLIENT_VERSION);
     }
 
     public static AboutView getInstance(Constants constants, Messages messages, Elements elements) {

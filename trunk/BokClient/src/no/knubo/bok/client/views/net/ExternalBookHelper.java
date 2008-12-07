@@ -213,12 +213,12 @@ public class ExternalBookHelper {
             book.setTitle(titleLabel.getText());
         }
 
-        if (authorCheckBox.isChecked()) {
+        if (authorCheckBox.isChecked() && authorBox.getSelectedIndex() >= 0) {
             book.setAuthorId(Util.getInt(authorBox.getValue(authorBox.getSelectedIndex())));
             book.setAuthor(authorBox.getItemText(authorBox.getSelectedIndex()));
         }
 
-        if (publisherCheckBox.isChecked()) {
+        if (publisherCheckBox.isChecked() && publisherBox.getSelectedIndex() >= 0) {
             book.setPublisherId(Util.getInt(publisherBox.getValue(publisherBox.getSelectedIndex())));
             book.setPublisher(publisherBox.getItemText(publisherBox.getSelectedIndex()));
         }
