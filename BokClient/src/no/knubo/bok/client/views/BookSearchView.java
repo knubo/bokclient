@@ -205,6 +205,7 @@ public class BookSearchView extends Composite implements ClickListener, TableRow
             }
 
             public void serverResponse(JSONValue responseObj) {
+                /* Empty */
             }
 
         };

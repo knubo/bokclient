@@ -6,6 +6,7 @@ public class MoneyValidator extends ValidatorBase {
         super(error);
     }
 
+    @Override
     protected boolean validate(Validateable val) {
         try {
             String money = val.getText();

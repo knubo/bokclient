@@ -6,6 +6,7 @@ public class EmailValidator extends ValidatorBase {
         super(errorText);
     }
 
+    @Override
     protected boolean validate(Validateable val) {
         String email = val.getText().trim();
 

@@ -14,7 +14,8 @@ public class CategorySuggestBox extends GeneralSuggestBox {
 		super("category", constants, messages, elements);
 	}
 
-	public SuggestOracle getOracle() {
+	@Override
+    public SuggestOracle getOracle() {
 		return CategorySuggestBuilder.createCategoryOracle(constants, messages, picked);
 	}
 

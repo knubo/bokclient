@@ -6,6 +6,7 @@ public class DateValidator extends ValidatorBase {
         super(error);
     }
 
+    @Override
     protected boolean validate(Validateable val) {
         String dateText = val.getText();
 

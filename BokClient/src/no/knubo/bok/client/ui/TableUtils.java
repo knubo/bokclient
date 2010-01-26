@@ -103,7 +103,8 @@ public class TableUtils implements EventPreview, ActiveWidget {
         previousElement = parentElement;
     }
 
-    private void setColStyles(Element element, String color) {
+    private void setColStyles(Element elementIn, String color) {
+        Element element = elementIn;
         do {
             element.getStyle().setProperty("color", color);
             element = element.getNextSiblingElement();

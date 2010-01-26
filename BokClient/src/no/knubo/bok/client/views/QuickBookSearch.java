@@ -99,6 +99,7 @@ public class QuickBookSearch extends Composite implements Picked, ClickListener 
         return new KeyboardListener() {
 
             public void onKeyDown(Widget sender, char keyCode, int modifiers) {
+                /* Empty */
             }
 
             public void onKeyPress(Widget sender, char keyCode, int modifiers) {
@@ -109,6 +110,7 @@ public class QuickBookSearch extends Composite implements Picked, ClickListener 
             }
 
             public void onKeyUp(Widget sender, char keyCode, int modifiers) {
+                /* Empty */
             }
 
         };

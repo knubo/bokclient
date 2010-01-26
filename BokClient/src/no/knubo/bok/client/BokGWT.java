@@ -92,6 +92,7 @@ public class BokGWT implements EntryPoint, ViewCallback, HistoryListener {
         addMenuItem(reportsMenu, elements.menuitem_report_no_placement(), WidgetIds.REPORT_NO_PLACEMENT);
         addMenuItem(reportsMenu, elements.menuitem_report_book_category(), WidgetIds.REPORT_CATEGORY);
         addMenuItem(reportsMenu, elements.menuitem_report_book_series(), WidgetIds.REPORT_SERIES);
+        addMenuItem(reportsMenu, elements.menuitem_report_book_last_registered(), WidgetIds.REPORT_LAST_REGISTERED);
 
         addMenuItem(booksMenu, elements.menuitem_new_book(), WidgetIds.REGISTER_BOOK);
         addMenuItem(booksMenu, elements.menuitem_book_fast_search(), WidgetIds.QUICK_SEARCH);
@@ -116,7 +117,7 @@ public class BokGWT implements EntryPoint, ViewCallback, HistoryListener {
         menu.addItem(title, true, new Command() {
 
             public void execute() {
-                if(History.getToken().equals(widgetId.name())) {
+                if (History.getToken().equals(widgetId.name())) {
                     openWidget(widgetId, 0);
                 } else {
                     History.newItem(widgetId.name());
@@ -165,7 +166,7 @@ public class BokGWT implements EntryPoint, ViewCallback, HistoryListener {
 
     private void normalModeInt() {
         topMenu.setVisible(true);
-        
+
         History.newItem(WidgetIds.ABOUT.name());
         openWidget(WidgetIds.ABOUT, 0);
 
@@ -229,27 +230,30 @@ public class BokGWT implements EntryPoint, ViewCallback, HistoryListener {
             widget = NamedEditView.getInstance("series", elements, constants, messages);
             break;
         case REPORT_PLACEMENT:
-            widget = ReportView.getInstance("registers/books.php?action=placementSummary", elements.menuitem_report_placement(), elements, constants,
-                    messages);
+            widget = ReportView.getInstance("registers/books.php?action=placementSummary", elements
+                    .menuitem_report_placement(), elements, constants, messages);
             break;
         case REPORT_TOP_AUTHORS:
-            widget = ReportView.getInstance("registers/books.php?action=top30authors", elements.menuitem_report_top_author(), elements, constants,
-                    messages);
+            widget = ReportView.getInstance("registers/books.php?action=top30authors", elements
+                    .menuitem_report_top_author(), elements, constants, messages);
             break;
         case REPORT_NO_PLACEMENT:
-            widget = ReportView.getInstance("registers/books.php?action=noplacement", elements.menuitem_report_no_placement(), elements, constants,
-                    messages);  
+            widget = ReportView.getInstance("registers/books.php?action=noplacement", elements
+                    .menuitem_report_no_placement(), elements, constants, messages);
             ((ReportView) widget).addBookLookup(this);
             break;
         case REPORT_CATEGORY:
-            widget = ReportView.getInstance("registers/books.php?action=countByCategory", elements.menuitem_report_book_category(), elements, constants,
-                    messages);  
+            widget = ReportView.getInstance("registers/books.php?action=countByCategory", elements
+                    .menuitem_report_book_category(), elements, constants, messages);
             break;
         case REPORT_SERIES:
-            widget = ReportView.getInstance("registers/books.php?action=countBySeries", elements.menuitem_report_book_series(), elements, constants,
-                    messages);  
-            break;            
-            
+            widget = ReportView.getInstance("registers/books.php?action=countBySeries", elements
+                    .menuitem_report_book_series(), elements, constants, messages);
+            break;
+        case REPORT_LAST_REGISTERED:
+            widget = ReportView.getInstance("registers/books.php?action=last_registered", elements
+                    .menuitem_report_book_last_registered(), elements, constants, messages);
+
         }
 
         if (widget == null) {
@@ -287,7 +291,8 @@ public class BokGWT implements EntryPoint, ViewCallback, HistoryListener {
         if (pos == -1) {
             openWidget(WidgetIds.valueOf(historyToken), 0);
         } else {
-            openWidget(WidgetIds.valueOf(historyToken.substring(0, pos)), Integer.parseInt(historyToken.substring(pos + 1)));
+            openWidget(WidgetIds.valueOf(historyToken.substring(0, pos)), Integer.parseInt(historyToken
+                    .substring(pos + 1)));
         }
 
     }
