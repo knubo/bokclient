@@ -114,6 +114,7 @@ public class PersonEditView extends Composite implements ClickListener, TableRow
             }
 
             public void serverResponse(JSONValue responseObj) {
+                /* Empty */
             }
 
         };
@@ -139,8 +140,8 @@ public class PersonEditView extends Composite implements ClickListener, TableRow
                 boolean translator = Util.getBoolean(object.get("translator"));
                 boolean reader = Util.getBoolean(object.get("reader"));
 
-                TableUtils.setTableText(id, firstNameStr, lastNameStr, author ? "f" : "", translator ? "o" : "", editor ? "r" : "", illustrator ? "i"
-                        : "", reader ? "l" : "");
+                TableUtils.setTableText(id, firstNameStr, lastNameStr, author ? "f" : "", translator ? "o" : "",
+                        editor ? "r" : "", illustrator ? "i" : "", reader ? "l" : "");
             }
 
         };
@@ -149,7 +150,8 @@ public class PersonEditView extends Composite implements ClickListener, TableRow
     }
 
     public void onKeyDown(Widget sender, char keyCode, int modifiers) {
-   }
+        /* Empty */
+    }
 
     public void onKeyPress(Widget sender, char keyCode, int modifiers) {
         if (keyCode == KEY_ENTER) {
@@ -158,9 +160,10 @@ public class PersonEditView extends Composite implements ClickListener, TableRow
     }
 
     public void onKeyUp(Widget sender, char keyCode, int modifiers) {
+        /* Empty */
     }
 
     public void selectedWithShift(List<String> data) {
-        
+        /* Empty */
     }
 }

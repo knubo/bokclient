@@ -1,2 +1,2 @@
 #!/bin/sh
-zip -r BokClient.zip www/*
+cd war;zip -r ../BokClient.zip *;cd ..

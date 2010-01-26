@@ -1,225 +1,251 @@
 package no.knubo.bok.client;
 
-
 /**
- * Interface to represent the messages contained in resource  bundle:
- * 	/Users/knuterikborgen/Documents/workspacebok/BokClient/src/no/knubo/bok/client/Messages.properties'.
+ * Interface to represent the messages contained in resource bundle:
+ * 	/Users/knuterikborgen/kode/workspace/BokClient/src/no/knubo/bok/client/Messages.properties'.
  */
 public interface Messages extends com.google.gwt.i18n.client.Messages {
   
   /**
-   * Translated "Det finnes allerede en person med gitt fornavn og etternavn - ikke lagret.".
+   * Translated "Fikk ikke forventet svar fra server. Operasjonen er trolig ikke gjennomført.".
    * 
-   * @return translated "Det finnes allerede en person med gitt fornavn og etternavn - ikke lagret."
-   * @gwt.key person_duplicate
+   * @return translated "Fikk ikke forventet svar fra server. Operasjonen er trolig ikke gjennomført."
    */
-  String person_duplicate();
-
-  /**
-   * Translated "Ulovlig måned".
-   * 
-   * @return translated "Ulovlig måned"
-   * @gwt.key illegal_month
-   */
-  String illegal_month();
+  @DefaultMessage("Fikk ikke forventet svar fra server. Operasjonen er trolig ikke gjennomført.")
+  @Key("bad_server_response")
+  String bad_server_response();
 
   /**
    * Translated "Slett bok?".
    * 
    * @return translated "Slett bok?"
-   * @gwt.key delete_book_question
    */
+  @DefaultMessage("Slett bok?")
+  @Key("delete_book_question")
   String delete_book_question();
-
-  /**
-   * Translated "Penger inngis på format 10.45 og må være større eller lik 0".
-   * 
-   * @return translated "Penger inngis på format 10.45 og må være større eller lik 0"
-   * @gwt.key field_money
-   */
-  String field_money();
-
-  /**
-   * Translated "Ulovlig år".
-   * 
-   * @return translated "Ulovlig år"
-   * @gwt.key illegal_year
-   */
-  String illegal_year();
-
-  /**
-   * Translated "Fikk ikke forventet svar fra server. Operasjonen er trolig ikke gjennomført.".
-   * 
-   * @return translated "Fikk ikke forventet svar fra server. Operasjonen er trolig ikke gjennomført."
-   * @gwt.key bad_server_response
-   */
-  String bad_server_response();
 
   /**
    * Translated "Slett bruker?".
    * 
    * @return translated "Slett bruker?"
-   * @gwt.key delete_user_question
    */
+  @DefaultMessage("Slett bruker?")
+  @Key("delete_user_question")
   String delete_user_question();
 
   /**
-   * Translated "Feil ved lagring av data".
+   * Translated "Gitt navn finnes fra før - ikke lagret.".
    * 
-   * @return translated "Feil ved lagring av data"
-   * @gwt.key save_failed_badly
+   * @return translated "Gitt navn finnes fra før - ikke lagret."
    */
-  String save_failed_badly();
+  @DefaultMessage("Gitt navn finnes fra før - ikke lagret.")
+  @Key("duplicate")
+  String duplicate();
 
   /**
-   * Translated "...lagret".
+   * Translated "Boken med gitt ISBN nummer finnes fra før.<br>Trykk på varseltrekant for å se på boken.".
    * 
-   * @return translated "...lagret"
-   * @gwt.key save_ok
+   * @return translated "Boken med gitt ISBN nummer finnes fra før.<br>Trykk på varseltrekant for å se på boken."
    */
-  String save_ok();
+  @DefaultMessage("Boken med gitt ISBN nummer finnes fra før.<br>Trykk på varseltrekant for å se på boken.")
+  @Key("duplicate_book")
+  String duplicate_book();
 
   /**
-   * Translated "Feltet må fylles ut".
+   * Translated "Oppgitt boknummer er allerede i bruk - ikke lagret.".
    * 
-   * @return translated "Feltet må fylles ut"
-   * @gwt.key required_field
+   * @return translated "Oppgitt boknummer er allerede i bruk - ikke lagret."
    */
-  String required_field();
+  @DefaultMessage("Oppgitt boknummer er allerede i bruk - ikke lagret.")
+  @Key("duplicate_user_number")
+  String duplicate_user_number();
+
+  /**
+   * Translated "Penger inngis på format 10.45 og må være større eller lik 0".
+   * 
+   * @return translated "Penger inngis på format 10.45 og må være større eller lik 0"
+   */
+  @DefaultMessage("Penger inngis på format 10.45 og må være større eller lik 0")
+  @Key("field_money")
+  String field_money();
+
+  /**
+   * Translated "Feltet må være større eller lik 0".
+   * 
+   * @return translated "Feltet må være større eller lik 0"
+   */
+  @DefaultMessage("Feltet må være større eller lik 0")
+  @Key("field_positive")
+  String field_positive();
+
+  /**
+   * Translated "Feltet må ha større verdi enn 0".
+   * 
+   * @return translated "Feltet må ha større verdi enn 0"
+   */
+  @DefaultMessage("Feltet må ha større verdi enn 0")
+  @Key("field_to_low_zero")
+  String field_to_low_zero();
 
   /**
    * Translated "Følgende felter er ikke validert ok: {0}.".
    * 
    * @return translated "Følgende felter er ikke validert ok: {0}."
-   * @gwt.key field_validation_fail
    */
+  @DefaultMessage("Følgende felter er ikke validert ok: {0}.")
+  @Key("field_validation_fail")
   String field_validation_fail(String arg0);
 
   /**
    * Translated "Ulovlig dato".
    * 
    * @return translated "Ulovlig dato"
-   * @gwt.key illegal_day
    */
+  @DefaultMessage("Ulovlig dato")
+  @Key("illegal_day")
   String illegal_day();
 
   /**
-   * Translated "Inngitt boknummer er ikke i bruk".
+   * Translated "Ulovlig måned".
    * 
-   * @return translated "Inngitt boknummer er ikke i bruk"
-   * @gwt.key unknown_book_number
+   * @return translated "Ulovlig måned"
    */
-  String unknown_book_number();
+  @DefaultMessage("Ulovlig måned")
+  @Key("illegal_month")
+  String illegal_month();
+
+  /**
+   * Translated "Ulovlig år".
+   * 
+   * @return translated "Ulovlig år"
+   */
+  @DefaultMessage("Ulovlig år")
+  @Key("illegal_year")
+  String illegal_year();
+
+  /**
+   * Translated "Ulovlig epostadresse".
+   * 
+   * @return translated "Ulovlig epostadresse"
+   */
+  @DefaultMessage("Ulovlig epostadresse")
+  @Key("invalid_email")
+  String invalid_email();
+
+  /**
+   * Translated "Du har ikke tilgang til operasjonen".
+   * 
+   * @return translated "Du har ikke tilgang til operasjonen"
+   */
+  @DefaultMessage("Du har ikke tilgang til operasjonen")
+  @Key("no_access")
+  String no_access();
 
   /**
    * Translated "Søket ga Ingen treff".
    * 
    * @return translated "Søket ga Ingen treff"
-   * @gwt.key no_result
    */
+  @DefaultMessage("Søket ga Ingen treff")
+  @Key("no_result")
   String no_result();
 
   /**
    * Translated "Fikk ikke svar fra server. Program- eller databasefeil.".
    * 
    * @return translated "Fikk ikke svar fra server. Program- eller databasefeil."
-   * @gwt.key no_server_response
    */
+  @DefaultMessage("Fikk ikke svar fra server. Program- eller databasefeil.")
+  @Key("no_server_response")
   String no_server_response();
+
+  /**
+   * Translated "Du er ikke in\u0009nlogget - åpner innloggingsvindu".
+   * 
+   * @return translated "Du er ikke in\u0009nlogget - åpner innloggingsvindu"
+   */
+  @DefaultMessage("Du er ikke in\u0009nlogget - åpner innloggingsvindu")
+  @Key("not_logged_in")
+  String not_logged_in();
+
+  /**
+   * Translated "Det finnes allerede en person med gitt fornavn og etternavn - ikke lagret.".
+   * 
+   * @return translated "Det finnes allerede en person med gitt fornavn og etternavn - ikke lagret."
+   */
+  @DefaultMessage("Det finnes allerede en person med gitt fornavn og etternavn - ikke lagret.")
+  @Key("person_duplicate")
+  String person_duplicate();
+
+  /**
+   * Translated "Feltet må fylles ut".
+   * 
+   * @return translated "Feltet må fylles ut"
+   */
+  @DefaultMessage("Feltet må fylles ut")
+  @Key("required_field")
+  String required_field();
 
   /**
    * Translated "...ingen data oppdatert.".
    * 
    * @return translated "...ingen data oppdatert."
-   * @gwt.key save_failed
    */
+  @DefaultMessage("...ingen data oppdatert.")
+  @Key("save_failed")
   String save_failed();
 
   /**
-   * Translated "Boken med gitt ISBN nummer finnes fra før.<br>Trykk på varseltrekant for å se på boken.".
+   * Translated "Feil ved lagring av data".
    * 
-   * @return translated "Boken med gitt ISBN nummer finnes fra før.<br>Trykk på varseltrekant for å se på boken."
-   * @gwt.key duplicate_book
+   * @return translated "Feil ved lagring av data"
    */
-  String duplicate_book();
+  @DefaultMessage("Feil ved lagring av data")
+  @Key("save_failed_badly")
+  String save_failed_badly();
 
   /**
-   * Translated "For mange treff. Viser kun {0}.".
+   * Translated "...lagret".
    * 
-   * @return translated "For mange treff. Viser kun {0}."
-   * @gwt.key too_many_hits
+   * @return translated "...lagret"
    */
-  String too_many_hits(String arg0);
-
-  /**
-   * Translated "Feltet må ha større verdi enn 0".
-   * 
-   * @return translated "Feltet må ha større verdi enn 0"
-   * @gwt.key field_to_low_zero
-   */
-  String field_to_low_zero();
-
-  /**
-   * Translated "Feltet må være større eller lik 0".
-   * 
-   * @return translated "Feltet må være større eller lik 0"
-   * @gwt.key field_positive
-   */
-  String field_positive();
+  @DefaultMessage("...lagret")
+  @Key("save_ok")
+  String save_ok();
 
   /**
    * Translated "Søket mislyktes - programfeil eller databasefeil".
    * 
    * @return translated "Søket mislyktes - programfeil eller databasefeil"
-   * @gwt.key search_failed
    */
+  @DefaultMessage("Søket mislyktes - programfeil eller databasefeil")
+  @Key("search_failed")
   String search_failed();
 
   /**
-   * Translated "Du har ikke tilgang til operasjonen".
+   * Translated "For mange treff. Viser kun {0}.".
    * 
-   * @return translated "Du har ikke tilgang til operasjonen"
-   * @gwt.key no_access
+   * @return translated "For mange treff. Viser kun {0}."
    */
-  String no_access();
+  @DefaultMessage("For mange treff. Viser kun {0}.")
+  @Key("too_many_hits")
+  String too_many_hits(String arg0);
+
+  /**
+   * Translated "Inngitt boknummer er ikke i bruk".
+   * 
+   * @return translated "Inngitt boknummer er ikke i bruk"
+   */
+  @DefaultMessage("Inngitt boknummer er ikke i bruk")
+  @Key("unknown_book_number")
+  String unknown_book_number();
 
   /**
    * Translated "Din cachet(?) versjon av klienten er ikke på samme versjon som serverversjonen. Klientversjonen er {0} og serverversjonen er {1}. Prøv en shift reload av siden. Dette kan gjøre at deler av applikasjonen ikke fungerer som forventet.".
    * 
    * @return translated "Din cachet(?) versjon av klienten er ikke på samme versjon som serverversjonen. Klientversjonen er {0} og serverversjonen er {1}. Prøv en shift reload av siden. Dette kan gjøre at deler av applikasjonen ikke fungerer som forventet."
-   * @gwt.key version_mismatch
    */
+  @DefaultMessage("Din cachet(?) versjon av klienten er ikke på samme versjon som serverversjonen. Klientversjonen er {0} og serverversjonen er {1}. Prøv en shift reload av siden. Dette kan gjøre at deler av applikasjonen ikke fungerer som forventet.")
+  @Key("version_mismatch")
   String version_mismatch(String arg0,  String arg1);
-
-  /**
-   * Translated "Ulovlig epostadresse".
-   * 
-   * @return translated "Ulovlig epostadresse"
-   * @gwt.key invalid_email
-   */
-  String invalid_email();
-
-  /**
-   * Translated "Oppgitt boknummer er allerede i bruk - ikke lagret.".
-   * 
-   * @return translated "Oppgitt boknummer er allerede i bruk - ikke lagret."
-   * @gwt.key duplicate_user_number
-   */
-  String duplicate_user_number();
-
-  /**
-   * Translated "Gitt navn finnes fra før - ikke lagret.".
-   * 
-   * @return translated "Gitt navn finnes fra før - ikke lagret."
-   * @gwt.key duplicate
-   */
-  String duplicate();
-
-  /**
-   * Translated "Du er ikke in	nlogget - åpner innloggingsvindu".
-   * 
-   * @return translated "Du er ikke in	nlogget - åpner innloggingsvindu"
-   * @gwt.key not_logged_in
-   */
-  String not_logged_in();
 }

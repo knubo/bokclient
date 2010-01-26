@@ -124,6 +124,7 @@ public class NamedEditView extends Composite implements ClickListener, TableRowS
             }
 
             public void serverResponse(JSONValue responseObj) {
+                /* Empty */
             }
 
         };
@@ -158,6 +159,7 @@ public class NamedEditView extends Composite implements ClickListener, TableRowS
     }
 
     public void onKeyDown(Widget sender, char keyCode, int modifiers) {
+        /* Empty */
     }
 
     public void onKeyPress(Widget sender, char keyCode, int modifiers) {
@@ -168,8 +170,10 @@ public class NamedEditView extends Composite implements ClickListener, TableRowS
     }
 
     public void onKeyUp(Widget sender, char keyCode, int modifiers) {
+        /* Empty */
     }
 
     public void selectedWithShift(List<String> data) {
+        /* Empty */
     }
 }

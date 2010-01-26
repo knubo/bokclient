@@ -21,7 +21,7 @@ public class ReportView extends Composite {
     private Messages messages;
     private HTML htmlReport;
 
-    public ReportView(Elements elements, Constants constants, Messages messages) {
+    public ReportView(Constants constants, Messages messages) {
         this.constants = constants;
         this.messages = messages;
         htmlReport = new HTML();
@@ -31,7 +31,7 @@ public class ReportView extends Composite {
     public static ReportView getInstance(String report, String title, Elements elements, Constants constants, Messages messages) {
 
         if (me == null) {
-            me = new ReportView(elements, constants, messages);
+            me = new ReportView(constants, messages);
         }
         me.init(report);
         me.setTitle(title);
@@ -48,7 +48,7 @@ public class ReportView extends Composite {
             }
 
             public void selectedWithShift(List<String> data) {
-                
+                /* Empty */
             }
 
         };
@@ -63,6 +63,7 @@ public class ReportView extends Composite {
             }
 
             public void serverResponse(JSONValue responseObj) {
+                /* Empty */
             }
 
         };

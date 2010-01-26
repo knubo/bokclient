@@ -21,7 +21,7 @@ public class RangeValidator extends ValidatorBase {
         
         try {
             int value = 0;
-            if (sval != null && sval.length() > 0) {
+            if (sval.length() > 0) {
                 value = Integer.parseInt(sval);
             }
 

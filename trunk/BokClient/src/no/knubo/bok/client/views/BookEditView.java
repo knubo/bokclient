@@ -102,7 +102,7 @@ public class BookEditView extends Composite implements ClickListener, BookInfo {
         this.elements = elements;
 
         createWarningBookPopup();
-        
+
         table = new FlexTable();
         table.setStyleName("edittable");
 
@@ -160,12 +160,15 @@ public class BookEditView extends Composite implements ClickListener, BookInfo {
         addElement(elements.book_title() + "*", bookTitle, bookErrorLabel);
         addElement(elements.book_org_title(), bookOrgTitle);
         addElement(elements.book_subtitle(), bookSubtitle);
-        addElement(elements.category() + "*", categorySuggestBox.getSuggestBox(), categorySuggestBox.getImageContainer());
+        addElement(elements.category() + "*", categorySuggestBox.getSuggestBox(), categorySuggestBox
+                .getImageContainer());
         addElement(elements.book_author() + "*", authorSuggestBox.getSuggestBox(), authorSuggestBox.getImageContainer());
         addElement(elements.book_coauthor(), coAuthorSuggestBox);
         addElement(elements.book_editor(), editorSuggestBox.getSuggestBox(), editorSuggestBox.getImageContainer());
-        addElement(elements.book_translator(), translatorSuggestBox.getSuggestBox(), translatorSuggestBox.getImageContainer());
-        addElement(elements.book_publisher(), publisherSuggestBox.getSuggestBox(), publisherSuggestBox.getImageContainer());
+        addElement(elements.book_translator(), translatorSuggestBox.getSuggestBox(), translatorSuggestBox
+                .getImageContainer());
+        addElement(elements.book_publisher(), publisherSuggestBox.getSuggestBox(), publisherSuggestBox
+                .getImageContainer());
         table.setWidget(1, 3, ImageFactory.blankImage(10, 10));
 
         row = 1;
@@ -178,8 +181,10 @@ public class BookEditView extends Composite implements ClickListener, BookInfo {
         addElement(elements.book_price(), bookPrice);
         addElement(elements.book_series(), seriesSuggestBox.getSuggestBox(), seriesSuggestBox.getImageContainer());
         addElement(elements.book_serie_nmb(), bookSeriesNmb);
-        addElement(elements.book_placement(), placementSuggestBox.getSuggestBox(), placementSuggestBox.getImageContainer());
-        addElement(elements.book_illustrator(), illustratorSuggestBox.getSuggestBox(), illustratorSuggestBox.getImageContainer());
+        addElement(elements.book_placement(), placementSuggestBox.getSuggestBox(), placementSuggestBox
+                .getImageContainer());
+        addElement(elements.book_illustrator(), illustratorSuggestBox.getSuggestBox(), illustratorSuggestBox
+                .getImageContainer());
         addElement(elements.book_read_by(), readBySuggestBox.getSuggestBox(), readBySuggestBox.getImageContainer());
 
         registerButton = new NamedButton("registerButton", elements.book_register_book());
@@ -222,22 +227,22 @@ public class BookEditView extends Composite implements ClickListener, BookInfo {
         vp.add(warningFields.getInfoTable());
         Button closeButton = new Button(elements.close());
         vp.add(closeButton);
-        
+
         closeButton.addClickListener(new ClickListener() {
 
             public void onClick(Widget sender) {
                 warningDialogBox.hide();
             }
-            
+
         });
         warningDialogBox.setWidget(vp);
     }
-
 
     private FocusCallback focusListnerForBookISBN() {
         return new FocusCallback() {
 
             public void onFocus(Validateable me) {
+                /* Empty */
             }
 
             public void onLostFocus(ErrorLabelWidget me) {
@@ -258,19 +263,21 @@ public class BookEditView extends Composite implements ClickListener, BookInfo {
             public void serverResponse(JSONValue responseObj) {
                 JSONArray arr = responseObj.isArray();
                 warnImage.setVisible(arr.size() > 0);
-                if(arr.size() > 0) {
+                if (arr.size() > 0) {
                     warnBook = arr.get(0).isObject();
                     mainErrorLabel.setHTML(messages.duplicate_book());
                 }
             }
         };
-        AuthResponder.get(constants, messages, callback, "registers/books.php?action=getfull&ISBN=" + bookISBN.getText());
+        AuthResponder.get(constants, messages, callback, "registers/books.php?action=getfull&ISBN="
+                + bookISBN.getText());
     }
 
     private FocusCallback fetchesUserNumber() {
         return new FocusCallback() {
 
             public void onFocus(Validateable me) {
+                /* Empty */
             }
 
             public void onLostFocus(ErrorLabelWidget me) {
@@ -330,7 +337,8 @@ public class BookEditView extends Composite implements ClickListener, BookInfo {
         }
     }
 
-    public static BookEditView getInstance(ViewCallback viewCallback, Constants constants, Messages messages, Elements elements) {
+    public static BookEditView getInstance(ViewCallback viewCallback, Constants constants, Messages messages,
+            Elements elements) {
         if (instance == null) {
             instance = new BookEditView(viewCallback, messages, constants, elements);
         }
@@ -363,7 +371,7 @@ public class BookEditView extends Composite implements ClickListener, BookInfo {
         coAuthorSuggestBox.setText("");
         bookSubNumber.setText("");
         id = 0;
-        
+
         mainErrorLabel.setText("");
         warnImage.setVisible(false);
         registerButton.setText(elements.book_register_book());
@@ -383,12 +391,10 @@ public class BookEditView extends Composite implements ClickListener, BookInfo {
             History.back();
         } else if (sender == isbnSearch) {
             IsbnLookupView.getInstance(bookISBN.getText(), this, elements, constants, messages);
-        } else if(sender == warnImage) {
+        } else if (sender == warnImage) {
             showWarninBookPopup();
         }
     }
-
-
 
     private void showWarninBookPopup() {
         warningDialogBox.center();
@@ -455,6 +461,7 @@ public class BookEditView extends Composite implements ClickListener, BookInfo {
         Util.addPostParam(sb, "subtitle", bookSubtitle.getText());
         Util.addPostParam(sb, "org_title", bookOrgTitle.getText());
         Util.addPostParam(sb, "ISBN", bookISBN.getText());
+        Util.addPostParam(sb, "coauthor", coAuthorSuggestBox.getText());
         Util.addPostParam(sb, "author_id", authorSuggestBox.getId());
         Util.addPostParam(sb, "read_by_id", readBySuggestBox.getId());
         Util.addPostParam(sb, "illustrator_id", illustratorSuggestBox.getId());
@@ -504,12 +511,14 @@ public class BookEditView extends Composite implements ClickListener, BookInfo {
 
                 setSuggest(categorySuggestBox, obj, "category_id", "category");
                 setSuggest(authorSuggestBox, obj, "author_id", "author");
+                coAuthorSuggestBox.setText(Util.str(obj.get("coauthor")));
                 setSuggest(readBySuggestBox, obj, "read_by_id", "readby");
                 setSuggest(editorSuggestBox, obj, "editor_id", "editor");
+                setSuggest(translatorSuggestBox, obj, "translator_id", "translator");
                 setSuggest(publisherSuggestBox, obj, "publisher_id", "publisher");
                 setSuggest(seriesSuggestBox, obj, "series_id", "series");
                 setSuggest(placementSuggestBox, obj, "placement_id", "placement");
-                setSuggest(placementSuggestBox, obj, "illustrator_id", "illustrator");
+                setSuggest(illustratorSuggestBox, obj, "illustrator_id", "illustrator");
             }
 
         };
