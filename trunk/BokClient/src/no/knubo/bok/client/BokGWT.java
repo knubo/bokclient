@@ -93,6 +93,8 @@ public class BokGWT implements EntryPoint, ViewCallback, HistoryListener {
         addMenuItem(reportsMenu, elements.menuitem_report_book_category(), WidgetIds.REPORT_CATEGORY);
         addMenuItem(reportsMenu, elements.menuitem_report_book_series(), WidgetIds.REPORT_SERIES);
         addMenuItem(reportsMenu, elements.menuitem_report_book_last_registered(), WidgetIds.REPORT_LAST_REGISTERED);
+        addMenuItem(reportsMenu, elements.menuitem_report_book_price(), WidgetIds.REPORT_PRICE);
+        addMenuItem(reportsMenu, elements.menuitem_report_book_all(), WidgetIds.REPORT_ALL);
 
         addMenuItem(booksMenu, elements.menuitem_new_book(), WidgetIds.REGISTER_BOOK);
         addMenuItem(booksMenu, elements.menuitem_book_fast_search(), WidgetIds.QUICK_SEARCH);
@@ -253,6 +255,18 @@ public class BokGWT implements EntryPoint, ViewCallback, HistoryListener {
         case REPORT_LAST_REGISTERED:
             widget = ReportView.getInstance("registers/books.php?action=last_registered", elements
                     .menuitem_report_book_last_registered(), elements, constants, messages);
+            ((ReportView) widget).addBookLookup(this);
+            break;
+        case REPORT_ALL:
+            widget = ReportView.getInstance("registers/books.php?action=all_books",
+                    elements.menuitem_report_book_all(), elements, constants, messages);
+            ((ReportView) widget).addBookLookup(this);
+            break;
+        case REPORT_PRICE:
+            widget = ReportView.getInstance("registers/books.php?action=per_price", elements
+                    .menuitem_report_book_price(), elements, constants, messages);
+            ((ReportView) widget).addBookLookup(this);
+            break;
 
         }
 

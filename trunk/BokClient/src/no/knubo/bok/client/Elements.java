@@ -709,6 +709,15 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   String menuitem_new_book();
 
   /**
+   * Translated "Alle bøker per boknummer\u0009".
+   * 
+   * @return translated "Alle bøker per boknummer\u0009"
+   */
+  @DefaultStringValue("Alle bøker per boknummer\u0009")
+  @Key("menuitem_report_book_all")
+  String menuitem_report_book_all();
+
+  /**
    * Translated "Antall bøker per kategori".
    * 
    * @return translated "Antall bøker per kategori"
@@ -725,6 +734,15 @@ public interface Elements extends com.google.gwt.i18n.client.ConstantsWithLookup
   @DefaultStringValue("Siste registrerte bøker")
   @Key("menuitem_report_book_last_registered")
   String menuitem_report_book_last_registered();
+
+  /**
+   * Translated "Top 50 dyreste bøker".
+   * 
+   * @return translated "Top 50 dyreste bøker"
+   */
+  @DefaultStringValue("Top 50 dyreste bøker")
+  @Key("menuitem_report_book_price")
+  String menuitem_report_book_price();
 
   /**
    * Translated "Antall bøker per serie".
