@@ -25,7 +25,7 @@ public class AboutView extends Composite {
     private Elements elements;
 
     /** This must match Version.php's version. */
-    public static final String CLIENT_VERSION = "1.21";
+    public static final String CLIENT_VERSION = "1.3";
 
     public AboutView(Messages messages, Constants constants, Elements elements) {
         this.messages = messages;
