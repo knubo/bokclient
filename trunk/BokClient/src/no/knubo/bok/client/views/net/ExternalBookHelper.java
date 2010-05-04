@@ -96,10 +96,10 @@ public class ExternalBookHelper {
         externalURL.setHTML("");
         authorBox.clear();
         publisherBox.clear();
-        titleCheckBox.setChecked(false);
-        authorCheckBox.setChecked(false);
-        publisherCheckBox.setChecked(false);
-        yearWrittenCheckBox.setChecked(false);
+        titleCheckBox.setValue(false);
+        authorCheckBox.setValue(false);
+        publisherCheckBox.setValue(false);
+        yearWrittenCheckBox.setValue(false);
         fetchData(initURL);
     }
 
@@ -117,7 +117,7 @@ public class ExternalBookHelper {
 
                 JSONObject info = object.get("info").isObject();
 
-                titleCheckBox.setChecked(true);
+                titleCheckBox.setValue(true);
                 titleLabel.setText(Util.strSkipNull(info.get("title")));
 
                 if (info.containsKey("author")) {
@@ -125,17 +125,17 @@ public class ExternalBookHelper {
                     fetchAuthorInfo(authorStr);
                     authorLabel.setText(authorStr);
                 }
-                authorCheckBox.setChecked(info.containsKey("author"));
+                authorCheckBox.setValue(info.containsKey("author"));
 
                 if (info.containsKey("publisher")) {
                     String publisherStr = Util.strSkipNull(info.get("publisher"));
                     fetchPublisherInfo(publisherStr);
                     publisherLabel.setText(publisherStr);
                 }
-                publisherCheckBox.setChecked(info.containsKey("publisher"));
+                publisherCheckBox.setValue(info.containsKey("publisher"));
 
                 writtenYearLabel.setText(Util.strSkipNull(info.get("written_year")));
-                yearWrittenCheckBox.setChecked(true);
+                yearWrittenCheckBox.setValue(true);
 
                 if (info.containsKey("note")) {
                     noteLabel.setHTML(Util.strSkipNull(info.get("note")));
@@ -209,21 +209,21 @@ public class ExternalBookHelper {
 
     public void fillBookInfo(Book book) {
 
-        if (titleCheckBox.isChecked()) {
+        if (titleCheckBox.getValue()) {
             book.setTitle(titleLabel.getText());
         }
 
-        if (authorCheckBox.isChecked() && authorBox.getSelectedIndex() >= 0) {
+        if (authorCheckBox.getValue() && authorBox.getSelectedIndex() >= 0) {
             book.setAuthorId(Util.getInt(authorBox.getValue(authorBox.getSelectedIndex())));
             book.setAuthor(authorBox.getItemText(authorBox.getSelectedIndex()));
         }
 
-        if (publisherCheckBox.isChecked() && publisherBox.getSelectedIndex() >= 0) {
+        if (publisherCheckBox.getValue() && publisherBox.getSelectedIndex() >= 0) {
             book.setPublisherId(Util.getInt(publisherBox.getValue(publisherBox.getSelectedIndex())));
             book.setPublisher(publisherBox.getItemText(publisherBox.getSelectedIndex()));
         }
 
-        if (yearWrittenCheckBox.isChecked()) {
+        if (yearWrittenCheckBox.getValue()) {
             book.setWrittenYear(Util.getInt(writtenYearLabel.getText()));
         }
     }
@@ -256,10 +256,10 @@ public class ExternalBookHelper {
 
             public void onClick(Widget sender) {
                 
-                if(sender == check1 && check1.isChecked()) {
-                    check2.setChecked(false);
-                } else if(sender == check2 && check2.isChecked()) {
-                    check1.setChecked(false);
+                if(sender == check1 && check1.getValue()) {
+                    check2.setValue(false);
+                } else if(sender == check2 && check2.getValue()) {
+                    check1.setValue(false);
                 }
             }
             

@@ -11,7 +11,8 @@ public class YearValidator extends ValidatorBase {
 		this.mouseOver = mouseover;
 	}
 
-	protected boolean validate(Validateable val) {
+	@Override
+    protected boolean validate(Validateable val) {
 		int year = 0;
 
 		/* Handle blank using mandatory validators. */
