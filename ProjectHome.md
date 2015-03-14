@@ -1,0 +1,1 @@
+Bokdatabase klientside i GWT.
